@@ -6,6 +6,10 @@
 #include "./../s21_decimal.h"
 
 // Отображение отладочной информации в тестах
-// #define __DEBUG 1
+#define __DEBUG 1
+
+Suite * debug_suite(void);
+
+void test_debug(s21_decimal decimal, char *check);
 
 #endif  // SRC_TESTS_TEST_H_

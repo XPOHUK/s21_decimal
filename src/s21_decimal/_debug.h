@@ -5,12 +5,13 @@
 
 #define GREEN   "\033[0;32m"
 #define RED     "\033[0;31m"
-#define YELLOW  "\033[93m"
+#define YELLOW  "\033[1;33m"
 #define OKCYAN  "\033[96m"
 #define RESET   "\033[0m"
 
 void s21_print_bits(size_t const size, void const * const ptr, int color);
 void s21_print_bit(int number, int color);
+void s21_decimal_to_string(s21_decimal decimal, char *res);
 void s21_reverse_string(char *str);
 void int128_to_str(unsigned __int128 x, char *res);
 void format_decimal_to_str(s21_decimal decimal, char *res);

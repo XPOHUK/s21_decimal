@@ -5,17 +5,24 @@
 #include "../s21_decimal.h"
 #include "./_debug.h"
 
+void s21_print_decimal_bits(s21_decimal decimal) {
+    s21_print_bit(decimal.bits[3], 1);
+    s21_print_bit(decimal.bits[2], 0);
+    s21_print_bit(decimal.bits[1], 0);
+    s21_print_bit(decimal.bits[0], 0);
+    putchar('\n');
+}
+
+void s21_print_bit(int number, int color) {
+    s21_print_bits(sizeof(number), &number, color);
+}
+
 void s21_print_bits(size_t const size, void const * const ptr, int color) {
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
     int i, j;
 
     int cnt = 31;
-    
-// Биты от 0 до 15, младшее слово, не используются и должны быть равны нулю.
-// Биты с 16 по 23 должны содержать показатель степени от 0 до 28, который указывает степень 10 для разделения целого числа.
-// Биты с 24 по 30 не используются и должны быть равны нулю.
-// Бит 31 содержит знак; 0 означает положительный, а 1 означает отрицательный.
 
     for (i = size - 1; i >= 0; i--) {
         for (j = 7; j >= 0; j--) {
@@ -52,40 +59,26 @@ void s21_print_bits(size_t const size, void const * const ptr, int color) {
     putchar(' ');
 }
 
-void s21_print_bit(int number, int color) {
-    s21_print_bits(sizeof(number), &number, color);
-}
+void s21_print_decimal_string(s21_decimal decimal) {
+    char res[1024];
+    memset(res, '\0', 1024);
 
-void s21_reverse_string(char *str) {
-    size_t length;
+    s21_decimal_to_string(decimal, res);
 
-    length = strlen(str);
-    if (length > 0) {
-        for (size_t i = length - 1, j = 0; i > (length - 1) / 2; i--, j++) {
-            char c;
-            c = str[i];
-            str[i] = str[j];
-            str[j] = c;
-        }
-    }
-}
-
-void int128_to_str(unsigned __int128 x, char *res) {
-    char *ptr = res;
-
-    if (x == 0) {
-        *ptr = '0';
-        ++ptr;
+    if (res[0] == '(') {
+        printf("%s%s%s\n", RED, res, RESET);
     } else {
-        while (x != 0) {
-            *ptr = x % 10 + '0';
-            x = x / 10;
-            ++ptr;
-        }
+        printf("|%s|\n", res);
     }
+}
 
-    *ptr = '\0';
-    s21_reverse_string(res);
+void s21_decimal_to_string(s21_decimal decimal, char *res) {
+    res[0] = '\0';
+    if (s21_is_correct_decimal(decimal) == 0) {
+        strcat(res, "(Incorrect Decimal)");
+    } else {
+        format_decimal_to_str(decimal, res);
+    }
 }
 
 void format_decimal_to_str(s21_decimal decimal, char *res) {
@@ -108,7 +101,7 @@ void format_decimal_to_str(s21_decimal decimal, char *res) {
     int sign = s21_decimal_get_sign(decimal);
 
     char *ptr = res;
-    if (sign == 1) {
+    if (sign == 1 && ex.dec != 0) {
         *(ptr++) = '-';
     }
 
@@ -125,7 +118,6 @@ void format_decimal_to_str(s21_decimal decimal, char *res) {
     } else {
         size_t i;
         for (i = 0; i < strlen(str) - power; i++) {
-
             *(ptr++) = str[i];
         }
 
@@ -136,28 +128,37 @@ void format_decimal_to_str(s21_decimal decimal, char *res) {
             *(ptr++) = str[i+j];
         }
     }
+    *(ptr++) = '\0';
 }
 
-void s21_print_decimal_bits(s21_decimal decimal) {
-    s21_print_bit(decimal.bits[3], 1);
-    s21_print_bit(decimal.bits[2], 0);
-    s21_print_bit(decimal.bits[1], 0);
-    s21_print_bit(decimal.bits[0], 0);
-    putchar('\n');
-}
+void int128_to_str(unsigned __int128 x, char *res) {
+    char *ptr = res;
 
-void s21_print_decimal_string(s21_decimal decimal) {
-    char res[1024];
-    memset(res, '\0', 1024);
-
-    if (s21_is_correct_decimal(decimal) == 0) {
-        strcat(res, RED);
-        strcat(res, "(Incorrect Decimal)");
-        strcat(res, RESET);
+    if (x == 0) {
+        *ptr = '0';
+        ++ptr;
     } else {
-        format_decimal_to_str(decimal, res);
+        while (x != 0) {
+            *ptr = x % 10 + '0';
+            x = x / 10;
+            ++ptr;
+        }
     }
 
-    printf("%s\n", res);
-    putchar('\n');
+    *ptr = '\0';
+    s21_reverse_string(res);
+}
+
+void s21_reverse_string(char *str) {
+    size_t length;
+
+    length = strlen(str);
+    if (length > 0) {
+        for (size_t i = length - 1, j = 0; i > (length - 1) / 2; i--, j++) {
+            char c;
+            c = str[i];
+            str[i] = str[j];
+            str[j] = c;
+        }
+    }
 }
