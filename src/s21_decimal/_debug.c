@@ -68,7 +68,7 @@ void s21_print_decimal_string(s21_decimal decimal) {
     if (res[0] == '(') {
         printf("%s%s%s\n", RED, res, RESET);
     } else {
-        printf("|%s|\n", res);
+        printf("%s\n", res);
     }
 }
 

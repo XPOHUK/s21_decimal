@@ -74,6 +74,14 @@ START_TEST(test_debug8) {
 }
 END_TEST
 
+START_TEST(test_debug9) {
+    s21_decimal decimal = {{0xFFFFFFFF, 0x0, 0x0, 0xB0000}};
+    char check[1024] = "0.04294967295";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
 START_TEST(test_debug10) {
     s21_decimal decimal = {{0xFFFFFFFF, 0x0, 0x0, 0xA0000}};
     char check[1024] = "0.4294967295";
@@ -126,6 +134,78 @@ END_TEST
 START_TEST(test_debug16) {
     s21_decimal decimal = {{0x0, 0x0, 0x0, 0x1C0000}};
     char check[1024] = "0.0000000000000000000000000000";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug17) {
+    s21_decimal decimal = {{0x1, 0x0, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000000000000000000000001";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug18) {
+    s21_decimal decimal = {{0xFFFFFFFF, 0x0, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000000000000004294967295";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug19) {
+    s21_decimal decimal = {{0x0, 0x1, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000000000000004294967296";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug20) {
+    s21_decimal decimal = {{0x0, 0xFFFFFFFF, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000018446744069414584320";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug21) {
+    s21_decimal decimal = {{0x0, 0x0, 0x1, 0x1C0000}};
+    char check[1024] = "0.0000000018446744073709551616";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug22) {
+    s21_decimal decimal = {{0x0, 0x0, 0xFFFFFFFF, 0x1C0000}};
+    char check[1024] = "7.9228162495817593519834398720";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug23) {
+    s21_decimal decimal = {{0xFFFFFFFF, 0x1, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000000000000008589934591";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug24) {
+    s21_decimal decimal = {{0xFFFFFFFF, 0xFFFFFFFF, 0x0, 0x1C0000}};
+    char check[1024] = "0.0000000018446744073709551615";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug25) {
+    s21_decimal decimal = {{0xFFFFFFFF, 0xFFFFFFFF, 0x1, 0x1C0000}};
+    char check[1024] = "0.0000000036893488147419103231";
 
     test_debug(decimal, check);
 }
@@ -215,6 +295,15 @@ START_TEST(test_debug_fail7) {
 }
 END_TEST
 
+START_TEST(test_debug_fail8) {
+    // Просто все единицы
+    s21_decimal decimal = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF}};
+    char check[1024] = "(Incorrect Decimal)";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
 Suite * debug_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -230,7 +319,7 @@ Suite * debug_suite(void) {
     tcase_add_test(tc_core, test_debug6);
     tcase_add_test(tc_core, test_debug7);
     tcase_add_test(tc_core, test_debug8);
-    // tcase_add_test(tc_core, test_debug9);
+    tcase_add_test(tc_core, test_debug9);
     tcase_add_test(tc_core, test_debug10);
     tcase_add_test(tc_core, test_debug11);
     tcase_add_test(tc_core, test_debug12);
@@ -238,6 +327,15 @@ Suite * debug_suite(void) {
     tcase_add_test(tc_core, test_debug14);
     tcase_add_test(tc_core, test_debug15);
     tcase_add_test(tc_core, test_debug16);
+    tcase_add_test(tc_core, test_debug17);
+    tcase_add_test(tc_core, test_debug18);
+    tcase_add_test(tc_core, test_debug19);
+    tcase_add_test(tc_core, test_debug20);
+    tcase_add_test(tc_core, test_debug21);
+    tcase_add_test(tc_core, test_debug22);
+    tcase_add_test(tc_core, test_debug23);
+    tcase_add_test(tc_core, test_debug24);
+    tcase_add_test(tc_core, test_debug25);
 
     tcase_add_test(tc_core, test_debug_fail1);
     tcase_add_test(tc_core, test_debug_fail2);
@@ -246,6 +344,7 @@ Suite * debug_suite(void) {
     tcase_add_test(tc_core, test_debug_fail5);
     tcase_add_test(tc_core, test_debug_fail6);
     tcase_add_test(tc_core, test_debug_fail7);
+    tcase_add_test(tc_core, test_debug_fail8);
 
     suite_add_tcase(s, tc_core);
 

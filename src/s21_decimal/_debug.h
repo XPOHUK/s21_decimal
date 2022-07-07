@@ -5,7 +5,7 @@
 
 #define GREEN   "\033[0;32m"
 #define RED     "\033[0;31m"
-#define YELLOW  "\033[1;33m"
+#define YELLOW  "\033[93m"
 #define OKCYAN  "\033[96m"
 #define RESET   "\033[0m"
 
@@ -42,6 +42,7 @@ void s21_print_decimal_string(s21_decimal decimal);
  * print_bit_ui32(b);
  * 
  * При необходимости использования других типов, например, __int128,легко добавить новую функцию по аналогии
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
  */
 #define print_bit(X)            \
     _Generic((X),               \
