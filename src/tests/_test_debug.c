@@ -304,6 +304,24 @@ START_TEST(test_debug_fail8) {
 }
 END_TEST
 
+START_TEST(test_debug_create1) {
+    // Просто все единицы
+    s21_decimal decimal = s21_create_matrix_from_array(0xFFFFFFFF, 0x1, 0x0, 0x1C0000);
+    char check[1024] = "0.0000000000000000008589934591";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug_create2) {
+    // Просто все единицы
+    s21_decimal decimal = s21_create_matrix_from_data(1, 28, 0xFFFFFFFF, 0x1, 0x0);
+    char check[1024] = "-0.0000000000000000008589934591";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
 Suite * debug_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -345,6 +363,9 @@ Suite * debug_suite(void) {
     tcase_add_test(tc_core, test_debug_fail6);
     tcase_add_test(tc_core, test_debug_fail7);
     tcase_add_test(tc_core, test_debug_fail8);
+
+    tcase_add_test(tc_core, test_debug_create1);
+    tcase_add_test(tc_core, test_debug_create2);
 
     suite_add_tcase(s, tc_core);
 

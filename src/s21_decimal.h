@@ -34,5 +34,7 @@ int s21_decimal_get_empty2(s21_decimal decimal);
 
 void s21_print_decimal_bits(s21_decimal decimal);
 void s21_print_decimal_string(s21_decimal decimal);
+s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int data4);
+s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data2, int data3);
 
 #endif  //  SRC_S21_DECIMAL_H_

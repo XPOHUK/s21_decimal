@@ -84,3 +84,31 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 
     return bits3.parts.empty2;
 }
+
+s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int data4) {
+    s21_decimal decimal;
+
+    decimal.bits[0] = data1;
+    decimal.bits[1] = data2;
+    decimal.bits[2] = data3;
+    decimal.bits[3] = data4;
+
+    return decimal;
+}
+
+s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data2, int data3) {
+    s21_decimal decimal;
+
+    decimal.bits[0] = data1;
+    decimal.bits[1] = data2;
+    decimal.bits[2] = data3;
+
+    decimal_bit3 bits3;
+    bits3.i = 0;
+    bits3.parts.power = power;
+    bits3.parts.sign = sign;
+
+    decimal.bits[3] = bits3.i;
+
+    return decimal;
+}
