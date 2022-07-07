@@ -84,7 +84,16 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 
     return bits3.parts.empty2;
 }
-
+/**
+ * @brief Возвращает заполненный decimal по данным аргументов
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param data1 int для bits[0]
+ * @param data2 int для bits[1]
+ * @param data3 int для bits[2]
+ * @param data4 int для bits[3]
+ * @return s21_decimal заполненный decimal
+ */
 s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int data4) {
     s21_decimal decimal;
 
@@ -96,6 +105,16 @@ s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int da
     return decimal;
 }
 
+/**
+ * @brief Возвращает заполненный decimal по данным аргументов
+ * 
+ * @param sign знак для заполнения в bits[3]
+ * @param power степень для заполнения в bits[3]
+ * @param data1 int для bits[0]
+ * @param data2 int для bits[1]
+ * @param data3 int для bits[2]
+ * @return s21_decimal заполненный decimal
+ */
 s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data2, int data3) {
     s21_decimal decimal;
 
