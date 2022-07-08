@@ -2,6 +2,7 @@
 #define SRC_S21_DECIMAL_H_
 
 #include "./s21_decimal/_debug/_debug.h"
+#include "./s21_decimal/binary/binary.h"
 
 int s21_is_correct_decimal(s21_decimal decimal);
 int s21_decimal_get_sign(s21_decimal decimal);
