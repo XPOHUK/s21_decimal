@@ -8,7 +8,7 @@ endif
 # Дополнительные библиотеки не для Mac, по умолчанию оставляем пустым, чтобы не портить сборку на Mac
 LIBS_ADDITIONAL = 
 ifneq ($(detected_OS), Darwin)
-	LIBS_ADDITIONAL = -lm
+	LIBS_ADDITIONAL = -lm -pthread -lsubunit -lrt
 endif
 
 # Набор цветов для красивостей
