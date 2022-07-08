@@ -56,7 +56,7 @@ ALL_TEST_O = $(ALL_TEST_C:$(TDIR)%.c=$(ODIR)$(TDIR)%.o)
 ALL_DECIMAL_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(MDIR)%.o)
 ALL_DECIMAL_GCOV_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(GDIR)%.o)
 
-ALL_C_H_FILES = $(shell find -E . -regex ".*\.(c|h)")
+ALL_C_H_FILES = $(shell find . -type f | grep "\.(c|h)$$" -E)
 
 all: test gcov_report
 
