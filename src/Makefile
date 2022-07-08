@@ -56,6 +56,8 @@ ALL_TEST_O = $(ALL_TEST_C:$(TDIR)%.c=$(ODIR)$(TDIR)%.o)
 ALL_DECIMAL_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(MDIR)%.o)
 ALL_DECIMAL_GCOV_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(GDIR)%.o)
 
+ALL_C_H_FILES = $(shell find -E . -regex ".*\.(c|h)")
+
 all: test gcov_report
 
 test: $(ODIR) $(ODIR)$(TDIR) $(ODIR)$(MDIR) s21_decimal.a $(ALL_TEST_O) $(MAIN_TEST_O)
@@ -132,9 +134,9 @@ clean:
 rebuild: clean all
 
 cpplint: 
-	python3 ../materials/linters/cpplint.py --extensions=c *.c *.h $(TDIR)*.c $(TDIR)*.h $(MDIR)*.c $(MDIR)*.h
+	python3 ../materials/linters/cpplint.py --extensions=c $(ALL_C_H_FILES)
 cppcheck:
-	cppcheck --enable=all --suppress=missingIncludeSystem *.c *.h $(TDIR)*.c $(TDIR)*.h $(MDIR)*.c $(MDIR)*.h
+	cppcheck --enable=all --suppress=missingIncludeSystem $(ALL_C_H_FILES)
 leaks:
 	leaks --atExit -- ./test
 valgrind:
