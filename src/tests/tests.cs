@@ -92,12 +92,12 @@ class DecimalCtorIArrDemo
         CreateDecimal( new int[ ] { 0, 0, 0 } );
         CreateDecimal( new int[ ] { 0, 0, 0, 0, 0 } );
         CreateDecimal( new int[ ] { 0, 0, 0, 1000000000 } );
-        CreateDecimal( new int[ ] { -1, 0, 0, 0x1D0000 } ); // степень 29 (показатель степени должен быть от 0 до 28)
-        CreateDecimal( new int[ ] { 0, 0, 0, 0x1D0000 } );  // степень 29 (показатель степени должен быть от 0 до 28)
-        CreateDecimal( new int[ ] { -1, 0, 0, 0x1C0001 } ); // степень 28 (что корректно), но биты 0-15 не нули (младший бит)
-        CreateDecimal( new int[ ] { -1, 0, 0, 0x1C8000 } ); // степень 28 (что корректно), но биты 0-15 не нули (старший бит)
-        CreateDecimal( new int[ ] { -1, 0, 0, 0x11C0000 } ); // степень 28 (что корректно), но биты 24-30 не нули (младший бит)
-        CreateDecimal( new int[ ] { -1, 0, 0, 0x401C0000 } ); // степень 28 (что корректно), но биты 24-30 не нули (старший бит)
+        CreateDecimal( new int[ ] { -1, 0, 0, 0x1D0000 } ); 
+        CreateDecimal( new int[ ] { 0, 0, 0, 0x1D0000 } );  
+        CreateDecimal( new int[ ] { -1, 0, 0, 0x1C0001 } ); 
+        CreateDecimal( new int[ ] { -1, 0, 0, 0x1C8000 } ); 
+        CreateDecimal( new int[ ] { -1, 0, 0, 0x11C0000 } ); 
+        CreateDecimal( new int[ ] { -1, 0, 0, 0x401C0000 } ); 
         
     }
 }

@@ -1,14 +1,46 @@
+# Определяем ОС
+ifeq ($(OS), Windows_NT)
+    detected_OS := Windows
+else
+    detected_OS := $(shell uname -s)
+endif
+
+# Дополнительные библиотеки не для Mac, по умолчанию оставляем пустым, чтобы не портить сборку на Mac
+LIBS_ADDITIONAL = 
+ifneq ($(detected_OS), Darwin)
+	LIBS_ADDITIONAL = -lm
+endif
+
+# Набор цветов для красивостей
 GREEN   =   \033[0;32m
 RED		=   \033[0;31m
 RESET	=   \033[0m
 
+# Компилятор / Линковщик
 CC=gcc
+
+# Пути до используемых папок
+OBJ_DIR = obj
+GCOV_OBJ_DIR = obj/gcov
+TEST_DIR = tests
+MODULES_DIR = s21_decimal
+REPORT_DIR = report
+
+#Цель и название исполняемого файла для тестов
+TEST_EXE = test
+#Цель и название исполняемого файла для отчета о покрытии
+GCOV_EXE = gcov_report
+
+# Имя статичной библиотеки со всеми модулями проекта
+MODULES_STATIC_LIBRARY = s21_decimal.a
+# Она же, но с флагами для отчета покрытия
+MODULES_STATIC_LIBRARY_GCOV = s21_decimal_gcov.a
+
 # Дефолтное значение 1 если не задано с консоли
 # Задаем так: make test MODE=4
 MODE?=1
 ifeq ($(MODE), 2)
 	# Собираем с fsanitizer
-	ZSH_MESSAGE=BUILD WITH fsanitizer!
 	LFLAGS=-g -fsanitize=leak -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fno-sanitize-recover \
 	-fstack-protector -fanalyzer
 	CFLAGS=-Wall -Werror -Wextra -c -g -fsanitize=leak -fsanitize=address -fsanitize=undefined -fsanitize=unreachable \
@@ -16,23 +48,20 @@ ifeq ($(MODE), 2)
 else 
 	ifeq ($(MODE), 3)
 		# Собираем с отладочной информацией для valgrind
-		ZSH_MESSAGE=BUILD FOR valgrind!
-    	LFLAGS=-g
-    	CFLAGS=-Wall -Werror -Wextra -c -g
-    else 
+		LFLAGS=-g
+		CFLAGS=-Wall -Werror -Wextra -c -g
+	else 
 		ifeq ($(MODE), 4)
-        	# Собираем со всеми флагами проверок и пишем идеальный код
-			ZSH_MESSAGE=BUILD PERFECT CODE!
-        	LFLAGS=-g -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -fanalyzer
+			# Собираем со всеми флагами проверок и пишем идеальный код
+			LFLAGS=-g -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -fstack-protector -fanalyzer
 			CFLAGS=-Wall -Werror -Wextra -c -g -O2 -pedantic -std=c11 -Wshadow -Wlogical-op -Wshift-overflow=2 \
 			-Wduplicated-cond -Wcast-align -Wfloat-equal -Wconversion -Wcast-qual -D_GLIBCXX_DEBUG \
 			-D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined \
 			-fno-sanitize-recover -fstack-protector -fanalyzer
-    	else
+		else
 			# Стандартный режим
-			ZSH_MESSAGE=BUILD BASIC!
-        	LFLAGS= 
-        	CFLAGS=-Wall -Werror -Wextra -c -std=c11
+			LFLAGS= 
+			CFLAGS=-Wall -Werror -Wextra -c -std=c11
 		endif
 	endif
 endif
@@ -40,96 +69,84 @@ endif
 # Флаги для lcov
 GCOV_FLAGS =-fprofile-arcs -ftest-coverage
 
-ODIR = obj/
-TDIR = tests/
-RDIR = report/
-MDIR = s21_decimal/
-GDIR = gcov/
+# Дополнительные библиотеки для линковки
+LIBS = -lcheck $(LIBS_ADDITIONAL)
 
-MAIN_TEST_C = s21_decimal_test.c
-MAINT_TEST_H = $(TDIR)test.h
-DECIMAL_H = s21_decimal.h
-ALL_TEST_C = $(wildcard $(TDIR)*.c)
-ALL_DECIMAL_C = $(wildcard $(MDIR)*.c)
-MAIN_TEST_O = $(MAIN_TEST_C:%.c=$(ODIR)%.o)
-ALL_TEST_O = $(ALL_TEST_C:$(TDIR)%.c=$(ODIR)$(TDIR)%.o)
-ALL_DECIMAL_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(MDIR)%.o)
-ALL_DECIMAL_GCOV_O = $(ALL_DECIMAL_C:$(MDIR)%.c=$(ODIR)$(GDIR)%.o)
+# Дополнительные библиотеки для линковки c отчетом о покрытии
+LIBS_GCOV = $(LIBS) -lgcov
 
+# Заполняем переменные со списком директорий, исходных и исполняемых файлов
+ALL_MODULES_DIRS = $(shell find $(MODULES_DIR) -type d)
+ALL_MODULES_C = $(notdir $(shell find $(ALL_MODULES_DIRS) -maxdepth 1 -name "*.c"))
+ALL_MODULES_H = $(shell find $(ALL_MODULES_DIRS) -maxdepth 1 -name "*.h")
+MAIN_H = $(shell find . -maxdepth 1 -name "*.h")
+ALL_H = $(ALL_MODULES_H) $(MAIN_H)
+ALL_MODULES_O = $(ALL_MODULES_C:%.c=%.o)
+
+ALL_TESTS_DIRS = $(shell find $(TEST_DIR) -type d)
+ALL_TESTS_C = $(notdir $(shell find $(ALL_TESTS_DIRS) -maxdepth 1 -name "*.c"))
+ALL_TESTS_H = $(shell find $(ALL_TESTS_DIRS) -maxdepth 1 -name "*.h")
+ALL_TESTS_O = $(ALL_TESTS_C:%.c=%.o)
+
+ALL_MODULES_GCOV_O = $(addprefix $(GCOV_OBJ_DIR)/, $(notdir $(ALL_MODULES_C:.c=.o)))
+
+# Набор всех файлов для cpplint / cppcheck
 ALL_C_H_FILES = $(shell find . -type f | grep "\.(c|h)$$" -E)
 
-all: test gcov_report
+# Указываем список каталогов, в которых make выполняет поиск
+vpath %.c $(ALL_MODULES_DIRS) : $(ALL_TESTS_DIRS)
+vpath %.o $(OBJ_DIR)
 
-test: $(ODIR) $(ODIR)$(TDIR) $(ODIR)$(MDIR) s21_decimal.a $(ALL_TEST_O) $(MAIN_TEST_O)
-	@echo "\n------------------------------------------------------------"
-	@$(CC) $(LFLAGS) $(ALL_TEST_O) $(MAIN_TEST_O) -lcheck s21_decimal.a -o ./test
-	@echo "Build: ./test";
-	@echo "------------------------------------------------------------"
-	@./test
+# Далее идут все цели
+all: $(TEST_EXE) $(GCOV_EXE)
 
-gcov_report: $(ODIR) $(ODIR)$(TDIR) $(ODIR)$(MDIR) $(RDIR) $(ODIR)$(GDIR) libs21_decimal_gcov.a $(ALL_TEST_O) $(MAIN_TEST_O)
-	@echo "\n------------------------------------------------------------"
-	@$(CC) $(LFLAGS) $(ALL_TEST_O) $(MAIN_TEST_O) -L. -ls21_decimal_gcov -lcheck -lgcov -o ./gcov_report
-	@echo "Build: ./gcov_report";
-	@echo "------------------------------------------"
-	@./gcov_report
-	@echo "------------------------------------------"
-	gcov -o $(ODIR)$(GDIR) $(ALL_DECIMAL_C)
-	@echo "------------------------------------------"
-	@lcov -b ./ -d $(ODIR)$(GDIR) --gcov-tool /usr/bin/gcov -c -o output.info
-	@genhtml -o $(RDIR) output.info
+$(TEST_EXE): $(OBJ_DIR) $(MODULES_STATIC_LIBRARY) $(ALL_TESTS_O)
+	$(CC) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $(ALL_TESTS_O)) $(MODULES_STATIC_LIBRARY) $(LIBS) -o $(TEST_EXE)
+	@./$(TEST_EXE)
+
+$(GCOV_EXE): $(GCOV_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_TESTS_O) $(ALL_H) $(ALL_TESTS_H)
+	$(CC) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $(ALL_TESTS_O)) $(MODULES_STATIC_LIBRARY_GCOV) $(LIBS_GCOV) -o ./$(GCOV_EXE)
+	@./$(GCOV_EXE)
+	@ gcov -o $(GCOV_OBJ_DIR) $(ALL_MODULES_C)
+	@lcov -b ./ -d $(GCOV_OBJ_DIR) --gcov-tool /usr/bin/gcov -c -o output.info
+	@genhtml -o $(REPORT_DIR) output.info
 	@rm *.c.gcov output.info
-	@echo "------------------------------------------"
-	open $(RDIR)index.html
+	open $(REPORT_DIR)/index.html
 
-s21_decimal.a: $(ODIR) $(ODIR)$(MDIR) $(ALL_DECIMAL_O)
+$(MODULES_STATIC_LIBRARY): $(OBJ_DIR) $(ALL_MODULES_O) $(ALL_H)
 	@echo "$(GREEN)*$(RESET)\c"
-	@ar rc s21_decimal.a $(ALL_DECIMAL_O)
-	@ranlib s21_decimal.a
+	@ar rc $(MODULES_STATIC_LIBRARY) $(addprefix $(OBJ_DIR)/, $(ALL_MODULES_O))
+	@ranlib $(MODULES_STATIC_LIBRARY)
 
-libs21_decimal_gcov.a: $(ODIR) $(ODIR)$(GDIR) $(ALL_DECIMAL_GCOV_O)
+$(MODULES_STATIC_LIBRARY_GCOV): $(GCOV_OBJ_DIR) $(ALL_MODULES_GCOV_O) $(ALL_H)
 	@echo "$(GREEN)*$(RESET)\c"
-	@ar rc libs21_decimal_gcov.a $(ALL_DECIMAL_GCOV_O)
-	@ranlib libs21_decimal_gcov.a
+	@ar rc $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_MODULES_GCOV_O)
+	@ranlib $(MODULES_STATIC_LIBRARY_GCOV)
 
-$(ODIR)$(MDIR)%.o: $(MDIR)%.c $(DECIMAL_H)
+%.o: %.c $(ALL_H) $(ALL_TESTS_H)
 	@echo "$(GREEN)*$(RESET)\c"
-	@$(CC) $(CFLAGS) -o $@ $<
+	@$(CC) $(CFLAGS) -o $(addprefix $(OBJ_DIR)/, $@) $<
 
-$(ODIR)$(GDIR)%.o: $(MDIR)%.c $(DECIMAL_H)
-	@echo "$(GREEN)*$(RESET)\c"
+$(GCOV_OBJ_DIR)/%.o : %.c $(ALL_H) $(ALL_TESTS_H)
+	@echo "$(GREEN)**$(RESET)\c"
 	@$(CC) $(CFLAGS) $(GCOV_FLAGS) -o $@ $<
 
-$(ODIR)$(TDIR)%.o: $(TDIR)%.c $(MAINT_TEST_H)
-	@echo "$(GREEN)*$(RESET)\c"
-	@$(CC) $(CFLAGS) -o $@ $<
-
-$(MAIN_TEST_O): $(MAIN_TEST_C)
-	@echo "$(GREEN)*$(RESET)\c"
-	@$(CC) $(CFLAGS) -o $@ $<
-
-$(RDIR):
-	@mkdir -p $(RDIR)
-	@echo "folder: $(GREEN)$(RDIR) was created$(RESET)"
-$(ODIR):
-	@mkdir -p $(ODIR)
-	@echo "folder: $(GREEN)$(ODIR) was created$(RESET)"
-$(ODIR)$(TDIR):
-	@mkdir -p $(ODIR)$(TDIR)
-	@echo "folder: $(GREEN)$(ODIR)$(TDIR) was created$(RESET)"
-$(ODIR)$(MDIR):
-	@mkdir -p $(ODIR)$(MDIR)
-	@echo "folder: $(GREEN)$(ODIR)$(MDIR) was created$(RESET)"
-$(ODIR)$(GDIR):
-	@mkdir -p $(ODIR)$(GDIR)
-	@echo "folder: $(GREEN)$(ODIR)$(GDIR) was created$(RESET)"
+$(REPORT_DIR):
+	@mkdir -p $(REPORT_DIR)
+	@echo "folder: $(GREEN)$(REPORT_DIR) was created$(RESET)"
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	@echo "folder: $(GREEN)$(OBJ_DIR) was created$(RESET)"
+$(GCOV_OBJ_DIR):
+	@mkdir -p $(GCOV_OBJ_DIR)
+	@echo "folder: $(GREEN)$(GCOV_OBJ_DIR) was created$(RESET)"
 
 clean:
-	rm -rf $(ODIR)
-	rm -f *.a
-	rm -f *.gcno *.gcov *.gcda output.info
-	rm -rf $(RDIR)
-	rm -f ./gcov_report ./test
+	rm -rf $(OBJ_DIR)
+	rm -rf $(REPORT_DIR)
+	rm -f *.a *.o
+	rm -f *.c.gcov *.gcno *.gcov *.gcda output.info
+	rm -f ./$(GCOV_EXE) ./$(TEST_EXE)
 
 rebuild: clean all
 
@@ -138,8 +155,8 @@ cpplint:
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem $(ALL_C_H_FILES)
 leaks:
-	leaks --atExit -- ./test
+	leaks --atExit -- ./$(TEST_EXE)
 valgrind:
-	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all -s ./test
+	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all -s ./$(TEST_EXE)
 
-.PHONY: all clean rebuild cpplint cppcheck leaks
+.PHONY: all clean rebuild cpplint cppcheck leaks valgrind

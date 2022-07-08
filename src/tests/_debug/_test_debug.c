@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./../s21_decimal.h"
-#include "./../s21_decimal/_debug.h"
-#include "./test.h"
+#include "./../../s21_decimal.h"
+#include "./../test.h"
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Тесты на корректные decimal

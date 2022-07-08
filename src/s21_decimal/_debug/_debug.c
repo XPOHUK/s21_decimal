@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "../s21_decimal.h"
+#include "../../s21_decimal.h"
 #include "./_debug.h"
 
 void s21_print_decimal_bits(s21_decimal decimal) {

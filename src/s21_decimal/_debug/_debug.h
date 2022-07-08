@@ -1,7 +1,10 @@
-#ifndef SRC_S21_DECIMAL__DEBUG_H_
-#define SRC_S21_DECIMAL__DEBUG_H_
+#ifndef SRC_S21_DECIMAL__DEBUG__DEBUG_H_
+#define SRC_S21_DECIMAL__DEBUG__DEBUG_H_
 
 #include <stdint.h>
+#include <stdlib.h>
+
+#include "./../types.h"
 
 #define GREEN   "\033[0;32m"
 #define RED     "\033[0;31m"
@@ -59,4 +62,4 @@ void print_bit_i64(int64_t number);
 void print_bit_i32(int32_t number);
 void print_bit_ui32(uint32_t number);
 
-#endif  //  SRC_S21_DECIMAL__DEBUG_H_
+#endif  //  SRC_S21_DECIMAL__DEBUG__DEBUG_H_
