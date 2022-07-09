@@ -10,8 +10,9 @@ int main(void) {
 
     sr = srunner_create(NULL);
     srunner_add_suite(sr, from_int_to_decimal_suite());
+    srunner_add_suite(sr, from_float_to_decimal_suite());
 
-    srunner_add_suite(sr, debug_suite());
+    // srunner_add_suite(sr, debug_suite());
 
     srunner_set_fork_status(sr, CK_NOFORK);
     // Используем данный блок для вывода подробно про каждый тест с разбиением по блокам

@@ -4,8 +4,9 @@
 #include "./../types.h"
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst);
+int s21_from_float_to_decimal(float src, s21_decimal *dst);
 
-typedef enum {
+typedef enum s21_conversion_result {
     S21_CONVERSION_OK = 0,
     S21_CONVERSION_ERROR = 1
 } s21_conversion_result;
