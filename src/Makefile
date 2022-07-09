@@ -1,14 +1,31 @@
+# Дополнительные библиотеки не для Mac, по умолчанию оставляем пустым, чтобы не портить сборку на Mac
+LIBS_ADDITIONAL = 
+# Команда для открытия файла отчета о покрытии по умполчанию
+CMD_OPEN = open
+
 # Определяем ОС
 ifeq ($(OS), Windows_NT)
     detected_OS := Windows
 else
     detected_OS := $(shell uname -s)
 endif
+# Настраиваем переменные в зависимости от ОС
+ifeq ($(detected_OS), Linux)
+	detected_Linux := $(shell cat /etc/issue | sed -n '1p' | awk '{print $$1}')
+	ifeq ($(detected_Linux), Arch)
+	LIBS_ADDITIONAL = -lm
+	CMD_OPEN = xdg-open
+	endif
 
-# Дополнительные библиотеки не для Mac, по умолчанию оставляем пустым, чтобы не портить сборку на Mac
-LIBS_ADDITIONAL = 
-ifneq ($(detected_OS), Darwin)
+	ifeq ($(detected_Linux), Ubuntu)
 	LIBS_ADDITIONAL = -lm -pthread -lsubunit -lrt
+	CMD_OPEN = xdg-open
+	endif
+	
+	ifeq ($(detected_Linux), Debian)
+	LIBS_ADDITIONAL = -lm -pthread -lsubunit -lrt
+	CMD_OPEN = xdg-open
+	endif
 endif
 
 # Набор цветов для красивостей
@@ -111,7 +128,7 @@ $(GCOV_EXE): $(GCOV_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_
 	@lcov -b ./ -d $(GCOV_OBJ_DIR) --gcov-tool /usr/bin/gcov -c -o output.info
 	@genhtml -o $(REPORT_DIR) output.info
 	@rm *.c.gcov output.info
-	open $(REPORT_DIR)/index.html
+	$(CMD_OPEN) $(REPORT_DIR)/index.html
 
 $(MODULES_STATIC_LIBRARY): $(OBJ_DIR) $(ALL_MODULES_O) $(ALL_H)
 	@echo "$(GREEN)*$(RESET)\c"
