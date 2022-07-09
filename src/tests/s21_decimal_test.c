@@ -9,6 +9,7 @@ int main(void) {
     SRunner *sr;
 
     sr = srunner_create(NULL);
+    srunner_add_suite(sr, from_int_to_decimal_suite());
 
     srunner_add_suite(sr, debug_suite());
 

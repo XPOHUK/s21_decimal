@@ -9,6 +9,7 @@
 #define __DEBUG 1
 
 Suite * debug_suite(void);
+Suite * from_int_to_decimal_suite(void);
 
 void test_debug(s21_decimal decimal, char *check);
 
