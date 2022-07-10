@@ -26,4 +26,14 @@ typedef union {
     } parts;
 } decimal_bit3;
 
+typedef union {
+    float f;
+    struct {
+        uint32_t mantisa : 23;
+        uint32_t exponent : 8;
+        uint32_t sign : 1;
+    } parts;
+    uint32_t bytes;
+} float_cast;
+
 #endif  //  SRC_S21_DECIMAL_TYPES_H_
