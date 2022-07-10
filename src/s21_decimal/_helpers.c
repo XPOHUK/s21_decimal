@@ -131,3 +131,35 @@ s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data
 
     return decimal;
 }
+
+/**
+ * @brief устанавливает для decimal знак sign
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal меняемый decimal
+ * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal
+ * любой sign, отличный от 0, установит знак 1
+ */
+void s21_set_sign(s21_decimal *decimal, int sign) {
+    decimal_bit3 bits3;
+    bits3.i = decimal->bits[3];
+    if (sign == 0) {
+        bits3.parts.sign = 0;
+    } else {
+        bits3.parts.sign = 1;
+    }
+
+    decimal->bits[3] = bits3.i;
+}
+
+/**
+ * @brief зануляет все биты числа *decimal
+ * 
+ * @param decimal зануляемый decimal
+ */
+void s21_clear_decimal(s21_decimal *decimal) {
+    decimal->bits[0] = 0;
+    decimal->bits[1] = 0;
+    decimal->bits[2] = 0;
+    decimal->bits[3] = 0;
+}
