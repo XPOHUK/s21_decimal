@@ -26,6 +26,14 @@ typedef union {
     } parts;
 } decimal_bit3;
 
+/**
+ * @brief каст для побитовой работы с float
+ * (23 бита) Биты 0 - 23: Мантисса
+ *   (8 бит) Биты 24 - 30  :Порядок
+ *   (1 бит) Бит 31: Знак
+ * via: https://w.wiki/5RpW (Число одинарной точности)
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ */
 typedef union {
     float f;
     struct {
