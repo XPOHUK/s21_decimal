@@ -304,7 +304,6 @@ START_TEST(test_debug_fail8) {
 END_TEST
 
 START_TEST(test_debug_create1) {
-    // Просто все единицы
     s21_decimal decimal = s21_create_matrix_from_array(0xFFFFFFFF, 0x1, 0x0, 0x1C0000);
     char check[1024] = "0.0000000000000000008589934591";
 
@@ -313,8 +312,7 @@ START_TEST(test_debug_create1) {
 END_TEST
 
 START_TEST(test_debug_create2) {
-    // Просто все единицы
-    s21_decimal decimal = s21_create_matrix_from_data(0, 0, -2147483648, 0, 0);
+    s21_decimal decimal = s21_create_matrix_from_data(1, 28, 0xFFFFFFFF, 0x1, 0x0);
     char check[1024] = "-0.0000000000000000008589934591";
 
     test_debug(decimal, check);

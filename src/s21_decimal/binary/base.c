@@ -32,7 +32,7 @@ int s21_set_bit(int number, int index) {
  * @param index 
  * @return int 
  */
-int s21_inverseBit(int number, int index) {
+int s21_inverse_bit(int number, int index) {
     return number ^(1 << index);
 }
 
