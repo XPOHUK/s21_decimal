@@ -99,7 +99,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         }
 
         if (cast.parts.sign == 1) {
-            s21_set_sign(dst, 1);
+            s21_decimal_set_sign(dst, 1);
         }
 
         // printf("%s\n", float_bits_str);

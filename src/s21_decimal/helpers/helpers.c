@@ -87,10 +87,10 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal меняемый decimal
- * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal
- * любой sign, отличный от 0, установит знак 1
+ * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal.
+ * Любой sign, отличный от 0, установит знак 1
  */
-void s21_set_sign(s21_decimal *decimal, int sign) {
+void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
     decimal_bit3 bits3;
     bits3.i = decimal->bits[3];
     if (sign == 0) {
@@ -98,6 +98,22 @@ void s21_set_sign(s21_decimal *decimal, int sign) {
     } else {
         bits3.parts.sign = 1;
     }
+
+    decimal->bits[3] = bits3.i;
+}
+
+/**
+ * @brief устанавливает для decimal степень
+ *  
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal меняемый decimal
+ * @param power устанавливаемая степень
+ * 
+ */
+void s21_decimal_set_power(s21_decimal *decimal, int power) {
+    decimal_bit3 bits3;
+    bits3.i = decimal->bits[3];
+    bits3.parts.power = power;
 
     decimal->bits[3] = bits3.i;
 }
