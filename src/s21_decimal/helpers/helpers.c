@@ -1,7 +1,4 @@
-
-#include <stdint.h>
-
-#include "../s21_decimal.h"
+#include "./helpers.h"
 
 /**
  * @brief проверяет корректность данных, записаных в decimal
@@ -84,50 +81,23 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 
     return bits3.parts.empty2;
 }
+
 /**
- * @brief Возвращает заполненный decimal по данным аргументов
+ * @brief устанавливает для decimal знак sign
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param data1 int для bits[0]
- * @param data2 int для bits[1]
- * @param data3 int для bits[2]
- * @param data4 int для bits[3]
- * @return s21_decimal заполненный decimal
+ * @param decimal меняемый decimal
+ * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal
+ * любой sign, отличный от 0, установит знак 1
  */
-s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int data4) {
-    s21_decimal decimal;
-
-    decimal.bits[0] = data1;
-    decimal.bits[1] = data2;
-    decimal.bits[2] = data3;
-    decimal.bits[3] = data4;
-
-    return decimal;
-}
-
-/**
- * @brief Возвращает заполненный decimal по данным аргументов
- * 
- * @param sign знак для заполнения в bits[3]
- * @param power степень для заполнения в bits[3]
- * @param data1 int для bits[0]
- * @param data2 int для bits[1]
- * @param data3 int для bits[2]
- * @return s21_decimal заполненный decimal
- */
-s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data2, int data3) {
-    s21_decimal decimal;
-
-    decimal.bits[0] = data1;
-    decimal.bits[1] = data2;
-    decimal.bits[2] = data3;
-
+void s21_set_sign(s21_decimal *decimal, int sign) {
     decimal_bit3 bits3;
-    bits3.i = 0;
-    bits3.parts.power = power;
-    bits3.parts.sign = sign;
+    bits3.i = decimal->bits[3];
+    if (sign == 0) {
+        bits3.parts.sign = 0;
+    } else {
+        bits3.parts.sign = 1;
+    }
 
-    decimal.bits[3] = bits3.i;
-
-    return decimal;
+    decimal->bits[3] = bits3.i;
 }

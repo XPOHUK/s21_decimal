@@ -10,7 +10,9 @@
 
 Suite * debug_suite(void);
 Suite * from_int_to_decimal_suite(void);
+Suite * from_float_to_decimal_suite(void);
 
 void test_debug(s21_decimal decimal, char *check);
+void test_from_int_to_decimal(int number, s21_decimal decimal_check);
 
 #endif  // SRC_TESTS_TEST_H_
