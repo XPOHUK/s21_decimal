@@ -1,5 +1,5 @@
-#ifndef SRC_S21_DECIMAL__HELPERS_H_
-#define SRC_S21_DECIMAL__HELPERS_H_
+#ifndef SRC_S21_DECIMAL_HELPERS_HELPERS_H_
+#define SRC_S21_DECIMAL_HELPERS_HELPERS_H_
 
 #include "./../types.h"
 
@@ -16,4 +16,4 @@ void s21_clear_decimal(s21_decimal *decimal);
 s21_decimal s21_decimal_get_one(void);
 s21_decimal s21_decimal_get_zero(void);
 
-#endif  //  SRC_S21_DECIMAL__HELPERS_H_
+#endif  //  SRC_S21_DECIMAL_HELPERS_HELPERS_H_
