@@ -304,7 +304,7 @@ START_TEST(test_debug_fail8) {
 END_TEST
 
 START_TEST(test_debug_create1) {
-    s21_decimal decimal = s21_create_matrix_from_array(0xFFFFFFFF, 0x1, 0x0, 0x1C0000);
+    s21_decimal decimal = s21_create_decimal_from_array(0xFFFFFFFF, 0x1, 0x0, 0x1C0000);
     char check[1024] = "0.0000000000000000008589934591";
 
     test_debug(decimal, check);
@@ -312,8 +312,32 @@ START_TEST(test_debug_create1) {
 END_TEST
 
 START_TEST(test_debug_create2) {
-    s21_decimal decimal = s21_create_matrix_from_data(1, 28, 0xFFFFFFFF, 0x1, 0x0);
+    s21_decimal decimal = s21_create_decimal_from_data(1, 28, 0xFFFFFFFF, 0x1, 0x0);
     char check[1024] = "-0.0000000000000000008589934591";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug_create3) {
+    s21_decimal decimal = s21_create_decimal_from_strings(
+        "11111111 11111111 11111111 11111111",
+        "11111111 11111111 11111111 11111111",
+        "00000000 00000000 00000000 00000001",
+        "10000000 00011100 00000000 00000000");
+    char check[1024] = "-0.0000000036893488147419103231";
+
+    test_debug(decimal, check);
+}
+END_TEST
+
+START_TEST(test_debug_create4) {
+    s21_decimal decimal = s21_create_decimal_from_strings(
+        "11111111 11111111 11111111 11111111",
+        "11111111 11111111 11111111 11111111",
+        "00000000 00000000 00000000 00000051",
+        "10000000 00011100 00000000 00000000");
+    char check[1024] = "(Incorrect Decimal)";
 
     test_debug(decimal, check);
 }
@@ -363,6 +387,8 @@ Suite * debug_suite(void) {
 
     tcase_add_test(tc_core, test_debug_create1);
     tcase_add_test(tc_core, test_debug_create2);
+    tcase_add_test(tc_core, test_debug_create3);
+    tcase_add_test(tc_core, test_debug_create4);
 
     suite_add_tcase(s, tc_core);
 

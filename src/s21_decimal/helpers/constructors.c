@@ -12,7 +12,7 @@
  * @param data4 int для bits[3]
  * @return s21_decimal заполненный decimal
  */
-s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int data4) {
+s21_decimal s21_create_decimal_from_array(int data1, int data2, int data3, int data4) {
     s21_decimal decimal;
 
     decimal.bits[0] = data1;
@@ -33,7 +33,7 @@ s21_decimal s21_create_matrix_from_array(int data1, int data2, int data3, int da
  * @param data3 int для bits[2]
  * @return s21_decimal заполненный decimal
  */
-s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data2, int data3) {
+s21_decimal s21_create_decimal_from_data(int sign, int power, int data1, int data2, int data3) {
     s21_decimal decimal;
     s21_clear_decimal(&decimal);
 
@@ -45,6 +45,78 @@ s21_decimal s21_create_matrix_from_data(int sign, int power, int data1, int data
     s21_decimal_set_sign(&decimal, sign);
 
     return decimal;
+}
+
+/**
+ * @brief Возвращает заполненный decimal по данным аргументов
+ * 
+ * Пробелы в строка игнорируются, можно передать как "11111111 11111111 11111111 11111111",
+ * так и "11111111111111111111111111111111"
+ * Если в строке окажутся символы, отличные от " 01" или количество бит в строке будет больше 32, то
+ * функция вернет некорректный decimal (все биты которого 1) 
+ * 
+ * @param str1 строка для bits[0]
+ * @param str2 строка для bits[1]
+ * @param str3 строка для bits[2]
+ * @param str4 строка для bits[3]
+ * @return s21_decimal 
+ */
+s21_decimal s21_create_decimal_from_strings(char *str1, char *str2, char *str3, char *str4) {
+    s21_decimal decimal = s21_decimal_get_zero();
+    int error = 0;
+
+    error = s21_decimal_set_bits_from_string(&decimal.bits[0], str1);
+
+    if (error == 0) {
+        error = s21_decimal_set_bits_from_string(&decimal.bits[1], str2);
+    }
+
+    if (error == 0) {
+        error = s21_decimal_set_bits_from_string(&decimal.bits[2], str3);
+    }
+
+    if (error == 0) {
+        error = s21_decimal_set_bits_from_string(&decimal.bits[3], str4);
+    }
+
+    if (error == 1) {
+        decimal.bits[0] = -1;
+        decimal.bits[1] = -1;
+        decimal.bits[2] = -1;
+        decimal.bits[3] = -1;
+    }
+
+    return decimal;
+}
+
+/**
+ * @brief устанваливает биты числа bits в соответствии со строкой str
+ * 
+ * @param bits 
+ * @param str 
+ * @return int код ошибки:
+ *          0 - OK
+ *          1 - Некорректная строка str
+ */
+int s21_decimal_set_bits_from_string(int *bits, char *str) {
+    int index = 0;
+    int error = 0;
+
+    for (int i = (int)strlen(str) - 1; i >= 0 ; i--) {
+        if (str[i] == ' ') {
+            continue;
+        } else if (str[i] == '1') {
+            *bits = s21_set_bit(*bits, index);
+        } else if (str[i] == '0') {
+            *bits = s21_reset_bit(*bits, index);
+        } else {
+            error = 1;
+            break;
+        }
+        ++index;
+    }
+
+    return error;
 }
 
 /**
