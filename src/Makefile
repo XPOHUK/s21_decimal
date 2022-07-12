@@ -124,7 +124,7 @@ $(TEST_EXE): $(OBJ_DIR) $(MODULES_STATIC_LIBRARY) $(ALL_TESTS_O)
 $(GCOV_EXE): $(GCOV_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_TESTS_O) $(ALL_H) $(ALL_TESTS_H)
 	$(CC) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $(ALL_TESTS_O)) $(MODULES_STATIC_LIBRARY_GCOV) $(LIBS_GCOV) -o ./$(GCOV_EXE)
 	@./$(GCOV_EXE)
-	@ gcov -o $(GCOV_OBJ_DIR) $(ALL_MODULES_C)
+	@gcov -o $(GCOV_OBJ_DIR) $(ALL_MODULES_C)
 	@lcov -b ./ -d $(GCOV_OBJ_DIR) --gcov-tool /usr/bin/gcov -c -o output.info
 	@genhtml -o $(REPORT_DIR) output.info
 	@rm *.c.gcov output.info
