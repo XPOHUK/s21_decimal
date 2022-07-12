@@ -7,5 +7,6 @@
 #include "./s21_decimal/binary/binary.h"
 #include "./s21_decimal/comparison/comparison.h"
 #include "./s21_decimal/conversion/conversion.h"
+#include "./s21_decimal/other/other.h"
 
 #endif  //  SRC_S21_DECIMAL_H_
