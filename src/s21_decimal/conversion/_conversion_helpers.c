@@ -38,6 +38,7 @@ void s21_get_float_mantissa_bits_string(float number, char *str) {
 /**
  * @brief записывает битовое представление переменной number в строку str
  * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param number переменнная, битовое представление которой мы хотим получить
  * @param str строка, в которую записывается битовое представление переменной
  */
@@ -49,6 +50,7 @@ void s21_get_uint32_bits_string(uint32_t number, char *str) {
  * @brief записывает битовое представление переменной размера size, указатель на которую размещен в ptr,
  * в строку str
  * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param size количество байт в переменной
  * @param ptr указатель на переменную
  * @param str строка, в которую записывается битовое представление переменной
