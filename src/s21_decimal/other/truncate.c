@@ -3,8 +3,8 @@
 #include "./../_debug/_debug.h"
 #include "./../helpers/helpers.h"
 #include "./../binary/binary.h"
+
 /**
- * @brief http://reshinfo.com/primer_delenije1.php
  * 
  * @param value 
  * @param result 
@@ -16,7 +16,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     // *result = value;
 
     // 10 = 2^3 + 2^2
-    
+
     s21_print_decimal_string(value);
     printf("(%d)(%d)\n", value.bits[0], value.bits[1]);
     printf("(%d)(%d)\n", value.bits[1] / 10, value.bits[1] / 10);
@@ -26,10 +26,10 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     s21_print_decimal_string(*result);
     printf("\n\n");
 
-    // int a = 213;
-    int a = 2000000;
-    // int b = 17;
-    int b = 7;
+    int a = 213;
+    // int a = 2000000;
+    int b = 17;
+    // int b = 7;
     int a_left = 0;
     int b_left = 0;
 
@@ -42,7 +42,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
         }
     }
     printf("\n{%d}\n", a_left);
-    
+
     printf("b:\n");s21_print_bit(b, 0);printf("\n");
     for (int i = 0; i < 32; i++) {
         // printf("{%d}", s21_is_set_bit(b, 31-i));
@@ -73,7 +73,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     while (kk >= 0) {
 
         unsigned int val2;
-        
+
         if (is_overflow == 1)
             val2 = ones_complement_b; 
         else
@@ -81,13 +81,13 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
 
         is_overflow = 0;
         unsigned int sum = del;
-        
+
         while (val2 > 0) {
             printf("------------\n");
             printf("+");s21_print_bit(sum, 0); printf("\n");
             printf("+");s21_print_bit(val2, 0); printf("\n");
             int overflow = sum & val2;
-            
+
             overflow = overflow << 1;
             if (s21_is_set_bit(overflow, 31) != 0 && is_overflow == 0) {
                 is_overflow = 1;
@@ -125,6 +125,61 @@ s21_print_bit(ostatok, 0); printf("\n");
     printf("[[%d]]\n", ostatok);
     s21_print_bit(rrrrr, 0); printf("\n");
     s21_print_bit(ostatok, 0); printf("\n");
+
+
+
+    printf("\n\n");
+
+    s21_decimal decimal_a = s21_decimal_get_zero();
+    s21_decimal decimal_b = s21_decimal_get_zero();
+    decimal_a.bits[0] = 1073741823;
+    // decimal_a.bits[0] = 8590751;
+    // decimal_a.bits[0]= 523986431;
+    
+    // decimal_a = s21_create_decimal_from_strings(
+    //     "11111111 11111111 11111111 11111111",
+    //     "11111111 11111111 11111111 11111111",
+    //     "11000000 00000000 00000000 00000001",
+    //     "10000000 00011100 00000000 00000000");
+    decimal_b.bits[0] = 1073741;
+    // decimal_b.bits[0] = 1073741;
+    // decimal_b.bits[0] = 1073741;
+    
+    // decimal_b = s21_create_decimal_from_strings(
+    //     "11111111 11111111 11111111 11111111",
+    //     "11111111 11111111 11111111 11111111",
+    //     "11000000 00000000 00000000 00000001",
+    //     "10000000 00011100 00000000 00000000");
+
+    printf("a:");s21_print_decimal_bits(decimal_a);
+    printf("b:");s21_print_decimal_bits(decimal_b);
+
+    s21_decimal decimal_a_plus_b;
+    s21_decimal decimal_a_minus_b;
+    s21_decimal decimal_a_del_b;
+
+    decimal_a_plus_b = s21_decimal_binary_addition(decimal_a, decimal_b);
+
+    printf("\n\n");
+    printf("+:");s21_print_decimal_bits(decimal_a_plus_b);
+
+    decimal_a_minus_b = s21_decimal_binary_subtraction(decimal_a, decimal_b);
+    printf("\n\n");
+    printf("-:");s21_print_decimal_bits(decimal_a_minus_b);
+
+    decimal_a_del_b = s21_decimal_binary_division(decimal_a, decimal_b);
+    printf("\n\n");
+    printf("\\:");s21_print_decimal_bits(decimal_a_del_b);
+
+    // printf("\n\n");
+    // s21_decimal decimal = s21_create_decimal_from_strings(
+    //     "11111110 11111110 11111110 11111110",
+    //     "11111100 11111100 11111100 11111100",
+    //     "11111000 11111000 11111000 11111000",
+    //     "11110000 11110000 11110000 11110000");
+    // printf("d:");s21_print_decimal_bits(decimal);
+    // s21_decimal rrr = s21_decimal_binary_shift_right(decimal, 64);
+    // printf("r:");s21_print_decimal_bits(rrr);
 
     printf("\n\n");
     return code;

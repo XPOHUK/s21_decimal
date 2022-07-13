@@ -46,14 +46,14 @@ void test_truncate(s21_decimal decimal, s21_decimal decimal_check) {
     s21_decimal result;
 
     #if defined(__DEBUG)
-    s21_print_decimal_bits(decimal);
+    // s21_print_decimal_bits(decimal);
     // s21_print_decimal_bits(decimal_check);
     #endif
 
     int res = s21_truncate(decimal, &result);
 
     #if defined(__DEBUG)
-    s21_print_decimal_bits(result);
+    // s21_print_decimal_bits(result);
     #endif
 
     ck_assert_int_eq(res, S21_OTHER_OK);
