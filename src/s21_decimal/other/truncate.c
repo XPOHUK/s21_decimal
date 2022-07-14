@@ -19,7 +19,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
 
     int power = s21_decimal_get_power(value);
     while (power > 0) {
-        tmp = s21_decimal_binary_division(tmp, s21_decimal_get_ten());
+        tmp = s21_decimal_binary_division(tmp, s21_decimal_get_ten(), NULL);
         --power;
     }
 

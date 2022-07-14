@@ -17,4 +17,9 @@ void test_debug(s21_decimal decimal, char *check);
 void test_from_int_to_decimal(int number, s21_decimal decimal_check);
 void test_truncate(s21_decimal decimal, s21_decimal decimal_check);
 
+Suite * binary_division_suite(void);
+
+void test_binary_division(
+    s21_decimal dividend, s21_decimal divisor, s21_decimal quotient, s21_decimal remainder);
+
 #endif  // SRC_TESTS_TEST_H_
