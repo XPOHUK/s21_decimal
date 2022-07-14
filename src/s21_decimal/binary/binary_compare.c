@@ -1,10 +1,13 @@
 #include "./binary.h"
 
 /**
- * @brief 
+ * @brief Сравнивает побитово 2 числа типа decimal
+ * Степень и знак в данном сравнении не выполняют свои функции.
+ * Фактически числа сравниваются как uint128
  * 
- * @param decimal1 
- * @param decima2 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param d1 первое сравниваемое число
+ * @param d2 второе сравниваемое число
  * @return int результат сравнения:
  *          -1 - Значение d1 меньше d2.
  *           0 - Значения d1 и d2 равны.
@@ -19,11 +22,13 @@ int s21_decimal_binary_compare(s21_decimal d1, s21_decimal d2) {
 
         if (b1 == 0 && b2 != 0) {
             result = -1;
-            break;
         }
 
         if (b1 != 0 && b2 == 0) {
             result = 1;
+        }
+
+        if (result != 0) {
             break;
         }
     }
