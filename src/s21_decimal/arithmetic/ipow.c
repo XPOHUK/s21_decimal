@@ -13,6 +13,7 @@
  * 
  * Т.к. работаем с decimal, то используем в функции значения decimal и арифметику decimal
  * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param value decimal, возводимый в степень
  * @param exp степень, в которую возводится число
  * @param result указатель на decimal, куда запишется результат выполнения функции
