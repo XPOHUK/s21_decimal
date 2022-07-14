@@ -18,5 +18,6 @@ int s21_decimal_set_bits_from_string(int *bits, char *str);
 void s21_clear_decimal(s21_decimal *decimal);
 s21_decimal s21_decimal_get_one(void);
 s21_decimal s21_decimal_get_zero(void);
+s21_decimal s21_decimal_get_ten(void);
 
 #endif  //  SRC_S21_DECIMAL_HELPERS_HELPERS_H_

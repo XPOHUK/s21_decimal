@@ -6,7 +6,7 @@
 #include "./../s21_decimal.h"
 
 // Отображение отладочной информации в тестах
-#define __DEBUG 1
+// #define __DEBUG 1
 
 Suite * debug_suite(void);
 Suite * from_int_to_decimal_suite(void);

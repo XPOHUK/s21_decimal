@@ -158,3 +158,17 @@ s21_decimal s21_decimal_get_zero(void) {
 
     return result;
 }
+
+/**
+ * @brief формирует и возвращает число (10) в виде decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @return s21_decimal число (10)
+ */
+s21_decimal s21_decimal_get_ten(void) {
+    s21_decimal result;
+    s21_clear_decimal(&result);
+    result.bits[0] = 10;
+
+    return result;
+}
