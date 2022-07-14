@@ -53,10 +53,9 @@ int s21_decimal_is_set_bit(s21_decimal decimal, int index) {
 }
 
 s21_decimal s21_decimal_set_bit(s21_decimal decimal, int index) {
-    s21_decimal result;
-    result.bits[index / MAX_BLOCK_BITS] =
+    decimal.bits[index / MAX_BLOCK_BITS] =
      s21_set_bit(decimal.bits[index / MAX_BLOCK_BITS], index % MAX_BLOCK_BITS);
-    return result;
+    return decimal;
 }
 
 int s21_decimal_get_not_zero_bit(s21_decimal decimal) {
