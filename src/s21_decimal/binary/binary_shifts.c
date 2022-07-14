@@ -25,15 +25,23 @@ s21_decimal s21_decimal_binary_shift_left_one(s21_decimal decimal) {
     s21_decimal result = s21_decimal_get_zero();
 
     int b0 = s21_is_set_bit(decimal.bits[0], MAX_BLOCK_BITS - 1);
-    result.bits[0] = decimal.bits[0] << 1;
+    unsigned int result0 = decimal.bits[0];
+    result0 = result0 << 1;
+    result.bits[0] = result0;
 
     int b1 = s21_is_set_bit(decimal.bits[1], MAX_BLOCK_BITS - 1);
-    result.bits[1] = decimal.bits[1] << 1;
+    unsigned int result1 = decimal.bits[1];
+    result1 = result1 << 1;
+    result.bits[1] = result1;
 
     int b2 = s21_is_set_bit(decimal.bits[2], MAX_BLOCK_BITS - 1);
-    result.bits[2] = decimal.bits[2] << 1;
+    unsigned int result2 = decimal.bits[2];
+    result2 = result2 << 1;
+    result.bits[2] = result2;
 
-    result.bits[3] = decimal.bits[3] << 1;
+    unsigned int result3 = decimal.bits[3];
+    result3 = result3 << 1;
+    result.bits[3] = result3;
 
     if (b0) {
         result.bits[1] = s21_set_bit(result.bits[1], 0);
