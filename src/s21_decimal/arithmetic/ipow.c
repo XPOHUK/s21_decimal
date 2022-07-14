@@ -24,32 +24,21 @@
  */
 int s21_ipow(s21_decimal value, int exp, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    // s21_decimal result = s21_decimal_get_zero();
     s21_decimal tmp = s21_decimal_get_zero();
-    // s21_clear_decimal(result);
 
     if (exp == 0) {
-        // printf("ipow exp=%d\n", 0);
         tmp = s21_decimal_get_one();
-        // s21_print_decimal_bits(tmp);
     } else if (exp < 0) {
-        // printf("div ipow exp=%d\n", -exp);
         code = s21_ipow(value, -exp, &tmp);
         if (code == S21_ARITHMETIC_OK) {
             code = s21_div(s21_decimal_get_one(), tmp, result);
         }
-        // s21_print_decimal_bits(tmp);
-
-        // result = decimal.Divide(Decimal.One, s21_ipow(value, -exp));
     } else {
-        // printf("mul ipow exp=%d\n", exp-1);
         code = s21_ipow(value, exp - 1, &tmp);
         if (code == S21_ARITHMETIC_OK) {
             code = s21_mul(value, tmp, result);
         }
-        // s21_print_decimal_bits(tmp);
-        // result = decimal.Multiply(value, s21_ipow(value, exp - 1));
     }
-    // printf("pow:");s21_print_decimal_bits(*result);
+    *result = tmp;
     return code;
 }
