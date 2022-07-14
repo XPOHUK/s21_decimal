@@ -14,7 +14,6 @@ int main(void) {
     srunner_add_suite(sr, from_truncate_suite());
 
     srunner_add_suite(sr, binary_division_suite());
-
     srunner_add_suite(sr, debug_suite());
 
     srunner_set_fork_status(sr, CK_NOFORK);
