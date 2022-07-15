@@ -11,9 +11,9 @@
  * 1 - ошибка конвертации 
  */
 int s21_from_int_to_decimal(int src, s21_decimal *dst) {
-    s21_conversion_result result = S21_CONVERSION_OK;
+    s21_conversion_result code = S21_CONVERSION_OK;
     if (!dst) {
-        result = S21_CONVERSION_ERROR;
+        code = S21_CONVERSION_ERROR;
     } else {
         s21_clear_decimal(dst);
 
@@ -29,5 +29,5 @@ int s21_from_int_to_decimal(int src, s21_decimal *dst) {
         s21_decimal_set_sign(dst, sign);
     }
 
-    return result;
+    return code;
 }
