@@ -1,6 +1,19 @@
 #include "./binary.h"
 #include "./../helpers/helpers.h"
 
+/**
+ * @brief Битовый сдвиг влево для чисел типа decimal.
+ * Эквивалентно decimal << shift
+ * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за пределы размеров
+ * (валидация должна осуществляться перед вызовом функции)
+ * 
+ * Фактически функция shift раз вызывает вспомогательную функцию s21_decimal_binary_shift_left_one()
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal 
+ * @param shift 
+ * @return s21_decimal результат применения decimal << shift
+ */
 s21_decimal s21_decimal_binary_shift_left(s21_decimal decimal, int shift) {
     s21_decimal result = decimal;
     while (shift > 0) {
@@ -11,6 +24,19 @@ s21_decimal s21_decimal_binary_shift_left(s21_decimal decimal, int shift) {
     return result;
 }
 
+/**
+ * @brief Битовый сдвиг вправо для чисел типа decimal.
+ * Эквивалентно decimal >> shift
+ * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за пределы размеров
+ * (валидация должна осуществляться перед вызовом функции)
+ * 
+ * Фактически функция shift раз вызывает вспомогательную функцию s21_decimal_binary_shift_right_one()
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal 
+ * @param shift 
+ * @return s21_decimal результат применения decimal >> shift
+ */
 s21_decimal s21_decimal_binary_shift_right(s21_decimal decimal, int shift) {
     s21_decimal result = decimal;
     while (shift > 0) {
@@ -21,6 +47,25 @@ s21_decimal s21_decimal_binary_shift_right(s21_decimal decimal, int shift) {
     return result;
 }
 
+/**
+ * @brief Битовый сдвиг влево на один для чисел типа decimal.
+ * Эквивалентно decimal << 1
+ * 
+ * Функция выполняет отдельно сдвиг для каждого элемента массива decimal:
+ * bits[0] = bits[0] << 1
+ * bits[1] = bits[1] << 1
+ * bits[2] = bits[2] << 1
+ * bits[3] = bits[3] << 1
+ * 
+ * и переносит старший бит элементов массива в соседний элемент:
+ * из bits[0] в bits[1]
+ * из bits[1] в bits[2]
+ * из bits[2] в bits[3]
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal 
+ * @return s21_decimal результат применения decimal << 1
+ */
 s21_decimal s21_decimal_binary_shift_left_one(s21_decimal decimal) {
     s21_decimal result = s21_decimal_get_zero();
 
@@ -58,6 +103,25 @@ s21_decimal s21_decimal_binary_shift_left_one(s21_decimal decimal) {
     return result;
 }
 
+/**
+ * @brief Битовый сдвиг вправо на один для чисел типа decimal.
+ * Эквивалентно decimal >> 1
+ * 
+ * Функция выполняет отдельно сдвиг для каждого элемента массива decimal:
+ * bits[0] = bits[0] >> 1
+ * bits[1] = bits[1] >> 1
+ * bits[2] = bits[2] >> 1
+ * bits[3] = bits[3] >> 1
+ * 
+ * и переносит младший бит элементов массива в соседний элемент:
+ * из bits[3] в bits[2]
+ * из bits[2] в bits[1]
+ * из bits[1] в bits[0]
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal 
+ * @return s21_decimal результат применения decimal >> 1
+ */
 s21_decimal s21_decimal_binary_shift_right_one(s21_decimal decimal) {
     s21_decimal result = s21_decimal_get_zero();
 
