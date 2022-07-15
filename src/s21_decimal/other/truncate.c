@@ -5,12 +5,26 @@
 #include "./../binary/binary.h"
 
 /**
+ * @brief Возвращает целые цифры указанного Decimal числа.
+ * Любые дробные цифры отбрасываются, включая конечные нули.
  * 
- * @param value 
- * @param result 
- * @return int 
+ * 123.999 -> 123
+ * 123.000 -> 123
+ * 123 -> 123
+ * 
+ * Для получения целой части выполняем n раз (где n - показатель степени decimal)
+ * деление 96-разрядного целого числа (bits[0], bits[1], bits[2]) на 10
+ * 
+ * Затем корректно выставляем знак, анализируя знак исходного числа
+ * 
+ * @param value обрабатываемый decimal
+ * @param result указатель на decimal, куда запишется результат выполнения функции
+ * @return int код ошибки:
+ *      0 - OK
+ *      1 - ошибка вычисления
  */
 int s21_truncate(s21_decimal value, s21_decimal *result) {
+    // TODO(hubertfu): обработка S21_OTHER_ERROR
     s21_other_result code = S21_OTHER_OK;
     s21_clear_decimal(result);
 
