@@ -78,7 +78,7 @@ else
 		else
 			# Стандартный режим
 			LFLAGS= 
-			CFLAGS=-Wall -Werror -Wextra -c -std=c11
+			CFLAGS=-Wall -Werror -Wextra -c -std=c11 -pedantic
 		endif
 	endif
 endif
