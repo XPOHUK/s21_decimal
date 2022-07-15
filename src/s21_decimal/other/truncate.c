@@ -17,6 +17,7 @@
  * 
  * Затем корректно выставляем знак, анализируя знак исходного числа
  * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param value обрабатываемый decimal
  * @param result указатель на decimal, куда запишется результат выполнения функции
  * @return int код ошибки:
