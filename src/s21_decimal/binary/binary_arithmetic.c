@@ -9,7 +9,7 @@ s21_decimal s21_decimal_binary_addition(s21_decimal decimal1, s21_decimal decima
     s21_decimal result = decimal1;
     s21_decimal tmp = decimal2;
 
-    while (!s21_is_equal_full_zero(tmp)) {
+    while (!s21_decimal_binary_equal_zero(tmp)) {
         s21_decimal overflow_bits = s21_decimal_binary_and(result, tmp);
         overflow_bits = s21_decimal_binary_shift_left(overflow_bits, 1);
         result = s21_decimal_binary_xor(result, tmp);
@@ -39,7 +39,7 @@ s21_decimal s21_decimal_binary_division(s21_decimal decimal1, s21_decimal decima
     s21_decimal partial_remainder = s21_decimal_get_zero();
     s21_decimal quotient = s21_decimal_get_zero();
 
-    if (s21_is_equal_full_zero(decimal1)) {
+    if (s21_decimal_binary_equal_zero(decimal1)) {
         quotient = s21_decimal_get_zero();
         partial_remainder = s21_decimal_get_zero();
     } else if (s21_decimal_binary_compare(decimal1, decimal2) == -1) {

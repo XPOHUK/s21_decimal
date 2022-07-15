@@ -1,6 +1,17 @@
 #include "./binary.h"
 
 /**
+ * @brief Функция определяет, являются ли все биты decimal нулями
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal 
+ * @return int 1 - все биты нули, 0 - не все биты нули
+ */
+int s21_decimal_binary_equal_zero(s21_decimal decimal) {
+    return decimal.bits[0] == 0 && decimal.bits[1] == 0 && decimal.bits[2] == 0 && decimal.bits[3] == 0;
+}
+
+/**
  * @brief Сравнивает побитово 2 числа типа decimal
  * Степень и знак в данном сравнении не выполняют свои функции.
  * Фактически числа сравниваются как uint128
