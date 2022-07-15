@@ -77,11 +77,87 @@ void s21_decimal_to_string(s21_decimal decimal, char *res) {
     if (s21_is_correct_decimal(decimal) == 0) {
         strcat(res, "(Incorrect Decimal)");
     } else {
-        format_decimal_to_str(decimal, res);
+        s21_format_decimal_to_str(decimal, res);
     }
 }
 
-void format_decimal_to_str(s21_decimal decimal, char *res) {
+void s21_format_decimal_to_str(s21_decimal decimal, char *res) {
+    char *str;
+    int power = s21_decimal_get_power(decimal);
+    int sign = s21_decimal_get_sign(decimal);
+
+    decimal.bits[3] = 0;
+    str = s21_bin128_to_string(decimal);
+
+    char *ptr = res;
+    if (sign == 1 && (decimal.bits[0] != 0 || decimal.bits[1] != 0 || decimal.bits[2] != 0)) {
+        *(ptr++) = '-';
+    }
+
+    if (strlen(str) <= (size_t) power) {
+        *(ptr++) = '0';
+        *(ptr++) = '.';
+
+        for (size_t i = 0; i < power - strlen(str); i++) {
+            *(ptr++) = '0';
+        }
+        for (int i = 0; i < power; i++) {
+            *(ptr++) = str[i];
+        }
+    } else {
+        size_t i;
+        for (i = 0; i < strlen(str) - power; i++) {
+            *(ptr++) = str[i];
+        }
+
+        for (int j = 0; j < power; j++) {
+            if (j == 0) {
+                *(ptr++) = '.';
+            }
+            *(ptr++) = str[i+j];
+        }
+    }
+    *(ptr++) = '\0';
+}
+
+char* s21_bin128_to_string(s21_decimal decimal) {
+    static char s[44];
+    uint32_t n[4];
+    char* p = s;
+
+    memset(s, '0', sizeof(s) - 1);
+    s[sizeof(s) - 1] = '\0';
+
+    n[0] = decimal.bits[0];
+    n[1] = decimal.bits[1];
+    n[2] = decimal.bits[2];
+    n[3] = decimal.bits[3];
+
+    for (int i = 0; i < 128; i++) {
+        int carry = (n[3] >= 0x80000000);
+
+        n[3] = ((n[3] << 1) & 0xFFFFFFFF) + (n[2] >= 0x80000000);
+        n[2] = ((n[2] << 1) & 0xFFFFFFFF) + (n[1] >= 0x80000000);
+        n[1] = ((n[1] << 1) & 0xFFFFFFFF) + (n[0] >= 0x80000000);
+        n[0] = ((n[0] << 1) & 0xFFFFFFFF);
+
+        for (int j = sizeof(s) - 2; j >= 0; j--) {
+            s[j] += s[j] - '0' + carry;
+            carry = (s[j] > '9');
+            if (carry) {
+                s[j] -= 10;
+            }
+        }
+    }
+
+    while ((p[0] == '0') && (p < &s[sizeof(s) - 2])) {
+        p++;
+    }
+
+    return p;
+}
+
+/*void format_decimal_to_str(s21_decimal decimal, char *res) {
     char str[1024];
     memset(str, '\0', 1024);
 
@@ -147,9 +223,9 @@ void int128_to_str(unsigned __int128 x, char *res) {
 
     *ptr = '\0';
     s21_reverse_string(res);
-}
+}*/
 
-void s21_reverse_string(char *str) {
+/*void s21_reverse_string(char *str) {
     size_t length;
 
     length = strlen(str);
@@ -161,4 +237,4 @@ void s21_reverse_string(char *str) {
             str[j] = c;
         }
     }
-}
+}*/

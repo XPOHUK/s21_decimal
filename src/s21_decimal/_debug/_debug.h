@@ -15,12 +15,12 @@
 void s21_print_bits(size_t const size, void const * const ptr, int color);
 void s21_print_bit(int number, int color);
 void s21_decimal_to_string(s21_decimal decimal, char *res);
-void s21_reverse_string(char *str);
-void int128_to_str(unsigned __int128 x, char *res);
-void format_decimal_to_str(s21_decimal decimal, char *res);
+void s21_format_decimal_to_str(s21_decimal decimal, char *res);
 void s21_print_decimal_bits(s21_decimal decimal);
 void s21_print_decimal_string(s21_decimal decimal);
-
+char* s21_bin128_to_string(s21_decimal decimal);
+// void int128_to_str(unsigned __int128 x, char *res);
+// void s21_reverse_string(char *str);
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Функции ниже не используются, но пригодятся для общего понимания
 И являются универсальными

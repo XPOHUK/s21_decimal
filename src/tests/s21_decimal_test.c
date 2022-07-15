@@ -11,7 +11,9 @@ int main(void) {
     sr = srunner_create(NULL);
     srunner_add_suite(sr, from_int_to_decimal_suite());
     srunner_add_suite(sr, from_float_to_decimal_suite());
+    srunner_add_suite(sr, from_truncate_suite());
 
+    srunner_add_suite(sr, binary_division_suite());
     srunner_add_suite(sr, debug_suite());
 
     srunner_set_fork_status(sr, CK_NOFORK);
