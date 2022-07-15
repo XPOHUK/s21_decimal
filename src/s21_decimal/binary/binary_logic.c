@@ -44,8 +44,7 @@ s21_decimal s21_decimal_binary_xor(s21_decimal decimal1, s21_decimal decimal2) {
  * Эквивалентно ~decimal
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param decimal1 
- * @param decimal2 
+ * @param decimal
  * @return s21_decimal результат применения ~decimal
  */
 s21_decimal s21_decimal_binary_not(s21_decimal decimal) {
