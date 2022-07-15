@@ -1,6 +1,15 @@
 #include "./binary.h"
 #include "./../helpers/helpers.h"
 
+/**
+ * @brief Побитовое «И» для чисел типа decimal.
+ * Эквивалентно decimal1 & decimal2
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal1 
+ * @param decimal2 
+ * @return s21_decimal результат применения decimal1 & decimal2 
+ */
 s21_decimal s21_decimal_binary_and(s21_decimal decimal1, s21_decimal decimal2) {
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = decimal1.bits[0] & decimal2.bits[0];
@@ -11,6 +20,15 @@ s21_decimal s21_decimal_binary_and(s21_decimal decimal1, s21_decimal decimal2) {
     return result;
 }
 
+/**
+ * @brief Исключающее «или» для чисел типа decimal.
+ * Эквивалентно decimal1 ^ decimal2
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal1 
+ * @param decimal2 
+ * @return s21_decimal результат применения decimal1 ^ decimal2
+ */
 s21_decimal s21_decimal_binary_xor(s21_decimal decimal1, s21_decimal decimal2) {
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = decimal1.bits[0] ^ decimal2.bits[0];
@@ -21,6 +39,15 @@ s21_decimal s21_decimal_binary_xor(s21_decimal decimal1, s21_decimal decimal2) {
     return result;
 }
 
+/**
+ * @brief Дополнение (побитовая инверсия) для чисел типа decimal.
+ * Эквивалентно ~decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param decimal1 
+ * @param decimal2 
+ * @return s21_decimal результат применения ~decimal
+ */
 s21_decimal s21_decimal_binary_not(s21_decimal decimal) {
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = ~decimal.bits[0];
