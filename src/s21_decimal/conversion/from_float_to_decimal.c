@@ -63,6 +63,7 @@
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     // TODO(hubertfu): добавить комментарии по коду
     // TODO(hubertfu): навести порядок
+    // TODO(hubertfu): S21_CONVERSION_ERROR
     s21_conversion_result code = S21_CONVERSION_OK;
     if (!dst) {
         code = S21_CONVERSION_ERROR;
