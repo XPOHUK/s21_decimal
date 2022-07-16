@@ -172,3 +172,17 @@ s21_decimal s21_decimal_get_ten(void) {
 
     return result;
 }
+
+s21_decimal s21_decimal_get_int_max(void) {
+    // MAX_INT = 2147483647
+    s21_decimal result = {{0x7FFFFFFF, 0x0, 0x0, 0x0}};
+
+    return result;
+}
+
+s21_decimal s21_decimal_get_int_min(void) {
+    // MIN_INT = -2147483648
+    s21_decimal result = {{0x80000000, 0x0, 0x0, 0x80000000}};
+
+    return result;
+}

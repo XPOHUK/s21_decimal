@@ -5,16 +5,11 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Тесты на некорректные данные
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-START_TEST(test_binary_division_fail1) {
-}
-END_TEST
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Тесты на корректные данные
+Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 START_TEST(test_binary_division_ok1) {
     // Delimoe
     // 79228162514264337593543950335
@@ -37594,15 +37589,12 @@ START_TEST(test_binary_division_ok2209) {
     test_binary_division(dividend, divisor, quotient, remainder);
 }
 
-Suite * binary_division_suite(void) {
+Suite * binary_division_suite1(void) {
     Suite *s;
     TCase *tc_core;
 
-    s = suite_create("debug");
+    s = suite_create("binary_division1");
     tc_core = tcase_create("Core");
-
-    tcase_add_test(tc_core, test_binary_division_fail1);
-
     tcase_add_test(tc_core, test_binary_division_ok1);
     tcase_add_test(tc_core, test_binary_division_ok2);
     tcase_add_test(tc_core, test_binary_division_ok3);
@@ -38003,6 +37995,17 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok398);
     tcase_add_test(tc_core, test_binary_division_ok399);
     tcase_add_test(tc_core, test_binary_division_ok400);
+
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
+Suite * binary_division_suite2(void) {
+    Suite *s;
+    TCase *tc_core;
+
+    s = suite_create("binary_division2");
+    tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_binary_division_ok401);
     tcase_add_test(tc_core, test_binary_division_ok402);
     tcase_add_test(tc_core, test_binary_division_ok403);
@@ -38403,6 +38406,17 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok798);
     tcase_add_test(tc_core, test_binary_division_ok799);
     tcase_add_test(tc_core, test_binary_division_ok800);
+
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
+Suite * binary_division_suite3(void) {
+    Suite *s;
+    TCase *tc_core;
+
+    s = suite_create("binary_division3");
+    tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_binary_division_ok801);
     tcase_add_test(tc_core, test_binary_division_ok802);
     tcase_add_test(tc_core, test_binary_division_ok803);
@@ -38803,6 +38817,17 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok1198);
     tcase_add_test(tc_core, test_binary_division_ok1199);
     tcase_add_test(tc_core, test_binary_division_ok1200);
+
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
+Suite * binary_division_suite4(void) {
+    Suite *s;
+    TCase *tc_core;
+
+    s = suite_create("binary_division4");
+    tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_binary_division_ok1201);
     tcase_add_test(tc_core, test_binary_division_ok1202);
     tcase_add_test(tc_core, test_binary_division_ok1203);
@@ -39203,6 +39228,17 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok1598);
     tcase_add_test(tc_core, test_binary_division_ok1599);
     tcase_add_test(tc_core, test_binary_division_ok1600);
+
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
+Suite * binary_division_suite5(void) {
+    Suite *s;
+    TCase *tc_core;
+
+    s = suite_create("binary_division5");
+    tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_binary_division_ok1601);
     tcase_add_test(tc_core, test_binary_division_ok1602);
     tcase_add_test(tc_core, test_binary_division_ok1603);
@@ -39603,6 +39639,17 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok1998);
     tcase_add_test(tc_core, test_binary_division_ok1999);
     tcase_add_test(tc_core, test_binary_division_ok2000);
+
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
+Suite * binary_division_suite6(void) {
+    Suite *s;
+    TCase *tc_core;
+
+    s = suite_create("binary_division6");
+    tc_core = tcase_create("Core");
     tcase_add_test(tc_core, test_binary_division_ok2001);
     tcase_add_test(tc_core, test_binary_division_ok2002);
     tcase_add_test(tc_core, test_binary_division_ok2003);
@@ -39814,7 +39861,6 @@ Suite * binary_division_suite(void) {
     tcase_add_test(tc_core, test_binary_division_ok2209);
 
     suite_add_tcase(s, tc_core);
-
     return s;
 }
 
