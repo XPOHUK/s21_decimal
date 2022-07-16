@@ -11,6 +11,8 @@ typedef struct {
 #define MAX_BITS 128
 // Общее количество бит в одном элементе массива
 #define MAX_BLOCK_BITS 32
+// Общее количество бит основания decimal (целого числа, которое хранит значение decimal)
+#define MAX_BLOCK_NUMBER 96
 
 /**
  * @brief объединение для получения доступа к данным bits[3] decimal
