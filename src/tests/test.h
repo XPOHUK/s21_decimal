@@ -8,7 +8,6 @@
 // Отображение отладочной информации в тестах
 // #define __DEBUG 1
 
-Suite * debug_suite(void);
 Suite * from_int_to_decimal_suite(void);
 Suite * from_float_to_decimal_suite(void);
 
@@ -33,6 +32,11 @@ Suite * binary_division_suite3(void);
 Suite * binary_division_suite4(void);
 Suite * binary_division_suite5(void);
 Suite * binary_division_suite6(void);
+
+Suite * debug0(void);
+Suite * debug1(void);
+Suite * debug2(void);
+Suite * debug3(void);
 
 void test_binary_division(
     s21_decimal dividend, s21_decimal divisor, s21_decimal quotient, s21_decimal remainder);

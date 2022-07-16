@@ -28,7 +28,10 @@ int main(void) {
     srunner_add_suite(sr, binary_division_suite5());
     srunner_add_suite(sr, binary_division_suite6());
 
-    srunner_add_suite(sr, debug_suite());
+    srunner_add_suite(sr, debug0());
+    srunner_add_suite(sr, debug1());
+    srunner_add_suite(sr, debug2());
+    srunner_add_suite(sr, debug3());
 
     srunner_set_fork_status(sr, CK_NOFORK);
     // Используем данный блок для вывода подробно про каждый тест с разбиением по блокам
