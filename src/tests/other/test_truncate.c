@@ -6806,7 +6806,7 @@ Suite * from_truncate_suite(void) {
     Suite *s;
     TCase *tc_core;
 
-    s = suite_create("debug");
+    s = suite_create("truncate");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, from_truncate_fail1);

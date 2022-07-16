@@ -129,7 +129,7 @@ Suite * from_int_to_decimal_suite(void) {
     Suite *s;
     TCase *tc_core;
 
-    s = suite_create("debug");
+    s = suite_create("from_int_to_decimal");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, test_from_int_to_decimal_fail1);
