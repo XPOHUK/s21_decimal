@@ -2,11 +2,8 @@
 // methods.
 using System;
 
-class TruncateTests
+class BinaryDivisionTests
 {
-    const string dataFmt = "{0,-30}{1,26}";
-
-    // Display decimal parameters and the method results.
     public static void printDivTest(decimal dividend, decimal divisor)
     {
         Console.WriteLine( "    // Delimoe");
@@ -27,13 +24,7 @@ class TruncateTests
 
         decimal quotient = decimal.Truncate(dividend / divisor);
         decimal remainder = Decimal.Remainder(dividend, divisor);
-        
-        /*Console.WriteLine("{0} / {1} = {2}", dividend, divisor, quotient);
-        Console.WriteLine("{0}", dividend / divisor);
-        Console.WriteLine("{0}", remainder);
-        Console.WriteLine("{0} * {1} = ", quotient, divisor);
-        Console.WriteLine("{0}", quotient * divisor);*/
-        
+
         try {
             decimal restore = quotient * divisor + remainder;
             if (restore != dividend) {
@@ -194,17 +185,12 @@ class TruncateTests
             5M,
             10M
         };
-
-        //decimal_random.CopyTo(result, numbers.Length);
         
-        /*printDivTest(79228162495817593519834398720M, 4294967297M);
-        Console.WriteLine("{0}", 79228162495817593519834398720M / 4294967297M);
-        Console.WriteLine("{0}", 4294967297M * 18446744065119617026M);
         Console.WriteLine("");
-        Console.WriteLine("{0}", 79228162495817593519834398720M);
-        Console.WriteLine("{0}", 4294967297M * 18446744065119617025M + 4294967295);*/
-
-
+        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+        Console.WriteLine("Tests for correct data (automatic)");
+        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
+        Console.WriteLine("");
 
         int i = 0;
         foreach (decimal dividend in dividends) {
@@ -218,17 +204,35 @@ class TruncateTests
         }
         
         i = 0;
+        int suit_num = 1;
         foreach (decimal dividend in dividends) {
             foreach (decimal divisor in divisors) {
+            if (i % 400 == 0) {
+                Console.WriteLine("Suite * binary_division_suite{0}(void) {{", suit_num);
+                Console.WriteLine("    Suite *s;");
+                Console.WriteLine("    TCase *tc_core;");
+                Console.WriteLine("");
+                Console.WriteLine("    s = suite_create(\"binary_division{0}\");", suit_num);
+                Console.WriteLine("    tc_core = tcase_create(\"Core\");");
+                suit_num++;
+            }
             i++;
-            Console.WriteLine("tcase_add_test(tc_core, test_binary_division_ok{0});", i);
+            Console.WriteLine("    tcase_add_test(tc_core, test_binary_division_ok{0});", i);
+            if (i % 400 == 0) {
+                Console.WriteLine("");
+                Console.WriteLine("    suite_add_tcase(s, tc_core);");
+                Console.WriteLine("    return s;");
+                Console.WriteLine("}");
+                Console.WriteLine("");
+            }
             }
         }
-        
-        // Console.WriteLine("{0}", getSign(new decimal (0, 0, 0, true, 0)));
-        // Console.WriteLine("{0}", getSign(new decimal (0, 0, 0, false, 0)));
-        // Console.WriteLine("{0}", getDecimalInit(new decimal (0, 0, 0, true, 0)));
-        // Console.WriteLine("{0}", getDecimalInit(decimal.Negate(new decimal (0, 0, 0, true, 0))));
-        // Console.WriteLine("{0}", getDecimalInit(randomDecimal()));
+        if (i % 400 != 0) {
+            Console.WriteLine("");
+            Console.WriteLine("    suite_add_tcase(s, tc_core);");
+            Console.WriteLine("    return s;");
+            Console.WriteLine("}");
+            Console.WriteLine("");
+        }
     }
 }
