@@ -187,7 +187,11 @@ class FromDecimalToIntTests
                 tests_fail[tests_fail.Length - 1] = number;
             }
         }
-        
+
+        Console.WriteLine("");
+        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+        Console.WriteLine("Tests for correct data (automatic)");
+        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
         Console.WriteLine("");
         int i = 0;
         foreach (decimal number in tests_ok) {
@@ -197,7 +201,11 @@ class FromDecimalToIntTests
             Console.WriteLine("}");
             Console.WriteLine("");
         }
-        
+
+        Console.WriteLine("");
+        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+        Console.WriteLine("Tests for incorrect data (auto)");
+        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
         Console.WriteLine("");
         i = 0;
         foreach (decimal number in tests_fail) {
@@ -207,12 +215,8 @@ class FromDecimalToIntTests
             Console.WriteLine("}");
             Console.WriteLine("");
         }
-        
-        Console.WriteLine("");
-        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-        Console.WriteLine("Tests for correct data (automatic)");
-        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
 
+        Console.WriteLine("");
         i = 0;
         int suit_num = 1;
         foreach (decimal number in tests_ok) {
@@ -232,6 +236,7 @@ class FromDecimalToIntTests
                 Console.WriteLine("    suite_add_tcase(s, tc_core);");
                 Console.WriteLine("    return s;");
                 Console.WriteLine("}");
+                Console.WriteLine("");
             }
         }
         
@@ -240,12 +245,10 @@ class FromDecimalToIntTests
             Console.WriteLine("    suite_add_tcase(s, tc_core);");
             Console.WriteLine("    return s;");
             Console.WriteLine("}");
+            Console.WriteLine("");
         }
         
         Console.WriteLine("");
-        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-        Console.WriteLine("Tests for incorrect data (auto)");
-        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
         i = 0;
         foreach (decimal number in tests_fail) {
             if (i % 400 == 0) {
@@ -264,6 +267,7 @@ class FromDecimalToIntTests
                 Console.WriteLine("    suite_add_tcase(s, tc_core);");
                 Console.WriteLine("    return s;");
                 Console.WriteLine("}");
+                Console.WriteLine("");
             }
         }
         if (i % 400 != 0) {
@@ -271,6 +275,7 @@ class FromDecimalToIntTests
             Console.WriteLine("    suite_add_tcase(s, tc_core);");
             Console.WriteLine("    return s;");
             Console.WriteLine("}");
+            Console.WriteLine("");
         }
     }
 }
