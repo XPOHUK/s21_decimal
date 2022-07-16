@@ -39,6 +39,7 @@ CC=gcc
 # Пути до используемых папок
 OBJ_DIR = obj
 GCOV_OBJ_DIR = obj/gcov
+TESTS_OBJ_DIR = obj/tests
 TEST_DIR = tests
 MODULES_DIR = s21_decimal
 REPORT_DIR = report
@@ -60,13 +61,15 @@ ifeq ($(MODE), 2)
 	# Собираем с fsanitizer
 	LFLAGS=-g -fsanitize=leak -fsanitize=address -fsanitize=undefined -fsanitize=unreachable -fno-sanitize-recover \
 	-fstack-protector -fanalyzer
-	CFLAGS=-Wall -Werror -Wextra -c -g -fsanitize=leak -fsanitize=address -fsanitize=undefined -fsanitize=unreachable \
-	-fno-sanitize-recover -fstack-protector -fanalyzer
+	CFLAGS_TESTS=-Wall -Werror -Wextra -c -g -fsanitize=leak -fsanitize=address -fsanitize=undefined -fsanitize=unreachable \
+	-fno-sanitize-recover -fstack-protector
+	CFLAGS += $(CFLAGS_TESTS) -fanalyzer
 else 
 	ifeq ($(MODE), 3)
 		# Собираем с отладочной информацией для valgrind
 		LFLAGS=-g
 		CFLAGS=-Wall -Werror -Wextra -c -g
+		CFLAGS_TESTS = $(CFLAGS)
 	else 
 		ifeq ($(MODE), 4)
 			# Собираем со всеми флагами проверок и пишем идеальный код
@@ -75,10 +78,12 @@ else
 			-Wduplicated-cond -Wcast-align -Wfloat-equal -Wconversion -Wcast-qual -D_GLIBCXX_DEBUG \
 			-D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=address -fsanitize=undefined \
 			-fno-sanitize-recover -fstack-protector -fanalyzer
+			CFLAGS_TESTS = $(CFLAGS)
 		else
 			# Стандартный режим
 			LFLAGS= 
 			CFLAGS=-Wall -Werror -Wextra -c -std=c11 -pedantic
+			CFLAGS_TESTS = $(CFLAGS)
 		endif
 	endif
 endif
@@ -103,7 +108,7 @@ ALL_MODULES_O = $(ALL_MODULES_C:%.c=%.o)
 ALL_TESTS_DIRS = $(shell find $(TEST_DIR) -type d)
 ALL_TESTS_C = $(notdir $(shell find $(ALL_TESTS_DIRS) -maxdepth 1 -name "*.c"))
 ALL_TESTS_H = $(shell find $(ALL_TESTS_DIRS) -maxdepth 1 -name "*.h")
-ALL_TESTS_O = $(ALL_TESTS_C:%.c=%.o)
+ALL_TESTS_O = $(addprefix $(TESTS_OBJ_DIR)/, $(notdir $(ALL_TESTS_C:%.c=%.o)))
 
 ALL_MODULES_GCOV_O = $(addprefix $(GCOV_OBJ_DIR)/, $(notdir $(ALL_MODULES_C:.c=.o)))
 
@@ -117,12 +122,12 @@ vpath %.o $(OBJ_DIR)
 # Далее идут все цели
 all: $(TEST_EXE) $(GCOV_EXE)
 
-$(TEST_EXE): $(OBJ_DIR) $(MODULES_STATIC_LIBRARY) $(ALL_TESTS_O)
-	$(CC) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $(ALL_TESTS_O)) $(MODULES_STATIC_LIBRARY) $(LIBS) -o $(TEST_EXE)
+$(TEST_EXE): $(OBJ_DIR) $(TESTS_OBJ_DIR) $(MODULES_STATIC_LIBRARY) $(ALL_TESTS_O)
+	$(CC) $(LFLAGS) $(ALL_TESTS_O) $(MODULES_STATIC_LIBRARY) $(LIBS) -o $(TEST_EXE)
 	@./$(TEST_EXE)
 
-$(GCOV_EXE): $(GCOV_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_TESTS_O) $(ALL_H) $(ALL_TESTS_H)
-	$(CC) $(LFLAGS) $(addprefix $(OBJ_DIR)/, $(ALL_TESTS_O)) $(MODULES_STATIC_LIBRARY_GCOV) $(LIBS_GCOV) -o ./$(GCOV_EXE)
+$(GCOV_EXE): $(GCOV_OBJ_DIR) $(TESTS_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_TESTS_O) $(ALL_H) $(ALL_TESTS_H)
+	$(CC) $(LFLAGS) $(ALL_TESTS_O) $(MODULES_STATIC_LIBRARY_GCOV) $(LIBS_GCOV) -o ./$(GCOV_EXE)
 	@./$(GCOV_EXE)
 	@gcov -o $(GCOV_OBJ_DIR) $(ALL_MODULES_C)
 	@lcov -b ./ -d $(GCOV_OBJ_DIR) --gcov-tool /usr/bin/gcov -c -o output.info
@@ -130,23 +135,27 @@ $(GCOV_EXE): $(GCOV_OBJ_DIR) $(REPORT_DIR) $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_
 	@rm *.c.gcov output.info
 	$(CMD_OPEN) $(REPORT_DIR)/index.html
 
-$(MODULES_STATIC_LIBRARY): $(OBJ_DIR) $(ALL_MODULES_O) $(ALL_H)
+$(MODULES_STATIC_LIBRARY): $(OBJ_DIR) $(TESTS_OBJ_DIR) $(ALL_MODULES_O) $(ALL_H)
 	@echo "$(GREEN)*$(RESET)\c"
 	@ar rc $(MODULES_STATIC_LIBRARY) $(addprefix $(OBJ_DIR)/, $(ALL_MODULES_O))
 	@ranlib $(MODULES_STATIC_LIBRARY)
 
-$(MODULES_STATIC_LIBRARY_GCOV): $(GCOV_OBJ_DIR) $(ALL_MODULES_GCOV_O) $(ALL_H)
+$(MODULES_STATIC_LIBRARY_GCOV): $(GCOV_OBJ_DIR) $(TESTS_OBJ_DIR) $(ALL_MODULES_GCOV_O) $(ALL_H)
 	@echo "$(GREEN)*$(RESET)\c"
 	@ar rc $(MODULES_STATIC_LIBRARY_GCOV) $(ALL_MODULES_GCOV_O)
 	@ranlib $(MODULES_STATIC_LIBRARY_GCOV)
 
 %.o: %.c $(ALL_H) $(ALL_TESTS_H)
 	@echo "$(GREEN)*$(RESET)\c"
-	@$(CC) $(CFLAGS) -o $(addprefix $(OBJ_DIR)/, $@) $<
+	$(CC) $(CFLAGS) -o $(addprefix $(OBJ_DIR)/, $@) $<
 
 $(GCOV_OBJ_DIR)/%.o : %.c $(ALL_H) $(ALL_TESTS_H)
 	@echo "$(GREEN)**$(RESET)\c"
-	@$(CC) $(CFLAGS) $(GCOV_FLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(GCOV_FLAGS) -o $@ $<
+
+$(TESTS_OBJ_DIR)/%.o : %.c $(ALL_H) $(ALL_TESTS_H)
+	echo "$(GREEN)***$(RESET)\c"
+	$(CC) $(CFLAGS_TESTS) -o $@ $<
 
 $(REPORT_DIR):
 	@mkdir -p $(REPORT_DIR)
@@ -157,6 +166,9 @@ $(OBJ_DIR):
 $(GCOV_OBJ_DIR):
 	@mkdir -p $(GCOV_OBJ_DIR)
 	@echo "folder: $(GREEN)$(GCOV_OBJ_DIR) was created$(RESET)"
+$(TESTS_OBJ_DIR):
+	@mkdir -p $(TESTS_OBJ_DIR)
+	@echo "folder: $(GREEN)$(TESTS_OBJ_DIR) was created$(RESET)"
 
 clean:
 	rm -rf $(OBJ_DIR)
