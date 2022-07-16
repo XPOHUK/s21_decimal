@@ -147,15 +147,15 @@ $(MODULES_STATIC_LIBRARY_GCOV): $(GCOV_OBJ_DIR) $(TESTS_OBJ_DIR) $(ALL_MODULES_G
 
 %.o: %.c $(ALL_H) $(ALL_TESTS_H)
 	@echo "$(GREEN)*$(RESET)\c"
-	$(CC) $(CFLAGS) -o $(addprefix $(OBJ_DIR)/, $@) $<
+	@$(CC) $(CFLAGS) -o $(addprefix $(OBJ_DIR)/, $@) $<
 
 $(GCOV_OBJ_DIR)/%.o : %.c $(ALL_H) $(ALL_TESTS_H)
-	@echo "$(GREEN)**$(RESET)\c"
-	$(CC) $(CFLAGS) $(GCOV_FLAGS) -o $@ $<
+	@echo "$(GREEN)*$(RESET)\c"
+	@$(CC) $(CFLAGS) $(GCOV_FLAGS) -o $@ $<
 
 $(TESTS_OBJ_DIR)/%.o : %.c $(ALL_H) $(ALL_TESTS_H)
-	echo "$(GREEN)***$(RESET)\c"
-	$(CC) $(CFLAGS_TESTS) -o $@ $<
+	@echo "$(GREEN)*$(RESET)\c"
+	@$(CC) $(CFLAGS_TESTS) -o $@ $<
 
 $(REPORT_DIR):
 	@mkdir -p $(REPORT_DIR)
