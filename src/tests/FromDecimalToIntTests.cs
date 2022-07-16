@@ -74,6 +74,7 @@ class FromDecimalToIntTests
 
     public static void Main( )
     {   
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
         decimal[] decimal_max = new decimal[29 + 29];
         
         for (int k = 0; k < 29; k++) {
@@ -209,7 +210,7 @@ class FromDecimalToIntTests
         
         Console.WriteLine("");
         Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-        Console.WriteLine("Тесты на корректные данные (авто)");
+        Console.WriteLine("Tests for correct data (automatic)");
         Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
 
         i = 0;
@@ -243,7 +244,7 @@ class FromDecimalToIntTests
         
         Console.WriteLine("");
         Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-        Console.WriteLine("Тесты на некорректные данные (авто)");
+        Console.WriteLine("Tests for incorrect data (auto)");
         Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
         i = 0;
         foreach (decimal number in tests_fail) {
