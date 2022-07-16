@@ -10,12 +10,17 @@ int main(void) {
 
     sr = srunner_create(NULL);
     srunner_add_suite(sr, from_int_to_decimal_suite());
-    srunner_add_suite(sr, from_float_to_decimal_suite());
+    // srunner_add_suite(sr, from_float_to_decimal_suite());
 
     // srunner_add_suite(sr, from_decimal_to_int_suite0());
     // srunner_add_suite(sr, from_decimal_to_int_suite1());
     // srunner_add_suite(sr, from_decimal_to_int_suite2());
     // srunner_add_suite(sr, from_decimal_to_int_suite3());
+
+    // srunner_add_suite(sr, from_decimal_to_float_suite0());
+    // srunner_add_suite(sr, from_decimal_to_float_suite1());
+    // srunner_add_suite(sr, from_decimal_to_float_suite2());
+    // srunner_add_suite(sr, from_decimal_to_float_suite3());
 
     srunner_add_suite(sr, truncate_suite0());
     srunner_add_suite(sr, truncate_suite1());

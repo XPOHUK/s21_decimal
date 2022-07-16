@@ -49,6 +49,7 @@ typedef union {
         uint32_t sign : 1;
     } parts;
     uint32_t bytes;
+    int int32_bytes;
 } float_cast;
 
 #endif  //  SRC_S21_DECIMAL_TYPES_H_

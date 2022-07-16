@@ -16,6 +16,11 @@ Suite * from_decimal_to_int_suite1(void);
 Suite * from_decimal_to_int_suite2(void);
 Suite * from_decimal_to_int_suite3(void);
 
+Suite * from_decimal_to_float_suite0(void);
+Suite * from_decimal_to_float_suite1(void);
+Suite * from_decimal_to_float_suite2(void);
+Suite * from_decimal_to_float_suite3(void);
+
 Suite * truncate_suite0(void);
 Suite * truncate_suite1(void);
 Suite * truncate_suite2(void);
@@ -25,6 +30,8 @@ void test_from_int_to_decimal(int number, s21_decimal decimal_check);
 void test_truncate(s21_decimal decimal, s21_decimal decimal_check);
 void test_from_decimal_to_int(s21_decimal decimal, int check);
 void test_from_decimal_to_int_fail(s21_decimal decimal);
+void test_from_decimal_to_float(s21_decimal decimal, int check);
+void test_from_decimal_to_float_fail(s21_decimal decimal);
 
 Suite * binary_division_suite1(void);
 Suite * binary_division_suite2(void);
