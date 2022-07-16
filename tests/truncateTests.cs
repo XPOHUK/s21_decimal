@@ -1,13 +1,8 @@
-// Example of the decimal.Negate, decimal.Floor, and decimal.Truncate
-// methods.
 using System;
 
 class TruncateTests
 {
-    const string dataFmt = "{0,-30}{1,26}";
-
-    // Display decimal parameters and the method results.
-    public static void ShowDecimalFloorNegTrunc( decimal Argument )
+    public static void ShowTest( decimal Argument )
     {
         if (Argument == 0 && getSign(Argument) != 0) {
             Console.WriteLine( "    // -{0}", Argument);
@@ -52,16 +47,12 @@ class TruncateTests
         var rng = new Random();
          byte scale = (byte) rng.Next(29);
          bool sign = rng.Next(2) == 1;
-         return new decimal(nextInt32(), 
-                            nextInt32(),
-                            nextInt32(),
-                            sign,
-                            scale);
+         return new decimal(nextInt32(),nextInt32(),nextInt32(),sign,scale);
     }
 
     public static void Main( )
     {   
-        decimal[] decimal_max = new decimal[29 + 29];
+        decimal[] decimal_max = new decimal[29+29];
         
         for (int k = 0; k < 29; k++) {
             if (k == 0) {
@@ -78,28 +69,10 @@ class TruncateTests
                 decimal_max[k] = decimal_max[k - 1] / 10;
             }
         }
-        
-        decimal[] decimal_min = new decimal[29 + 29];
-        
-        for (int k = 0; k < 29; k++) {
-            if (k == 0) {
-                decimal_min[k] = Decimal.MinValue;
-            } else {
-                decimal_min[k] = decimal_min[k - 1] / 10;
-            }
-        }
 
-        for (int k = 29; k < 29+29; k++) {
-            if (k == 29) {
-                decimal_min[k] = Decimal.MinValue + 1;
-            } else {
-                decimal_min[k] = decimal_min[k - 1] / 10;
-            }
-        }
+        decimal[] decimal_random = new decimal[100];
         
-        decimal[] decimal_random = new decimal[29];
-        
-        for (int k = 0; k < 29; k++) {
+        for (int k = 0; k < 100; k++) {
             decimal_random[k] = randomDecimal();
         }
 
@@ -153,40 +126,66 @@ class TruncateTests
             new decimal (0, 0, 0, true, 0), new decimal (0, 0, 0, true, 1), new decimal (0, 0, 0, true, 2), new decimal (0, 0, 0, true, 14), new decimal (0, 0, 0, true, 27), new decimal (0, 0, 0, true, 28)
         };
         
-        decimal[] result = new decimal[decimal_max.Length + decimal_min.Length + numbers.Length + decimal_random.Length];
+        decimal[] result = new decimal[decimal_max.Length + numbers.Length + decimal_random.Length];
         
         decimal_max.CopyTo(result, 0);
-        decimal_min.CopyTo(result, decimal_max.Length);
-        numbers.CopyTo(result, decimal_max.Length + decimal_min.Length);
-        decimal_random.CopyTo(result, decimal_max.Length + decimal_min.Length + numbers.Length);
+        numbers.CopyTo(result, decimal_max.Length);
+        decimal_random.CopyTo(result, decimal_max.Length + numbers.Length);
         
+        decimal[] tests_ok = new decimal[0];
+
+        foreach (decimal number in result) {
+            Array.Resize(ref tests_ok, tests_ok.Length + 1);
+            tests_ok[tests_ok.Length - 1] = number;
+                
+            decimal tmp = decimal.Negate(number);
+            Array.Resize(ref tests_ok, tests_ok.Length + 1);
+            tests_ok[tests_ok.Length - 1] = tmp;
+        }
+        
+        Console.WriteLine("");
+        Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+        Console.WriteLine("Tests for correct data (automatic)");
+        Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
+        Console.WriteLine("");
         int i = 0;
-        foreach (decimal number in result) {
+        foreach (decimal number in tests_ok) {
             i++;
             Console.WriteLine("START_TEST(test_truncate_ok{0}) {{", i);
-            ShowDecimalFloorNegTrunc(number);
-            Console.WriteLine("}");
-            Console.WriteLine("");
-            
-            i++;
-            Console.WriteLine("START_TEST(test_truncate_ok{0}) {{", i);
-            ShowDecimalFloorNegTrunc(decimal.Negate(number));
+            ShowTest(number);
             Console.WriteLine("}");
             Console.WriteLine("");
         }
         
+        Console.WriteLine("");
         i = 0;
-        foreach (decimal number in result) {
+        int suit_num = 1;
+        foreach (decimal number in tests_ok) {
+            if (i % 400 == 0) {
+                Console.WriteLine("Suite * truncate_suite{0}(void) {{", suit_num);
+                Console.WriteLine("    Suite *s;");
+                Console.WriteLine("    TCase *tc_core;");
+                Console.WriteLine("");
+                Console.WriteLine("    s = suite_create(\"truncate_suite{0}\");", suit_num);
+                Console.WriteLine("    tc_core = tcase_create(\"Core\");");
+                suit_num++;
+            }
             i++;
-            Console.WriteLine("tcase_add_test(tc_core, test_truncate_ok{0});", i);
-            i++;
-            Console.WriteLine("tcase_add_test(tc_core, test_truncate_ok{0});", i);
+            Console.WriteLine("    tcase_add_test(tc_core, test_truncate_ok{0});", i);
+            if (i % 400 == 0) {
+                Console.WriteLine("");
+                Console.WriteLine("    suite_add_tcase(s, tc_core);");
+                Console.WriteLine("    return s;");
+                Console.WriteLine("}");
+                Console.WriteLine("");
+            }
         }
-        
-        // Console.WriteLine("{0}", getSign(new decimal (0, 0, 0, true, 0)));
-        // Console.WriteLine("{0}", getSign(new decimal (0, 0, 0, false, 0)));
-        // Console.WriteLine("{0}", getDecimalInit(new decimal (0, 0, 0, true, 0)));
-        // Console.WriteLine("{0}", getDecimalInit(decimal.Negate(new decimal (0, 0, 0, true, 0))));
-        // Console.WriteLine("{0}", getDecimalInit(randomDecimal()));
+        if (i % 400 != 0) {
+            Console.WriteLine("");
+            Console.WriteLine("    suite_add_tcase(s, tc_core);");
+            Console.WriteLine("    return s;");
+            Console.WriteLine("}");
+            Console.WriteLine("");
+        }
     }
 }

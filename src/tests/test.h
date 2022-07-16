@@ -17,7 +17,9 @@ Suite * from_decimal_to_int_suite1(void);
 Suite * from_decimal_to_int_suite2(void);
 Suite * from_decimal_to_int_suite3(void);
 
-Suite * from_truncate_suite(void);
+Suite * truncate_suite0(void);
+Suite * truncate_suite1(void);
+Suite * truncate_suite2(void);
 
 void test_debug(s21_decimal decimal, char *check);
 void test_from_int_to_decimal(int number, s21_decimal decimal_check);
