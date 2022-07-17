@@ -21,6 +21,8 @@ Suite * from_decimal_to_float_suite1(void);
 Suite * from_decimal_to_float_suite2(void);
 Suite * from_decimal_to_float_suite3(void);
 
+Suite * is_equal_suite(void);
+
 Suite * truncate_suite0(void);
 Suite * truncate_suite1(void);
 Suite * truncate_suite2(void);

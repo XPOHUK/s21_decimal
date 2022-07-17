@@ -22,6 +22,8 @@ int main(void) {
     // srunner_add_suite(sr, from_decimal_to_float_suite2());
     // srunner_add_suite(sr, from_decimal_to_float_suite3());
 
+    srunner_add_suite(sr, is_equal_suite());
+
     srunner_add_suite(sr, truncate_suite0());
     srunner_add_suite(sr, truncate_suite1());
     srunner_add_suite(sr, truncate_suite2());
