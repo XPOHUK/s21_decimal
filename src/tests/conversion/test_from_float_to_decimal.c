@@ -21,15 +21,28 @@ START_TEST(from_float_to_decimal_ok1) {
     float f0 = 79228101123500060288156172288.f;
             // 79228162514264337593543950335.f;
             // 79228157791897854723898736640.f;
+            // max = 79228162514264337593543950335
 
     // float f0 = 1234567890.0f;
-    float f1 = 1234567500.12f;
-    float f2 = -10.980355f;
+    // float f1 = 1234567500.12f;
+    float f1 = 792281625.14264337593543950335f;
+    float f2 = 10.980355f;
+
+    s21_print_bit(1093644169, 0); printf("\n");
+
+// 01000001 00101111 10101111 10001001
+// 01000001 00101111 10101111 10001001
+// 01000001 00101111 10101111 10001001
+
+    float_cast cast;
+    cast.f = 10.980355f;
+    s21_print_bit(cast.bytes, 0); printf("\n");
+
     float f3 = 0.15625f;
     // float f3 = 0.0f;
-    // printf("%.50f\n", f1);
-    // printf("%.50f\n", f2);
-    // printf("%.50f\n", f3);
+    printf("%.50f\n", f1);
+    printf("%.50f\n", f2);
+    printf("%.50f\n", f3);
     s21_decimal decimal0;
     s21_decimal decimal1;
     s21_decimal decimal2;
