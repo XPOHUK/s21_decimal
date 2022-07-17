@@ -49,7 +49,7 @@ Suite * is_equal_suite(void) {
     Suite *s;
     TCase *tc_core;
 
-    s = suite_create("debug");
+    s = suite_create("is_equal1");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, s21_is_equal_1);
