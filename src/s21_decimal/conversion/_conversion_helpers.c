@@ -39,8 +39,8 @@ void s21_get_float_mantissa_bits_string(float number, char *str) {
  * @brief записывает битовое представление переменной number в строку str
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param number переменнная, битовое представление которой мы хотим получить
- * @param str строка, в которую записывается битовое представление переменной
+ * @param number переменная, битовое представление которой мы хотим получить
+ * @param str строка, в которую записывается битовое представление переменная
  */
 void s21_get_uint32_bits_string(uint32_t number, char *str) {
     s21_get_bits_string(sizeof(number), &number, str);
