@@ -14,10 +14,6 @@
  * @return int 
  */
 
-int get_bit(s21_decimal n, int pos) {
-    return (n.bits[pos / 32] >> (pos % 32)) & 1;
-}
-
 int s21_from_decimal_to_float(s21_decimal src, float *dst) {
     s21_conversion_result code = S21_CONVERSION_OK;
     if (!dst || !s21_is_correct_decimal(src)) {
