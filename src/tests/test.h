@@ -4,6 +4,7 @@
 #include <check.h>
 
 #include "./../s21_decimal.h"
+#include "./_helpers/_debug.h"
 
 // Отображение отладочной информации в тестах
 // #define __DEBUG 1
