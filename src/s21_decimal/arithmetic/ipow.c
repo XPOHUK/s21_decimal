@@ -1,7 +1,5 @@
-#include "./arithmetic.h"
 #include "./../helpers/helpers.h"
-#include "./../_debug/_debug.h"
-#include <stdio.h>
+#include "./arithmetic.h"
 
 /**
  * @brief Функция для возведения decimal value в целую степень exp
@@ -10,36 +8,43 @@
  * x^0 = 1
  * x^n = x*x^(n-1)
  * x^(-n) = 1 / x^n
- * 
+ *
  * Т.к. работаем с decimal, то используем в функции значения decimal и арифметику decimal
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param value decimal, возводимый в степень
+ * @param base decimal, возводимый в степень
  * @param exp степень, в которую возводится число
- * @param result указатель на decimal, куда запишется результат выполнения функции
- * @return int код ошибки:
-0 - OK
-1 - число слишком велико или равно бесконечности
-2 - число слишком мало или равно отрицательной бесконечности
-3 - деление на 0
+ * @param error int код ошибки:
+ * 0 - OK
+ * 1 - число слишком велико или равно бесконечности
+ * 2 - число слишком мало или равно отрицательной бесконечности
+ * 3 - деление на 0
+ * @return s21_decimal результат возведения в степнь числа decimal выполнения функции
  */
-int s21_ipow(s21_decimal value, int exp, s21_decimal *result) {
-    s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    s21_decimal tmp = s21_decimal_get_zero();
+s21_decimal s21_ipow(s21_decimal base, int exp, int *error) {
+    s21_decimal result;
 
     if (exp == 0) {
-        tmp = s21_decimal_get_one();
+        result = s21_decimal_get_one();
     } else if (exp < 0) {
-        code = s21_ipow(value, -exp, &tmp);
-        if (code == S21_ARITHMETIC_OK) {
-            code = s21_div(s21_decimal_get_one(), tmp, result);
+        s21_decimal div = s21_ipow(base, -exp, error);
+        int code = s21_div(s21_decimal_get_one(), div, &result);
+        if (code != S21_ARITHMETIC_OK) {
+            result = s21_decimal_get_zero();
+        }
+        if (error) {
+            *error = code;
         }
     } else {
-        code = s21_ipow(value, exp - 1, &tmp);
-        if (code == S21_ARITHMETIC_OK) {
-            code = s21_mul(value, tmp, result);
+        s21_decimal mul = s21_ipow(base, exp - 1, error);
+        int code = s21_mul(base, mul, &result);
+        if (code != S21_ARITHMETIC_OK) {
+            result = s21_decimal_get_zero();
+        }
+        if (error) {
+            *error = code;
         }
     }
-    *result = tmp;
-    return code;
+
+    return result;
 }
