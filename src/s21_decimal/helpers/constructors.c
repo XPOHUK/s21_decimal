@@ -147,6 +147,20 @@ s21_decimal s21_decimal_get_one(void) {
 }
 
 /**
+ * @brief формирует и возвращает число (2) в виде decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @return s21_decimal число (1)
+ */
+s21_decimal s21_decimal_get_two(void) {
+    s21_decimal result;
+    s21_clear_decimal(&result);
+    result.bits[0] = 2;
+
+    return result;
+}
+
+/**
  * @brief формирует и возвращает число (0) в виде decimal
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
@@ -173,6 +187,25 @@ s21_decimal s21_decimal_get_ten(void) {
     return result;
 }
 
+/**
+ * @brief возвращает 10 в степени pow в виде числа decimal
+ * Допустимый диапазон для pow - [0, 28]. Валидация данных не осуществляется и должна производится
+ * перед вызовом функции
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param pow требуемая степень числа 10 (в диапазоне [0, 28])
+ * @return s21_decimal 10^pow
+ */
+s21_decimal s21_decimal_get_ten_pow(int pow) {
+    return all_ten_pows[pow];
+}
+
+/**
+ * @brief формирует и возвращает число (2147483647) в виде decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @return s21_decimal число (2147483647)
+ */
 s21_decimal s21_decimal_get_int_max(void) {
     // MAX_INT = 2147483647
     s21_decimal result = {{0x7FFFFFFF, 0x0, 0x0, 0x0}};
@@ -180,6 +213,12 @@ s21_decimal s21_decimal_get_int_max(void) {
     return result;
 }
 
+/**
+ * @brief формирует и возвращает число (-2147483648) в виде decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @return s21_decimal число (-2147483648)
+ */
 s21_decimal s21_decimal_get_int_min(void) {
     // MIN_INT = -2147483648
     s21_decimal result = {{0x80000000, 0x0, 0x0, 0x80000000}};

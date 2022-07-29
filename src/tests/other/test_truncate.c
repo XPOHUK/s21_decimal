@@ -15,7 +15,7 @@ START_TEST(from_truncate_fail1) {
 
     int code = s21_truncate(decimal, NULL);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 
 START_TEST(from_truncate_fail2) {
@@ -27,7 +27,7 @@ START_TEST(from_truncate_fail2) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -38,7 +38,7 @@ START_TEST(from_truncate_fail3) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -49,7 +49,7 @@ START_TEST(from_truncate_fail4) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -60,7 +60,7 @@ START_TEST(from_truncate_fail5) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -71,7 +71,7 @@ START_TEST(from_truncate_fail6) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -82,7 +82,7 @@ START_TEST(from_truncate_fail7) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -93,7 +93,7 @@ START_TEST(from_truncate_fail8) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -104,7 +104,7 @@ START_TEST(from_truncate_fail9) {
 
     int code = s21_truncate(decimal, &result);
 
-    ck_assert_int_eq(code, S21_OTHER_ERROR);
+    ck_assert_int_eq(code, TEST_OTHER_ERROR);
 }
 END_TEST
 
@@ -7972,7 +7972,7 @@ void test_truncate(s21_decimal decimal, s21_decimal decimal_check) {
     s21_print_decimal_string(result);
     #endif
 
-    ck_assert_int_eq(res, S21_OTHER_OK);
+    ck_assert_int_eq(res, TEST_OTHER_OK);
     ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);
     ck_assert_int_eq(s21_decimal_get_sign(result), s21_decimal_get_sign(decimal_check));
 }
