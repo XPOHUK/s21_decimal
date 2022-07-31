@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef struct {
+typedef struct s21_decimal {
     int bits[4];
 } s21_decimal;
 
@@ -23,7 +23,7 @@ typedef struct {
  * Итого 32 бита
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  */
-typedef union {
+typedef union decimal_bit3 {
     int i;
     struct {
         uint32_t empty2 : 16;
@@ -34,6 +34,16 @@ typedef union {
 } decimal_bit3;
 
 /**
+ * @brief enum для улучшения читаемости кода при проверках на знак
+ * 0 - положительный decimal
+ * 1 - отрицательный decimal
+ */
+typedef enum s21_decimal_sign {
+    S21_POSITIVE = 0,
+    S21_NEGATIVE = 1
+} s21_decimal_sign;
+
+/**
  * @brief каст для побитовой работы с float
  * (23 бита) Биты 0 - 23: Мантисса
  *   (8 бит) Биты 24 - 30: Порядок
@@ -41,7 +51,7 @@ typedef union {
  * via: https://w.wiki/5RpW (Число одинарной точности)
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  */
-typedef union {
+typedef union float_cast {
     float f;
     struct {
         uint32_t mantisa : 23;

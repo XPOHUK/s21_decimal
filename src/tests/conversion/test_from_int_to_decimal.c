@@ -1,4 +1,4 @@
-#include <check.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,7 +13,7 @@ START_TEST(test_from_int_to_decimal_fail1) {
     int number = -2147483648;
     int result = s21_from_int_to_decimal(number, NULL);
 
-    ck_assert_int_eq(result, S21_CONVERSION_ERROR);
+    ck_assert_int_eq(result, TEST_CONVERSION_ERROR);
 }
 END_TEST
 
@@ -125,7 +125,20 @@ START_TEST(test_from_int_to_decimal_ok13) {
     test_from_int_to_decimal(number, decimal_check);
 }
 
-Suite * from_int_to_decimal_suite(void) {
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Тесты на рандомные данные
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+START_TEST(test_from_int_to_decimal_ok_random1) {
+    int num = s21_random_int(1, INT_MAX - 1);
+    s21_decimal decimal_check1 = {{num, 0x0, 0x0, 0x0}};
+    test_from_int_to_decimal(num, decimal_check1);
+    s21_decimal decimal_check2 = {{num, 0x0, 0x0, 0x80000000}};
+    test_from_int_to_decimal(-num, decimal_check2);
+}
+END_TEST
+
+Suite *from_int_to_decimal_suite(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -148,6 +161,8 @@ Suite * from_int_to_decimal_suite(void) {
     tcase_add_test(tc_core, test_from_int_to_decimal_ok12);
     tcase_add_test(tc_core, test_from_int_to_decimal_ok13);
 
+    tcase_add_loop_test(tc_core, test_from_int_to_decimal_ok_random1, 0, NUM_RANDOM_TEST);
+
     suite_add_tcase(s, tc_core);
 
     return s;
@@ -158,11 +173,19 @@ void test_from_int_to_decimal(int number, s21_decimal decimal_check) {
     int result = s21_from_int_to_decimal(number, &decimal);
 
     #if defined(__DEBUG)
+    printf("---------------------------------\n");
+    printf("Test:\n");
+    printf("number: %d\n", number);
+    printf("Check:\n");
     s21_print_decimal_bits(decimal_check);
+    s21_print_decimal_string(decimal_check);
+    printf("Result:\n");
     s21_print_decimal_bits(decimal);
+    s21_print_decimal_string(decimal);
+    printf("---------------------------------\n");
     #endif
 
-    ck_assert_int_eq(result, S21_CONVERSION_OK);
+    ck_assert_int_eq(result, TEST_CONVERSION_OK);
     ck_assert_int_eq(s21_is_equal(decimal, decimal_check), 1);
     ck_assert_int_eq(s21_decimal_get_sign(decimal), s21_decimal_get_sign(decimal_check));
 }

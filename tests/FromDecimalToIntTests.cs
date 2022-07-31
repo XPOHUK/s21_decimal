@@ -170,14 +170,13 @@ class FromDecimalToIntTests
                 int num = Decimal.ToInt32(number);
                 Array.Resize(ref tests_ok, tests_ok.Length + 1);
                 tests_ok[tests_ok.Length - 1] = number;
-                
+
                 decimal tmp = decimal.Negate(number);
                 try {
                     num = Decimal.ToInt32(tmp);
                     Array.Resize(ref tests_ok, tests_ok.Length + 1);
                     tests_ok[tests_ok.Length - 1] = tmp;
-                }
-                catch (OverflowException) {
+                } catch (OverflowException) {
                     Array.Resize(ref tests_fail, tests_fail.Length + 1);
                     tests_fail[tests_fail.Length - 1] = tmp;
                 }
@@ -185,6 +184,16 @@ class FromDecimalToIntTests
             catch (OverflowException) {
                 Array.Resize(ref tests_fail, tests_fail.Length + 1);
                 tests_fail[tests_fail.Length - 1] = number;
+                
+                decimal tmp = decimal.Negate(number);
+                try {
+                    int num = Decimal.ToInt32(tmp);
+                    Array.Resize(ref tests_ok, tests_ok.Length + 1);
+                    tests_ok[tests_ok.Length - 1] = tmp;
+                } catch (OverflowException) {
+                    Array.Resize(ref tests_fail, tests_fail.Length + 1);
+                    tests_fail[tests_fail.Length - 1] = tmp;
+                }
             }
         }
 

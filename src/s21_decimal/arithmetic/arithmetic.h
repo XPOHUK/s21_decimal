@@ -2,15 +2,18 @@
 #define SRC_S21_DECIMAL_ARITHMETIC_ARITHMETIC_H_
 
 #include "./../types.h"
-#include "mant_ops.h"
+#include "../mant_ops/mant_ops.h"
 
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_ipow(s21_decimal value, int exp, s21_decimal *result);
-int raise_exp(s21_decimal decimal);
+s21_decimal s21_ipow(s21_decimal base, int exp, int *error);
+
+s21_decimal raise_exp(s21_decimal decimal, s21_decimal* overflow);
+int balance_exp(s21_decimal val1, s21_decimal val2, s21_decimal* balanced1, s21_decimal* balanced2)
+
 
 /**
  * @brief коды ошибок арифметических операторов
