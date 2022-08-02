@@ -1,22 +1,18 @@
-#include <stdlib.h>
 #include <string.h>
 
 #include "./conversion.h"
 
 /**
  * @brief записывает в строку str битовое представление мантиссы числа number в виде строки
+ * Например, число 0.15625 в памяти представлено как 00111110 00100000 00000000 00000000
+ * Мантисса: 0100000 00000000 00000000
  * 
- * 
- * Данные некорректны если выполняется хотя бы одно условие:
- * 1) в bits[3] биты от 0 до 15 не равны нулю.
- * 2) в bits[3] биты с 16 по 23 содержат показатель степени вне диапазона [0, 28].
- * 3) в bits[3] биты с 24 по 30 не равны нулю.
+ * В str будет записано "01000000000000000000000" (всегда 23 символа + '\0')
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int 1 - ок, 0 - некорректные данные
  */
-
 void s21_get_float_mantissa_bits_string(float number, char *str) {
     float_cast cast;
     cast.f = number;
@@ -72,7 +68,3 @@ void s21_get_bits_string(size_t const size, void const * const ptr, char *str) {
     }
     *(sptr++) = '\0';
 }
-
-
-
-

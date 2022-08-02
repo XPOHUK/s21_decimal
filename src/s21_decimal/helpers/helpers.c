@@ -117,3 +117,13 @@ void s21_decimal_set_power(s21_decimal *decimal, int power) {
 
     decimal->bits[3] = bits3.i;
 }
+
+/**
+ * @brief зануляет все биты, не являющиеся самим числом decimal (bits[3])
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @param value указатель на decimal, биты которого требуется занулить
+ */
+void s21_decimal_null_service_bits(s21_decimal *value) {
+    value->bits[3] = 0;
+}

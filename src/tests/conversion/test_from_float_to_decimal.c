@@ -1,15 +1,122 @@
-#include <check.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "./test_from_float_to_decimal.h"
 #include "./../../s21_decimal.h"
 #include "./../test.h"
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Тесты на ненормальные float
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+START_TEST(from_float_to_decimal_unnormal1) {
+    float f = 0.0;
+    s21_decimal result;
+    s21_decimal check = {{0x0, 0x0, 0x0, 0x0}};
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_OK);
+    ck_assert_int_eq(s21_is_equal(result, check), 1);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_unnormal2) {
+    float f = -0.0;
+    s21_decimal result;
+    s21_decimal check = {{0x0, 0x0, 0x0, 0x80000000}};
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_OK);
+    ck_assert_int_eq(s21_is_equal(result, check), 1);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_unnormal3) {
+    float f = INFINITY;
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_unnormal4) {
+    float f = -INFINITY;
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_unnormal5) {
+    float f = NAN;
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_unnormal6) {
+    float f = -NAN;
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Тесты на некорректные данные
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-START_TEST(from_float_to_decimal_fail1) {
+START_TEST(from_float_to_decimal_incorrect1) {
+    float f = 1.0f;
+    int code = s21_from_float_to_decimal(f, NULL);
+
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_fail_big) {
+    float f = fails_big[_i];
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_fail_big_negate) {
+    float f = -fails_big[_i];
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_fail_small) {
+    float f = fails_small[_i];
+    s21_decimal result;
+    s21_decimal check = {{0x0, 0x0, 0x0, 0x0}};
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+    ck_assert_int_eq(s21_is_equal(result, check), 1);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_fail_small_negate) {
+    float f = -fails_small[_i];
+    s21_decimal result;
+    s21_decimal check = {{0x0, 0x0, 0x0, 0x0}};
+
+    int code = s21_from_float_to_decimal(f, &result);
+    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
+    ck_assert_int_eq(s21_is_equal(result, check), 1);
 }
 END_TEST
 
@@ -17,119 +124,142 @@ END_TEST
 Тесты на корректные данные
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-START_TEST(from_float_to_decimal_ok1) {
-    float f0 = 79228101123500060288156172288.f;
-            // 79228162514264337593543950335.f;
-            // 79228157791897854723898736640.f;
-            // max = 79228162514264337593543950335
+START_TEST(from_float_to_decimal_ok_big) {
+    float f = oks_big[_i];
 
-    // float f0 = 1234567890.0f;
-    // float f1 = 1234567500.12f;
-    float f1 = 792281625.14264337593543950335f;
-    float f2 = 10.980355f;
-
-    s21_print_bit(1093644169, 0); printf("\n");
-
-// 01000001 00101111 10101111 10001001
-// 01000001 00101111 10101111 10001001
-// 01000001 00101111 10101111 10001001
-
-    float_cast cast;
-    cast.f = 10.980355f;
-    s21_print_bit(cast.bytes, 0); printf("\n");
-
-    float f3 = 0.15625f;
-    // float f3 = 0.0f;
-    printf("%.50f\n", f1);
-    printf("%.50f\n", f2);
-    printf("%.50f\n", f3);
-    s21_decimal decimal0;
-    s21_decimal decimal1;
-    s21_decimal decimal2;
-    s21_decimal decimal3;
-
-    s21_from_float_to_decimal(f0, &decimal0);
-    s21_from_float_to_decimal(f1, &decimal1);
-    s21_from_float_to_decimal(f2, &decimal2);
-    s21_from_float_to_decimal(f3, &decimal3);
-
-    // s21_print_decimal_bits(s21_decimal_get_one());
-    // s21_print_decimal_bits(s21_decimal_get_zero());
-
-    float arr[] = {
-        79228190848463234811415232512.f,
-        79228181403730269072124805120.f,
-        79228171958997303332834377728.f,
-        79228162514264337593543950336.f,
-        79228162514264337593543950335.f,
-        79228157791897854723898736640.f,
-        79228153069531371854253522944.f,
-        0.00000000000000000000000000025000003088542459379332304078347154134317722106936599f,
-        0.00000000000000000000000000025000000681130028895287487758374725903158573934309539f,
-        0.00000000000000000000000000024999998273717598411242671438402297671999425761682478f,
-        0.00000000000000000000000000020000001267127752261443435102691509191874603599235749f,
-        0.00000000000000000000000000020000000063421537019421026942705295076295029512922219f,
-        0.00000000000000000000000000019999998859715321777398618782719080960715455426608689f,
-        0.00000000000000000000000000015000001853125475627599382447008292480590633264161959f,
-        0.00000000000000000000000000015000000649419260385576974287022078365011059177848429f,
-        0.00000000000000000000000000014999999445713045143554566127035864249431485091534899f,
-        0.00000000000000000000000000014999981390119816513218443727242652515737873796831947f,
-        0.00000000000000000000000000010000001837270091372744125711331968711516875885931405f,
-        0.00000000000000000000000000010000001235416983751732921631338861653727088842774640f,
-        0.00000000000000000000000000010000000633563876130721717551345754595937301799617875f,
-        0.00000000000000000000000000010000000031710768509710513471352647538147514756461109f,
-        0.00000000000000000000000000009999999429857660888699309391359540480357727713304344f,
-        0.00000000000000000000000000009999998828004553267688105311366433422567940670147579f,
-        0.00000000000000000000000000009999998226151445646676901231373326364778153626990814f,
-        0.00000000000000000000000000009000000028539691658739462124217382784332763280814999f,
-        0.00000000000000000000000000005000000015855384254855256735676323769073757378230555f,
-        0.00000000000000000000000000004999999714928830444349654695679770240178863856652172f,
-    };
-
-    for (int i = 0; i < (int) (sizeof(arr) / sizeof(*arr)); i++) {
-        printf("%.28f\n", arr[i]);
-    }
-
-    float f = 0.00000000000000000000000000025000003088542459379332304078347154134317722106936599f;
-    float i = 0.f;
-    int p = 0;
-    printf("\n\n%.28f\n", f);
-    while(1) {
-        float fff = f + i;
-        if (fff != f) {
-            printf("%.80f\n", fff);
-            // printf("%.80f\n", fff - f);
-            // printf("%.80f\n", i);
-            p++;
-            f = fff;
-            if (p == 15)
-                break;
-        }
-        i = i + 0.000000000000000000000000000000000000000001;
-    }
-
-// 2361188870934356819968.000000
-
-    float_cast cast1;
-    cast1.int32_bytes = 1870659582;
-    printf("%.80f", cast1.f);
-
-
+    test_from_float_to_decimal(f);
 }
 END_TEST
 
-Suite * from_float_to_decimal_suite(void) {
+START_TEST(from_float_to_decimal_ok_big_negate) {
+    float f = -oks_big[_i];
+
+    test_from_float_to_decimal(f);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_ok_small) {
+    float f = oks_small[_i];
+
+    test_from_float_to_decimal(f);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_ok_small_negate) {
+    float f = -oks_small[_i];
+
+    test_from_float_to_decimal(f);
+}
+END_TEST
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Тесты на рандомные данные
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+START_TEST(from_float_to_decimal_ok_random1) {
+    float f = s21_random_double(1e-10, 1.0);
+    test_from_float_to_decimal(f);
+    test_from_float_to_decimal(-f);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_ok_random2) {
+    float f = s21_random_double(1.0, 1e10);
+    test_from_float_to_decimal(f);
+    test_from_float_to_decimal(-f);
+}
+END_TEST
+
+START_TEST(from_float_to_decimal_ok_random3) {
+    float f = s21_random_double(1e10, 1e20);
+    test_from_float_to_decimal(f);
+    test_from_float_to_decimal(-f);
+}
+END_TEST
+
+Suite *from_float_to_decimal_suite(void) {
     Suite *s;
     TCase *tc_core;
 
     s = suite_create("from_float_to_decimal");
     tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, from_float_to_decimal_fail1);
+    tcase_add_loop_test(tc_core, from_float_to_decimal_fail_big, 0, sizeof(fails_big) / sizeof(*fails_big));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_fail_big_negate, 0,
+                        sizeof(fails_big) / sizeof(*fails_big));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_fail_small, 0,
+                        sizeof(fails_small) / sizeof(*fails_small));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_fail_small_negate, 0,
+                        sizeof(fails_small) / sizeof(*fails_small));
 
-    tcase_add_test(tc_core, from_float_to_decimal_ok1);
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_big_negate, 0, sizeof(oks_big) / sizeof(*oks_big));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_big, 0, sizeof(oks_big) / sizeof(*oks_big));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_small, 0, sizeof(oks_small) / sizeof(*oks_small));
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_small_negate, 0,
+                        sizeof(oks_small) / sizeof(*oks_small));
+
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_random1, 0, NUM_RANDOM_TEST);
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_random2, 0, NUM_RANDOM_TEST);
+    tcase_add_loop_test(tc_core, from_float_to_decimal_ok_random3, 0, NUM_RANDOM_TEST);
+
+    tcase_add_test(tc_core, from_float_to_decimal_incorrect1);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal1);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal2);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal3);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal4);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal5);
+    tcase_add_test(tc_core, from_float_to_decimal_unnormal6);
 
     suite_add_tcase(s, tc_core);
 
     return s;
+}
+
+void test_from_float_to_decimal(float f) {
+    s21_decimal result;
+
+    int code = s21_from_float_to_decimal(f, &result);
+    char str_float[128];
+    char str_decimal[128];
+    sprintf(str_float, "%.28f", f);
+    s21_decimal_to_string(result, str_decimal);
+
+    #if defined(__DEBUG)
+    // printf("---------------------------------\n");
+    // printf("Float:   %s\n", str_float);
+    printf("%sM,\n", str_decimal);
+    #endif
+    char str_decimal_copy[128];
+    strcpy(str_decimal_copy, str_decimal);
+    test_remove_trailing_zeros(str_float);
+    test_remove_trailing_zeros(str_decimal);
+
+    #if defined(__DEBUG)
+    // printf("remove_trailing_zeros:\n");
+    // printf("Float:   %s\n", str_float);
+    if (strcmp(str_decimal, str_decimal_copy) != 0)
+        printf("%sM,\n", str_decimal);
+    // printf("-------------------------------\n");
+    #endif
+
+    ck_assert_int_eq(code, TEST_CONVERSION_OK);
+    ck_assert_str_eq(str_float, str_decimal);
+}
+
+void test_remove_trailing_zeros(char *str) {
+    if (strchr(str, '.') != NULL) {
+        int stop = 0;
+        size_t i = strlen(str);
+        while (!stop) {
+            if (str[i - 1] == '0') {
+                str[i - 1] = '\0';
+            } else if (str[i - 1] == '.') {
+                str[i - 1] = '\0';
+                stop = 1;
+            } else {
+                stop = 1;
+            }
+            --i;
+        }
+    }
 }
