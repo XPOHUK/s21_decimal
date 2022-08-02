@@ -18,7 +18,7 @@ s21_decimal s21_decimal_add_mant(s21_decimal a, s21_decimal b) {
         int a_bit = s21_decimal_is_set_bit(a, i);
         int b_bit = s21_decimal_is_set_bit(b, i);
         if (a_bit ^ b_bit ^ dig)
-            s21_decimal_set_bit(res, k);
+            s21_decimal_set_bit(res, i);
         dig = (a_bit & b_bit || a_bit & dig || b_bit & dig);
     }
     if (dig)

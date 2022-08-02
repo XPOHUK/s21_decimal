@@ -3,6 +3,7 @@
 //
 #include "./mant_ops.h"
 #include "../helpers/helpers.h"
+#include <stdio.h>
 
 
 /**
@@ -22,16 +23,16 @@ s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index, s21_deci
         // По хорошему, over тоже может переполниться, если запросить сдвиг очень большого числа
         // больше, чем на 96
         if (over) {
-            *over = s21_decimal_shift_mant_left(over, 1, null);
+            *over = s21_decimal_shift_mant_left(*over, 1, NULL);
             if (s21_decimal_is_set_bit(res, 96))
-                *over = s21_decimal_set_bit(over, 0);
+                *over = s21_decimal_set_bit(*over, 0);
         }
         for (int i = 2; i >= 0; i++) {
             unsigned int part = res.bits[i];
             part = part << 1;
             if (i && s21_is_set_bit(decimal.bits[i - 1], 31))
                 s21_set_bit(part, 0);
-            res->bits[i] = part;
+            res.bits[i] = part;
         }
         index--;
     }

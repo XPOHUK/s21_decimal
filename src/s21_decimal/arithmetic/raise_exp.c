@@ -36,7 +36,7 @@ s21_decimal raise_exp(s21_decimal decimal, s21_decimal* overflow) {
     shift1 = s21_decimal_shift_mant_left(decimal, 1, &over1);
     shift3 = s21_decimal_shift_mant_left(decimal, 3, &over3);
     res = s21_decimal_add_mant(shift1, shift3);
-    s21_decimal_set_power(res, s21_decimal_get_power(decimal) + 1);
+    s21_decimal_set_power(&res, s21_decimal_get_power(decimal) + 1);
     int over_res = s21_decimal_get_sign(res);
     if (overflow) {
         *overflow = s21_decimal_add_mant(over1, over3);

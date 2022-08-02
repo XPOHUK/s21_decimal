@@ -5,6 +5,7 @@
 #include "../helpers/helpers.h"
 #include "../binary/binary.h"
 #include "../arithmetic/arithmetic.h"
+#include <stdio.h>
 
 /**
  * @brief Функция производит целочисленное деление мантисс.
@@ -43,16 +44,16 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
         int shift_size = s21_decimal_get_not_zero_bit(dividend) - s21_decimal_get_not_zero_bit(divisor);
         // Потом сдвигаем
         // Переполнения быть не может поэтому третьим аргументом передаём null
-        s21_decimal shifted_divisor = s21_decimal_shift_mant_left(divisor, shift_size, null);
+        s21_decimal shifted_divisor = s21_decimal_shift_mant_left(divisor, shift_size, NULL);
         // Получаем обратный код делителя
-        shifted_b = s21_decimal_binary_not(shifted_divisor);
+        shifted_divisor = s21_decimal_binary_not(shifted_divisor);
         // Получаем дополнительный код делителя
         shifted_divisor = s21_decimal_add_mant(shifted_divisor, s21_decimal_get_one());
         // Тут должен начинаться цикл длительностью shift_size
         s21_decimal sum = s21_decimal_get_zero();
         for (int i = 0; i <= shift_size; i++) {
             // Сдвигаем результат для записи нового бита
-            *res = s21_decimal_shift_mant_left(*res, 1, null);
+            *res = s21_decimal_shift_mant_left(*res, 1, NULL);
             // Складываем делимое и дополнительный код делителя
             sum = s21_decimal_add_mant(dividend, shifted_divisor);
             // Если сумма (промежуточный остаток) больше или равна 0, то сохраняем её в качестве делимого,
@@ -63,13 +64,13 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
                 *res = s21_decimal_set_bit(*res, 0);
             }
             // Сдвигаем делимое на один разряд влево
-            dividend = s21_decimal_shift_mant_left(dividend, 1, null);
+            dividend = s21_decimal_shift_mant_left(dividend, 1, NULL);
         }
         if (s21_decimal_get_sign(sum))
             *remainder = dividend;
         else
             *remainder = sum;
-        *remainder = s21_decimal_shift_mant_right(*remainder, shift_size, null);
+        *remainder = s21_decimal_shift_mant_right(*remainder, shift_size);
     }
     return code;
 }
