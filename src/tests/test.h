@@ -27,9 +27,14 @@ Suite *from_decimal_to_float_suite6(void);
 Suite *from_decimal_to_float_suite7(void);
 Suite *from_decimal_to_float_suite8(void);
 
+Suite *is_greater_suite(void);
+Suite *is_equal_suite(void);
+
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
 Suite *truncate_suite2(void);
+
+Suite *negate_suite(void);
 
 #define TEST_CONVERSION_OK 0
 #define TEST_CONVERSION_ERROR 1
