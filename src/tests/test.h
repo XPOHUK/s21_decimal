@@ -33,6 +33,7 @@ Suite *is_equal_suite(void);
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
 Suite *truncate_suite2(void);
+Suite *truncate_suite3(void);
 
 Suite *negate_suite(void);
 
