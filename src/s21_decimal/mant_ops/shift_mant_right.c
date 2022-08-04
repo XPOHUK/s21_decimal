@@ -3,7 +3,7 @@
 //
 #include "./mant_ops.h"
 #include "../helpers/helpers.h"
-
+#include <stdio.h>
 
 /**
  * @brief Функция принимает на входе decimal, количество сдвигов.
@@ -14,18 +14,22 @@
  * @author Rambton Ovtime (rambtono@student.21-school.ru)
  */
 s21_decimal s21_decimal_shift_mant_right(s21_decimal decimal, int index) {
+    fprintf(stdout, "tut30\n");
+    fprintf(stdout, "tut31\n");
     s21_decimal res = decimal;
     s21_decimal_set_sign(&res, 0);
     s21_decimal_set_power(&res, 0);
     while (index > 0) {
-        for (int i = 2; i >= 0; i++) {
+        for (int i = 2; i >= 0; i--) {
             unsigned int part = res.bits[i];
             part = part << 1;
             if (i && s21_is_set_bit(decimal.bits[i - 1], 31))
                 s21_set_bit(part, 0);
-            res->bits[i] = part;
+            res.bits[i] = part;
         }
         index--;
     }
+    fprintf(stdout, "tut32\n");
+    fprintf(stdout, "tut33\n");
     return res;
 }

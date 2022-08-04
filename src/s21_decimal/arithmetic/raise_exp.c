@@ -19,29 +19,34 @@
  * 00011000 =
  * 00011110   30
  *
- * Т.к. оба сдвига могут вызывать переполнение, передаём в функцию сдвига пустой decimal для сохранения переполнений.
- * Сложение сдвигов также может вызвать переполнение, но не больше чем на один порядок. Его тоже сохраняем.
- * Если были переполнения, то суммируем их и записываем по указателю переданному в аргументах
- * Если в вызывающей функции переполнение не представляет интереса, то в аргументах будет передан null, поэтому
- * делаем предварительную проверку.
+ * Оба сдвига и их последующее сложение могут вызывать переполнение, в этом случае вернуть сигнал об ошибке.
  * @param decimal
  * @param overflow
- * @return Функция возвращает новый decimal
+ * @return Функция возвращает код
  * @author Rambton Ovtime (rambtono\@student.21-school.ru)
  */
-s21_decimal raise_exp(s21_decimal decimal, s21_decimal* overflow) {
+s21_decimal raise_exp(s21_decimal decimal, s21_decimal* result) {
+    s21_arithmetic_result code = S21_ARITHMETIC_BIG;
     s21_decimal shift1, shift3, res;
     s21_decimal over1 = s21_decimal_get_zero();
     s21_decimal over3 = s21_decimal_get_zero();
+    // Выполняем сдвиг на 1
     shift1 = s21_decimal_shift_mant_left(decimal, 1, &over1);
-    shift3 = s21_decimal_shift_mant_left(decimal, 3, &over3);
-    res = s21_decimal_add_mant(shift1, shift3);
-    s21_decimal_set_power(&res, s21_decimal_get_power(decimal) + 1);
-    int over_res = s21_decimal_get_sign(res);
-    if (overflow) {
-        *overflow = s21_decimal_add_mant(over1, over3);
-        if (over_res)
-            *overflow = s21_decimal_add_mant(*overflow, s21_decimal_get_one());
+    // Если переполнения не было, то продолжаем
+    if (s21_decimal_mant_is_zero(over1)) {
+        // Выполняем сдвиг на 3
+        shift3 = s21_decimal_shift_mant_left(decimal, 3, &over3);
+        // Если переполнения нет, продолжаем
+        if (s21_decimal_mant_is_zero(over3)) {
+            // Сложение
+            res = s21_decimal_add_mant(shift1, shift3);
+            // Если переполнения нет, увеличиваем значение экспонеты и сохраняем результат
+            if (s21_decimal_get_sign(decimal) == s21_decimal_get_sign(res)) {
+                s21_decimal_set_power(&res, s21_decimal_get_power(decimal) + 1);
+                *result = res;
+                code = S21_ARITHMETIC_OK;
+            }
+        }
     }
-    return res;
+    return code;
 }

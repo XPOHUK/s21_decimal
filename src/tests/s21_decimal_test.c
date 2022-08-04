@@ -12,12 +12,12 @@ int main(void) {
 
     srunner_add_suite(sr, from_int_to_decimal_suite());
 
-    srunner_add_suite(sr, from_float_to_decimal_suite());
+    // srunner_add_suite(sr, from_float_to_decimal_suite());
 
-    srunner_add_suite(sr, from_decimal_to_int_suite0());
-    srunner_add_suite(sr, from_decimal_to_int_suite1());
-    srunner_add_suite(sr, from_decimal_to_int_suite2());
-    srunner_add_suite(sr, from_decimal_to_int_suite3());
+//    srunner_add_suite(sr, from_decimal_to_int_suite0());
+//    srunner_add_suite(sr, from_decimal_to_int_suite1());
+//    srunner_add_suite(sr, from_decimal_to_int_suite2());
+//    srunner_add_suite(sr, from_decimal_to_int_suite3());
 
     srunner_add_suite(sr, from_decimal_to_float_suite1());
     srunner_add_suite(sr, from_decimal_to_float_suite2());
@@ -39,6 +39,8 @@ int main(void) {
     srunner_add_suite(sr, binary_division_suite4());
     srunner_add_suite(sr, binary_division_suite5());
     srunner_add_suite(sr, binary_division_suite6());
+
+    srunner_add_suite(sr, division_suite1());
 
     srunner_add_suite(sr, debug0());
     srunner_add_suite(sr, debug1());

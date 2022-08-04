@@ -9,7 +9,7 @@
  * @return int 
  */
 int s21_is_set_bit(int number, int index) {
-    return (number & (1 << index));
+    return (number & (1U << index)) >> index;
 }
 
 /**
@@ -21,7 +21,7 @@ int s21_is_set_bit(int number, int index) {
  * @return int 
  */
 int s21_set_bit(int number, int index) {
-    return number | (1 << index);
+    return number | (1U << index);
 }
 
 /**
@@ -33,7 +33,7 @@ int s21_set_bit(int number, int index) {
  * @return int 
  */
 int s21_inverse_bit(int number, int index) {
-    return number ^(1 << index);
+    return number ^(1U << index);
 }
 
 /**
@@ -45,7 +45,7 @@ int s21_inverse_bit(int number, int index) {
  * @return int 
  */
 int s21_reset_bit(int number, int index) {
-    return number &~(1 << index);
+    return number &~(1U << index);
 }
 
 /**
@@ -57,7 +57,7 @@ int s21_reset_bit(int number, int index) {
  * @param index номер проверяемого бита
  * @return int результат провреки:
  *          0 - бит не установлен.
- *          ненулевое значение - бит установлен.
+ *          1 - бит установлен.
  */
 int s21_decimal_is_set_bit(s21_decimal decimal, int index) {
     return s21_is_set_bit(decimal.bits[index / MAX_BLOCK_BITS], index % MAX_BLOCK_BITS);
