@@ -95,10 +95,10 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
     decimal_bit3 bits3;
     bits3.i = decimal->bits[3];
-    if (sign == 0) {
-        bits3.parts.sign = 0;
+    if (sign == S21_POSITIVE) {
+        bits3.parts.sign = S21_POSITIVE;
     } else {
-        bits3.parts.sign = 1;
+        bits3.parts.sign = S21_NEGATIVE;
     }
 
     decimal->bits[3] = bits3.i;
