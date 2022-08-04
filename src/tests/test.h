@@ -27,9 +27,15 @@ Suite *from_decimal_to_float_suite6(void);
 Suite *from_decimal_to_float_suite7(void);
 Suite *from_decimal_to_float_suite8(void);
 
+Suite *is_greater_suite(void);
+Suite *is_equal_suite(void);
+
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
 Suite *truncate_suite2(void);
+Suite *truncate_suite3(void);
+
+Suite *negate_suite(void);
 
 #define TEST_CONVERSION_OK 0
 #define TEST_CONVERSION_ERROR 1
@@ -83,5 +89,7 @@ void test_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotie
 
 double s21_random_double(double min, double max);
 int s21_random_int(int min, int max);
+int test_decimal_get_sign(s21_decimal value);
+int test_decimal_is_full_equal(s21_decimal value_1, s21_decimal value_2);
 
 #endif  // SRC_TESTS_TEST_H_

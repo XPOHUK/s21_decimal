@@ -9,10 +9,8 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-s21_decimal s21_ipow(s21_decimal base, int exp, int *error);
 
 int raise_exp(s21_decimal decimal, s21_decimal* result);
-
 
 /**
  * @brief коды ошибок арифметических операторов

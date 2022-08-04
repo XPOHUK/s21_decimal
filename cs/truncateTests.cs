@@ -70,9 +70,9 @@ class TruncateTests
             }
         }
 
-        decimal[] decimal_random = new decimal[100];
+        decimal[] decimal_random = new decimal[200];
         
-        for (int k = 0; k < 100; k++) {
+        for (int k = 0; k < 200; k++) {
             decimal_random[k] = randomDecimal();
         }
 
@@ -123,7 +123,11 @@ class TruncateTests
             1.1M, 12.12M, 123.123M, 1234.1234M, 12345.12345M, 123456.123456M, 1234567.1234567M, 1234567890.1234567890M, 12345678901234.12345678901234M,
             99M, 9.9M, 99.99M, 999.999M, 9999.9999M, 99999.99999M, 999999.999999M, 9999999.9999999M, 99999999.99999999M, 999999999.999999999M, 9999999999.9999999999M, 
             9M, 0.9M, 0.99M, 0.999M, 0.9999M, 0.99999M, 0.999999M, 0.9999999M, 0.99999999M, 0.999999999M, 0.9999999999M, 0.99999999999999999999M, 
-            new decimal (0, 0, 0, true, 0), new decimal (0, 0, 0, true, 1), new decimal (0, 0, 0, true, 2), new decimal (0, 0, 0, true, 14), new decimal (0, 0, 0, true, 27), new decimal (0, 0, 0, true, 28)
+            new decimal (0, 0, 0, true, 0), new decimal (0, 0, 0, true, 1), new decimal (0, 0, 0, true, 2), new decimal (0, 0, 0, true, 14), new decimal (0, 0, 0, true, 27), new decimal (0, 0, 0, true, 28),
+            0.5m, 0.49m, 0.51m, 0.49999999m, 0.4999999999999999999999999999M, 0.5000000000000000000000000001M, 0.5000000000000000000000000000M, 
+            0.99m, 0.999999999m, 0.9999999999999999999999999999M, 
+            1.0000000000000000000000000001M, 1.5m, 1.49m, 1.51m, 1.49999999m, 1.4999999999999999999999999999M, 1.5000000000000000000000000001M, 1.5000000000000000000000000000M, 
+            1.999999M, 1.9999999999999999999999999999M,
         };
         
         decimal[] result = new decimal[decimal_max.Length + numbers.Length + decimal_random.Length];
@@ -145,7 +149,7 @@ class TruncateTests
         
         Console.WriteLine("");
         Console.WriteLine("/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-        Console.WriteLine("Tests for correct data (automatic)");
+        Console.WriteLine("* Tests for correct data (automatic)");
         Console.WriteLine("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */");
         Console.WriteLine("");
         int i = 0;
@@ -162,7 +166,7 @@ class TruncateTests
         int suit_num = 1;
         foreach (decimal number in tests_ok) {
             if (i % 400 == 0) {
-                Console.WriteLine("Suite * truncate_suite{0}(void) {{", suit_num);
+                Console.WriteLine("Suite *truncate_suite{0}(void) {{", suit_num);
                 Console.WriteLine("    Suite *s;");
                 Console.WriteLine("    TCase *tc_core;");
                 Console.WriteLine("");
