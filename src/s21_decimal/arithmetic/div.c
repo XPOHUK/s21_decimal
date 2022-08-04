@@ -9,12 +9,9 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int exp_diff = s21_decimal_get_power(value_1) - s21_decimal_get_power(value_2);
     s21_decimal remainder = s21_decimal_get_zero();
     s21_decimal_div_mant(value_1, value_2, result, &remainder);
-    fprintf(stdout, "res bits in div = %u %u\n", result->bits[1], result->bits[0]);
-    fprintf(stdout, "remainder = %u %u\n", remainder.bits[1], remainder.bits[0]);
     s21_decimal temp_res = s21_decimal_get_zero();
     s21_decimal raised_res;
     if (!s21_decimal_mant_is_zero(remainder)) {
-        fprintf(stdout, "suda ne popal");
         while (!s21_decimal_mant_is_zero(remainder)) {
             // Умножаем остаток на 10. Пока так, потом переделать на умножение мантисс
             raise_exp(remainder, &remainder);  // TODO Rambton Ovtime

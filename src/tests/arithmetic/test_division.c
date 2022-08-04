@@ -5,7 +5,7 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-#define __DEBUG
+// #define __DEBUG
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -64,8 +64,7 @@ START_TEST(test_division_ok4) {
     s21_decimal divisor = {{0x0, 0xAAAAAAAA, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x4C336475, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-
+    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -79,8 +78,7 @@ START_TEST(test_division_ok5) {
     s21_decimal divisor = {{0xAAAAAAAA, 0x0, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x6F9BEBF5, 0x4C29401E, 0x204FCE5E, 0x001C0000}};
-
+    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -94,8 +92,7 @@ START_TEST(test_division_ok6) {
     s21_decimal divisor = {{0x0, 0x0, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x6FAB51D2, 0x4C29401E, 0x204FCE5E, 0x001C0000}};
-
+    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
 
     test_division(dividend, divisor, quotient);
 }

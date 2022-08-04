@@ -43,24 +43,22 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
         // Сдвиг делителя на уровень старшего значащего бита делимого
         // Сначала вычисляем размер сдвига
         int shift_size = s21_decimal_get_not_zero_bit(dividend) - s21_decimal_get_not_zero_bit(divisor);
-        fprintf(stdout, "shift_size = %d\n", shift_size);
+        // fprintf(stdout, "shift_size = %d\n", shift_size);
         // Потом сдвигаем
         // Переполнения быть не может поэтому третьим аргументом передаём null
         s21_decimal shifted_divisor = s21_decimal_shift_mant_left(divisor, shift_size, NULL);
         // Получаем обратный код делителя
-        fprintf(stdout, "shifted, reversed and added divisor:\n");
-        s21_print_decimal_bits(shifted_divisor);
+        // fprintf(stdout, "shifted, reversed and added divisor:\n");
+        // s21_print_decimal_bits(shifted_divisor);
         shifted_divisor = s21_decimal_binary_not(shifted_divisor);
-        s21_print_decimal_bits(shifted_divisor);
+        // s21_print_decimal_bits(shifted_divisor);
         // Получаем дополнительный код делителя
         shifted_divisor = s21_decimal_add_mant(shifted_divisor, s21_decimal_get_one());
-        s21_print_decimal_bits(shifted_divisor);
+        // s21_print_decimal_bits(shifted_divisor);
         // Тут должен начинаться цикл длительностью shift_size
         s21_decimal sum = s21_decimal_get_zero();
 
             for (int i = 0; i <= shift_size; i++) {
-                fprintf(stdout, "tut17\n");
-                fprintf(stdout, "tut18\n");
                 // Сдвигаем результат для записи нового бита
                 *res = s21_decimal_shift_mant_left(*res, 1, NULL);
                 // Складываем делимое и дополнительный код делителя
@@ -69,7 +67,6 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
                 // а в результат дописываем 1. Если же сумма отрицательная, то записывать ничего не надо -- там и так
                 // ноль после сдвига результата. И делимое тоже не меняем чтобы сдвинулось ещё на один порядок.
                 if (s21_decimal_get_sign(sum) == 0) {
-                    fprintf(stdout, "sum > 0\n");
                     dividend = sum;
                     *res = s21_decimal_set_bit(*res, 0);
                 }
@@ -77,8 +74,6 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
                 if (shift_size != 0) {
                     dividend = s21_decimal_shift_mant_left(dividend, 1, NULL);
                 }
-                fprintf(stdout, "loop number = %d\n", i);
-                fprintf(stdout, "res in div mant in loop = %u %u\n", res->bits[1], res->bits[0]);
             }
         if (s21_decimal_get_sign(sum))
             *remainder = dividend;
@@ -87,6 +82,6 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
         *remainder = s21_decimal_shift_mant_right(*remainder, shift_size);
 
     }
-    fprintf(stdout, "res in div mant = %u\n", res->bits[0]);
+    // fprintf(stdout, "res in div mant = %u\n", res->bits[0]);
     return code;
 }

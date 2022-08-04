@@ -14,13 +14,11 @@
  * @author Rambton Ovtime (rambtono@student.21-school.ru)
  */
 s21_decimal s21_decimal_add_mant(s21_decimal a, s21_decimal b) {
-    fprintf(stdout, "tut21\n");
-    fprintf(stdout, "tut22\n");
-    fprintf(stdout, "A, B and sum res in bits:\n");
+    // fprintf(stdout, "A, B and sum res in bits:\n");
     s21_decimal res = s21_decimal_get_zero();
     int carry = 0;
-    s21_print_decimal_bits(a);
-    s21_print_decimal_bits(b);
+    // s21_print_decimal_bits(a);
+    // s21_print_decimal_bits(b);
     for (int i = 0; i < 96; i++) {
         int a_bit = s21_decimal_is_set_bit(a, i);
         int b_bit = s21_decimal_is_set_bit(b, i);
@@ -31,6 +29,6 @@ s21_decimal s21_decimal_add_mant(s21_decimal a, s21_decimal b) {
     if (carry ^ s21_decimal_get_sign(a) ^ s21_decimal_get_sign(b)) {
         res = s21_decimal_set_bit(res, 127);
     }
-    s21_print_decimal_bits(res);
+    // s21_print_decimal_bits(res);
     return res;
 }
