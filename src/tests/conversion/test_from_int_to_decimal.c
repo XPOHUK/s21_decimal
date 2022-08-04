@@ -169,8 +169,10 @@ Suite *from_int_to_decimal_suite(void) {
 }
 
 void test_from_int_to_decimal(int number, s21_decimal decimal_check) {
-    s21_decimal decimal;
-    int result = s21_from_int_to_decimal(number, &decimal);
+    s21_decimal result;
+    int code = s21_from_int_to_decimal(number, &result);
+    int sign_check = test_decimal_get_sign(decimal_check);
+    int sign_result = test_decimal_get_sign(result);
 
     #if defined(__DEBUG)
     printf("---------------------------------\n");
@@ -179,13 +181,15 @@ void test_from_int_to_decimal(int number, s21_decimal decimal_check) {
     printf("Check:\n");
     s21_print_decimal_bits(decimal_check);
     s21_print_decimal_string(decimal_check);
+    printf("sign = %d\n", sign_check);
     printf("Result:\n");
-    s21_print_decimal_bits(decimal);
-    s21_print_decimal_string(decimal);
+    s21_print_decimal_bits(result);
+    s21_print_decimal_string(result);
+    printf("sign = %d\n", sign_check);
     printf("---------------------------------\n");
     #endif
 
-    ck_assert_int_eq(result, TEST_CONVERSION_OK);
-    ck_assert_int_eq(s21_is_equal(decimal, decimal_check), 1);
-    ck_assert_int_eq(s21_decimal_get_sign(decimal), s21_decimal_get_sign(decimal_check));
+    ck_assert_int_eq(code, TEST_CONVERSION_OK);
+    ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);
+    ck_assert_int_eq(sign_check, sign_result);
 }

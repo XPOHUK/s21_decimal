@@ -35,6 +35,7 @@ int main(void) {
     srunner_add_suite(sr, truncate_suite0());
     srunner_add_suite(sr, truncate_suite1());
     srunner_add_suite(sr, truncate_suite2());
+    srunner_add_suite(sr, truncate_suite3());
 
     srunner_add_suite(sr, negate_suite());
 

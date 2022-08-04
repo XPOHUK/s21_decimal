@@ -133,6 +133,19 @@ void s21_clear_decimal(s21_decimal *decimal) {
 }
 
 /**
+ * @brief формирует и возвращает число (0) в виде decimal
+ * 
+ * @author Hubert Furr (hubertfu@student.21-school.ru)
+ * @return s21_decimal число (0)
+ */
+s21_decimal s21_decimal_get_zero(void) {
+    s21_decimal result;
+    s21_clear_decimal(&result);
+
+    return result;
+}
+
+/**
  * @brief формирует и возвращает число (1) в виде decimal
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
@@ -147,28 +160,24 @@ s21_decimal s21_decimal_get_one(void) {
 }
 
 /**
- * @brief формирует и возвращает число (2) в виде decimal
- * 
+ * @brief возвращает 2 в степени pow в виде числа decimal
+ * Допустимый диапазон для pow - [-95, 95]. Валидация данных не осуществляется и должна производится
+ * перед вызовом функции
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @return s21_decimal число (1)
+ * @param pow требуемая степень числа 2 (в диапазоне [-95, 95])
+ * @return s21_decimal 2^pow
  */
-s21_decimal s21_decimal_get_two(void) {
+s21_decimal s21_decimal_get_two_pow(int pow) {
     s21_decimal result;
     s21_clear_decimal(&result);
-    result.bits[0] = 2;
 
-    return result;
-}
-
-/**
- * @brief формирует и возвращает число (0) в виде decimal
- * 
- * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @return s21_decimal число (0)
- */
-s21_decimal s21_decimal_get_zero(void) {
-    s21_decimal result;
-    s21_clear_decimal(&result);
+    if (pow < 0) {
+        pow = -pow;
+        result = all_two_pows_neg[pow];
+    } else {
+        result = all_two_pows_pos[pow];
+    }
 
     return result;
 }
@@ -222,6 +231,12 @@ s21_decimal s21_decimal_get_int_max(void) {
 s21_decimal s21_decimal_get_int_min(void) {
     // MIN_INT = -2147483648
     s21_decimal result = {{0x80000000, 0x0, 0x0, 0x80000000}};
+
+    return result;
+}
+
+s21_decimal s21_decimal_get_inf(void) {
+    s21_decimal result = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x7FFFFFFF}};
 
     return result;
 }

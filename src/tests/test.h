@@ -33,6 +33,7 @@ Suite *is_equal_suite(void);
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
 Suite *truncate_suite2(void);
+Suite *truncate_suite3(void);
 
 Suite *negate_suite(void);
 
@@ -84,5 +85,6 @@ void test_debug(s21_decimal decimal, char *check);
 
 double s21_random_double(double min, double max);
 int s21_random_int(int min, int max);
+int test_decimal_get_sign(s21_decimal value);
 
 #endif  // SRC_TESTS_TEST_H_

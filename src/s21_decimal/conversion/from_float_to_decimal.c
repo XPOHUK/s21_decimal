@@ -60,7 +60,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         // Если указатель на decimal является NULL
         code = S21_CONVERSION_ERROR;
     } else if (src == 0.0) {
-        // Отдельно обрабатываем 0.0, чтобы не выполять лишних вычислений
+        // Отдельно обрабатываем 0.0, чтобы не выполнять лишних вычислений
         code = S21_CONVERSION_OK;
         *dst = s21_decimal_get_zero();
         if (signbit(src) != 0) {
@@ -70,11 +70,17 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
     } else if (isinf(src) || isnan(src)) {
         // Отдельно обрабатываем +inf, -inf, +nan, и -nan
         code = S21_CONVERSION_ERROR;
-        *dst = s21_decimal_get_zero();
+        *dst = s21_decimal_get_inf();
+        if (signbit(src) != 0) {
+            s21_decimal_set_sign(dst, S21_NEGATIVE);
+        }
     } else if (fabsf(src) > MAX_FLOAT_TO_CONVERT) {
         // MAX_FLOAT_TO_CONVERT - максимальное число, которое можно сконвертировать в decimal
         code = S21_CONVERSION_ERROR;
-        *dst = s21_decimal_get_zero();
+        *dst = s21_decimal_get_inf();
+        if (signbit(src) != 0) {
+            s21_decimal_set_sign(dst, S21_NEGATIVE);
+        }
     } else if (fabsf(src) < MIN_FLOAT_TO_CONVERT) {
         // MIN_FLOAT_TO_CONVERT - минимальное число, которое можно сконвертировать в decimal
         code = S21_CONVERSION_ERROR;
@@ -92,17 +98,16 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         // Получаем значение степени  числа src (типа float)
         int float_exponent = cast.parts.exponent - 127;
 
-        s21_decimal two = s21_decimal_get_two();
         // Начинаем считать мантиссу float src
         // Сначала прибавляем целую часть мантиссы, которая всегда 1
         result = s21_decimal_get_one();
 
         // Далее считаем дробную часть мантиссы
-        // Тут и далее не контролируем ошибки вычисления s21_ipow, т.к. мы не выйдем никогда
-        // за границы decimal (мы отсекли большие и маленькие float в самом начале функции)
+        // Тут и далее не контролируем ошибки выход за пределы s21_decimal_get_two_pow(), т.к. мы не выйдем
+        // никогда за границы decimal (мы отсекли большие и маленькие float в самом начале функции)
         for (int i = 0; i < (int)strlen(float_bits_str); i++) {
             if (float_bits_str[i] == '1') {
-                s21_decimal tmp = s21_ipow(two, -i - 1, NULL);
+                s21_decimal tmp = s21_decimal_get_two_pow(-i - 1);
                 s21_add(result, tmp, &result);
             }
         }
@@ -112,22 +117,16 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
             s21_decimal_set_sign(&result, S21_NEGATIVE);
         }
 
-        // На первый взгляд можно сделать проще:
-        // s21_decimal powtwo = s21_ipow(two, float_exponent, NULL);
-        // s21_mul(result, powtwo, &result);
-        // Однако это добавляет дополнительный этап вычисления при float_exponent < 0 и для маленьких чисел
-        // порождает ошибку округления, которая может изменить результат работы функции
-        // (подумайте самостоятельно о чем я)
-        // Поэтому отдельно считаем для отрицательных и положительных степеней
+        // Считаем результат умножения мантиссы на степень
+        // Отдельно для отрицательных и положительных степеней
         if (float_exponent < 0) {
-            s21_decimal powtwo = s21_ipow(two, -float_exponent, NULL);
-            s21_div(result, powtwo, &result);
+            s21_div(result, s21_decimal_get_two_pow(-float_exponent), &result);
         } else {
-            s21_decimal powtwo = s21_ipow(two, float_exponent, NULL);
-            s21_mul(result, powtwo, &result);
+            s21_mul(result, s21_decimal_get_two_pow(float_exponent), &result);
         }
 
         *dst = result;
     }
+
     return code;
 }

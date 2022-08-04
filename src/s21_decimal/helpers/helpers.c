@@ -14,16 +14,18 @@
  * @return int 1 - ок, 0 - некорректные данные
  */
 int s21_is_correct_decimal(s21_decimal decimal) {
+    int code = 1;
+
     if (s21_decimal_get_empty1(decimal) != 0 || s21_decimal_get_empty2(decimal) != 0) {
-        return 0;
+        code = 0;
+    } else {
+        int power = s21_decimal_get_power(decimal);
+        if (power < 0 || power > 28) {
+            code = 0;
+        }
     }
 
-    int power = s21_decimal_get_power(decimal);
-    if (power < 0 || power > 28) {
-        return 0;
-    }
-
-    return 1;
+    return code;
 }
 
 /**
@@ -93,10 +95,10 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
     decimal_bit3 bits3;
     bits3.i = decimal->bits[3];
-    if (sign == 0) {
-        bits3.parts.sign = 0;
+    if (sign == S21_POSITIVE) {
+        bits3.parts.sign = S21_POSITIVE;
     } else {
-        bits3.parts.sign = 1;
+        bits3.parts.sign = S21_NEGATIVE;
     }
 
     decimal->bits[3] = bits3.i;
