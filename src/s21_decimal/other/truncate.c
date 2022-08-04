@@ -5,7 +5,7 @@
 #include "./other.h"
 
 /**
- * @brief Возвращает целые цифры указанного Decimal числа.
+ * @brief Возвращает целые цифры числа value.
  * Любые дробные цифры отбрасываются, включая конечные нули.
  *
  * 123.999 -> 123
@@ -32,17 +32,19 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
     s21_other_result code = S21_OTHER_OK;
 
     if (!result) {
+        // Если указатель на decimal является NULL
         code = S21_OTHER_ERROR;
     } else if (!s21_is_correct_decimal(value)) {
+        // Проверяем, что value является корректными decimal
         code = S21_OTHER_ERROR;
-        *result = s21_decimal_get_zero();
+        *result = s21_decimal_get_inf();
     } else {
+        // В остальных случаях производим расчет
         *result = s21_decimal_get_zero();
-
+        int power = s21_decimal_get_power(value);
         s21_decimal tmp = value;
         s21_decimal_null_service_bits(&tmp);
 
-        int power = s21_decimal_get_power(value);
         tmp = s21_decimal_binary_division(tmp, s21_decimal_get_ten_pow(power), NULL);
 
         *result = tmp;

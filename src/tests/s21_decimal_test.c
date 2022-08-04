@@ -10,24 +10,24 @@ int main(void) {
 
     sr = srunner_create(NULL);
 
-    srunner_add_suite(sr, from_int_to_decimal_suite());
+    // srunner_add_suite(sr, from_int_to_decimal_suite());
 
-    srunner_add_suite(sr, from_float_to_decimal_suite());
+    // srunner_add_suite(sr, from_float_to_decimal_suite());
 
-    srunner_add_suite(sr, from_decimal_to_int_suite0());
-    srunner_add_suite(sr, from_decimal_to_int_suite1());
-    srunner_add_suite(sr, from_decimal_to_int_suite2());
-    srunner_add_suite(sr, from_decimal_to_int_suite3());
+    // srunner_add_suite(sr, from_decimal_to_int_suite0());
+    // srunner_add_suite(sr, from_decimal_to_int_suite1());
+    // srunner_add_suite(sr, from_decimal_to_int_suite2());
+    // srunner_add_suite(sr, from_decimal_to_int_suite3());
 
-    srunner_add_suite(sr, from_decimal_to_float_suite1());
-    srunner_add_suite(sr, from_decimal_to_float_suite2());
-    srunner_add_suite(sr, from_decimal_to_float_suite3());
-    srunner_add_suite(sr, from_decimal_to_float_suite4());
-    srunner_add_suite(sr, from_decimal_to_float_suite5());
-    srunner_add_suite(sr, from_decimal_to_float_suite6());
-    srunner_add_suite(sr, from_decimal_to_float_suite7());
-    srunner_add_suite(sr, from_decimal_to_float_suite8());
-    srunner_add_suite(sr, from_decimal_to_float_suite0());
+    // srunner_add_suite(sr, from_decimal_to_float_suite1());
+    // srunner_add_suite(sr, from_decimal_to_float_suite2());
+    // srunner_add_suite(sr, from_decimal_to_float_suite3());
+    // srunner_add_suite(sr, from_decimal_to_float_suite4());
+    // srunner_add_suite(sr, from_decimal_to_float_suite5());
+    // srunner_add_suite(sr, from_decimal_to_float_suite6());
+    // srunner_add_suite(sr, from_decimal_to_float_suite7());
+    // srunner_add_suite(sr, from_decimal_to_float_suite8());
+    // srunner_add_suite(sr, from_decimal_to_float_suite0());
 
     srunner_add_suite(sr, is_greater_suite());
     srunner_add_suite(sr, is_equal_suite());

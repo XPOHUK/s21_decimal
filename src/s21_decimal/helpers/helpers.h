@@ -23,6 +23,7 @@ s21_decimal s21_decimal_get_ten(void);
 s21_decimal s21_decimal_get_ten_pow(int pow);
 s21_decimal s21_decimal_get_int_max(void);
 s21_decimal s21_decimal_get_int_min(void);
+s21_decimal s21_decimal_get_inf(void);
 
 void s21_decimal_null_service_bits(s21_decimal *value);
 

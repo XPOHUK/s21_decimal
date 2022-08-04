@@ -84,5 +84,6 @@ void test_debug(s21_decimal decimal, char *check);
 
 double s21_random_double(double min, double max);
 int s21_random_int(int min, int max);
+int test_decimal_get_sign(s21_decimal value);
 
 #endif  // SRC_TESTS_TEST_H_

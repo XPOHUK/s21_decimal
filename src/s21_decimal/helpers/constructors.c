@@ -225,3 +225,9 @@ s21_decimal s21_decimal_get_int_min(void) {
 
     return result;
 }
+
+s21_decimal s21_decimal_get_inf(void) {
+    s21_decimal result = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x7FFFFFFF}};
+
+    return result;
+}
