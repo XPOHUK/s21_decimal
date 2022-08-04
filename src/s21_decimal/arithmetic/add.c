@@ -44,10 +44,31 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             int exp_diff = s21_decimal_get_power(second) - s21_decimal_get_power(to_raise);
             // Надо второе число поделить с остатком на 10 в степени разницы
             s21_decimal div_res = s21_decimal_get_zero();
-            s21_decimal reminder = s21_decimal_get_zero();
-            int div_code = s21_decimal_div_mant(second, s21_decimal_get_ten_pow(exp_diff), &div_res, &reminder);
+            s21_decimal remainder = s21_decimal_get_zero();
+            s21_arithmetic_result div_code = s21_decimal_div_mant(second, s21_decimal_get_ten_pow(exp_diff - 1), &div_res, &remainder);
+            if (div_code == S21_ARITHMETIC_OK) {
+                s21_decimal second_div_res = s21_decimal_get_zero();
+                s21_decimal second_remainder = s21_decimal_get_zero();
+                s21_arithmetic_result second_div_code = s21_decimal_div_mant(div_res, s21_decimal_get_ten(),
+                                                                             &second_div_res, &second_remainder);
+                if (second_div_code == S21_ARITHMETIC_OK) {
+                    if ((second_remainder.bits[0] == 5 && !s21_decimal_mant_is_zero(remainder)) ||
+                        s21_decimal_is_set_bit(second_div_res, 0)) {
+                        second_div_res = s21_decimal_add_mant(second_div_res, s21_decimal_get_one());
+                    }
+                    second = second_div_res;
+                } else {
+                    // Ошибка деления
+                }
+            } else {
+                // Ошибка деления
+            }
         }
     }
     *result = s21_decimal_add_mant(to_raise, second);
+    if ((s21_decimal_get_sign(to_raise) ^ s21_decimal_get_sign(second)) != s21_decimal_get_sign(*result)) {
+        // Произошло переполнение при сложении мантисс, но если есть экспонента, значит можно округлить
+
+    }
     return code;
 }

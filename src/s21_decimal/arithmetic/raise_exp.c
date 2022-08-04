@@ -25,7 +25,7 @@
  * @return Функция возвращает код
  * @author Rambton Ovtime (rambtono\@student.21-school.ru)
  */
-s21_decimal raise_exp(s21_decimal decimal, s21_decimal* result) {
+int raise_exp(s21_decimal decimal, s21_decimal* result) {
     s21_arithmetic_result code = S21_ARITHMETIC_BIG;
     s21_decimal shift1, shift3, res;
     s21_decimal over1 = s21_decimal_get_zero();

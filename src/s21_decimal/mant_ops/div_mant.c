@@ -24,27 +24,17 @@
  */
 int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal* res, s21_decimal* remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    fprintf(stdout, "tut7\n");
-    fprintf(stdout, "tut8\n");
     if (s21_decimal_mant_is_zero(divisor)) {
-        fprintf(stdout, "tut9\n");
-        fprintf(stdout, "tut10\n");
         code = S21_ARITHMETIC_ZERO_DIV;  // Обработка деления на 0
     } else if (s21_decimal_mant_is_zero(dividend)) {
-        fprintf(stdout, "tut11\n");
-        fprintf(stdout, "tut12\n");
         // Обработка деления нуля
         *res = s21_decimal_get_zero();
         *remainder = s21_decimal_get_zero();
     } else if (s21_decimal_mant_compare(divisor, dividend) == 1) {
-        fprintf(stdout, "tut13\n");
-        fprintf(stdout, "tut14\n");
         // Делитель больше делимого
         *res = s21_decimal_get_zero();
         *remainder = dividend;
     } else {
-        fprintf(stdout, "tut15\n");
-        fprintf(stdout, "tut16\n");
         // Зануляем экспоненты и знаки
         s21_decimal_set_power(&dividend, 0);
         s21_decimal_set_power(&divisor, 0);

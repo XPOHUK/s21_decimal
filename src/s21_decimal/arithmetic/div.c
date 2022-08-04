@@ -13,17 +13,16 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     fprintf(stdout, "remainder = %u %u\n", remainder.bits[1], remainder.bits[0]);
     s21_decimal temp_res = s21_decimal_get_zero();
     s21_decimal raised_res;
-    s21_decimal overflow = s21_decimal_get_zero();
     if (!s21_decimal_mant_is_zero(remainder)) {
         fprintf(stdout, "suda ne popal");
         while (!s21_decimal_mant_is_zero(remainder)) {
             // Умножаем остаток на 10. Пока так, потом переделать на умножение мантисс
-            remainder = raise_exp(remainder, NULL);  // TODO Rambton Ovtime
+            raise_exp(remainder, &remainder);  // TODO Rambton Ovtime
             // Делим увеличенный остаток на делитель
             s21_decimal_div_mant(remainder, value_2, &temp_res, &remainder);
-            // Умножаем основной результат на 10 чтобы дописать к нему цифру. Результат умноженияя сохраняем во временный
-            raised_res = raise_exp(*result, &overflow);
-            if (s21_decimal_mant_is_zero(overflow)) {
+            // Умножаем основной результат на 10 чтобы дописать к нему цифру.
+            int raise_code = raise_exp(*result, &raised_res);
+            if (raise_code == S21_ARITHMETIC_OK) {
                 // Переполнения результата нет, дописываем цифру
                 *result = s21_decimal_add_mant(raised_res, temp_res);
                 // И сохраняем экспоненту, которая была повышена тремя строками выше, но обнулена при сложении мантисс
