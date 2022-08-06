@@ -14,11 +14,12 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     if (!s21_decimal_mant_is_zero(remainder)) {
         while (!s21_decimal_mant_is_zero(remainder)) {
             // Умножаем остаток на 10. Пока так, потом переделать на умножение мантисс
-            raise_exp(remainder, &remainder);  // TODO Rambton Ovtime
+            s21_arithmetic_result raise_code = raise_exp(remainder, &remainder);  // TODO Rambton Ovtime
+            if (raise_code == S21_ARITHMETIC_OK) {
             // Делим увеличенный остаток на делитель
             s21_decimal_div_mant(remainder, value_2, &temp_res, &remainder);
             // Умножаем основной результат на 10 чтобы дописать к нему цифру.
-            int raise_code = raise_exp(*result, &raised_res);
+            raise_code = raise_exp(*result, &raised_res);
             if (raise_code == S21_ARITHMETIC_OK) {
                 // Переполнения результата нет, дописываем цифру
                 *result = s21_decimal_add_mant(raised_res, temp_res);

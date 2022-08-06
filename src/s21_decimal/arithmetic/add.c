@@ -68,7 +68,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     *result = s21_decimal_add_mant(to_raise, second);
     if ((s21_decimal_get_sign(to_raise) ^ s21_decimal_get_sign(second)) != s21_decimal_get_sign(*result)) {
         // Произошло переполнение при сложении мантисс, но если есть экспонента, значит можно округлить
-
     }
+    s21_decimal_set_power(result, s21_decimal_get_power(second));
     return code;
 }
