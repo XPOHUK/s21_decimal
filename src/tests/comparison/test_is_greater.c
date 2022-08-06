@@ -52,8 +52,8 @@ START_TEST(s21_is_greater_5) {
 END_TEST
 
 START_TEST(s21_is_greater_6) {
-  s21_decimal value_1 = {{0x7FFFFFFF, 0x0, 0x0, 0x80000000}};
-  s21_decimal value_2 = {{0x80000000, 0x0, 0x0, 0x80000000}};
+  s21_decimal value_1 = {{0x1, 0x0, 0x0, 0x80000000}};
+  s21_decimal value_2 = {{0x3E8, 0x0, 0x0, 0x80000000}};
   s21_decimal_set_sign(&value_1, 1);
   s21_decimal_set_sign(&value_2, 1);
 

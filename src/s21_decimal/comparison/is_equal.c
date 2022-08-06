@@ -1,11 +1,20 @@
 #include "./comparison.h"
-#include "./../helpers/helpers.h"
-
+/**
+ * @file is_equal.c
+ * @author Isle Annamae (isleanna@student.21-school.ru)
+ * @brief Возвращает значение, определяющее, равны ли два значения Decimal.
+ * Сравниваются младшие, средние, старшие и служебные биты двух значений Decimal.
+ * @param value_1 Первое сравниваемое значение.
+ * @param value_2 Второе сравниваемое значение.
+ * @return Код возврата:
+ *         0 - FALSE
+ *         1 - TRUE
+ */
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
 
     // if (s21_decimal_get_power(value_1) != s21_decimal_get_power(value_2)) {
-    //     функция для выравнивания степеней(&value_1, &value_2);
+    //     Здесь необходима функция для выравнивания степеней(&value_1, &value_2);
     // }
 
     if (value_1.bits[0] == value_2.bits[0] &&

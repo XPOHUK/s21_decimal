@@ -28,6 +28,7 @@ Suite *from_decimal_to_float_suite7(void);
 Suite *from_decimal_to_float_suite8(void);
 
 Suite *is_greater_suite(void);
+Suite *is_less_suite(void);
 Suite *is_equal_suite(void);
 
 Suite *truncate_suite0(void);
