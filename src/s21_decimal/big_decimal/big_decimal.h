@@ -32,5 +32,11 @@ big_decimal big_decimal_incr(big_decimal in);
 big_decimal big_decimal_shift_left(big_decimal in, int shifts);
 big_decimal big_decimal_shift_right(big_decimal in, int shifts);
 
+int big_decimal_div(big_decimal in, big_decimal divisor, big_decimal *result, big_decimal *remainder);
+
 s21_decimal big_decimal_round_to_decimal(big_decimal in);
+
+int big_decimal_is_zero(big_decimal in);
+int big_decimal_get_exp(big_decimal in);
+void big_decimal_set_exp(big_decimal in, int exp);
 #endif //DECIMAL_BIG_DECIMAL_H

@@ -1,5 +1,6 @@
 #include "big_decimal.h"
 #include "../helpers/helpers.h"
+#include "../mant_ops/mant_ops.h"
 
 /**
  * @brief Функция возвращает big_decimal с одним единственным битом выставленным по индексу. Такое число удобно для
@@ -92,4 +93,16 @@ big_decimal big_decimal_get_zero(void) {
  */
 big_decimal big_decimal_to_twos_complement(big_decimal direct_code) {
     return big_decimal_incr(big_decimal_not(direct_code));
+}
+
+int big_decimal_is_zero(big_decimal in) {
+    return s21_decimal_mant_is_zero(in.low) && s21_decimal_mant_is_zero(in.over);
+}
+
+int big_decimal_get_exp(big_decimal in) {
+    return s21_decimal_get_power(in.low);
+}
+
+void big_decimal_set_exp(big_decimal in, int exp) {
+    s21_decimal_set_power(&(in.low), exp)
 }
