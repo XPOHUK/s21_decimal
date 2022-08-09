@@ -2,6 +2,27 @@
 #include "../helpers/helpers.h"
 #include "../mant_ops/mant_ops.h"
 
+big_decimal decimal_to_big_decimal(s21_decimal in) {
+    big_decimal result = big_decimal_get_zero();
+    result.parts[0] = (unsigned int)in.bits[0];
+    result.parts[1] = (unsigned int)in.bits[1];
+    result.parts[2] = (unsigned int)in.bits[2];
+    result.parts[6] = (unsigned int)in.bits[3];
+    if (s21_decimal_get_sign(in))
+        result = big_decimal_change_sign(result);
+    return result;
+}
+
+s21_decimal big_decimal_to_decimal(big_decimal in) {
+    s21_decimal result = s21_decimal_get_zero();
+    result.bits[0] = in.parts[0];
+    result.bits[1] = in.parts[1];
+    result.bits[2] = in.parts[2];
+    // Теперь прописать экспоненту и знак
+    s21_decimal_set_power(&result, big_decimal_get_exp(in));
+    s21_decimal_set_sign(&result, big_decimal_get_sign(in));
+}
+
 /**
  * @brief Функция возвращает big_decimal с одним единственным битом мантиссы выставленным по индексу. Такое число
  * удобно для проверки, установки или переворачивания одного бита другого числа.
@@ -129,4 +150,13 @@ void big_decimal_set_exp(big_decimal* in, int exp) {
     unsigned int sign = big_decimal_get_sign(*in);
     (*in).parts[6] = ((unsigned int)exp) << 16;
     *in = big_decimal_set_sign(*in, sign);
+}
+
+unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
+    unsigned int i = 191;
+    for (; i >=0; i--) {
+        if (big_decimal_is_set_bit(in, i))
+            break;
+    }
+    return i;
 }
