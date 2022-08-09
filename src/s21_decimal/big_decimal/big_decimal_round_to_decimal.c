@@ -23,7 +23,7 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
     // Теория проверена на бумаге до bits_to_round < 24
     big_decimal divisor = big_decimal_get_zero();
     int ten_exp = bits_to_round / 3 - 1;
-    divisor.low = *(all_ten_pows[ten_exp]);
+    divisor.low = all_ten_pows[ten_exp];
     // Используем деление нацело с остатком
     big_decimal result = big_decimal_get_zero();
     big_decimal remainder = big_decimal_get_zero();
@@ -46,7 +46,7 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         // Получить первую округляемую цифру
         big_decimal first = big_decimal_get_zero();
         big_decimal tmp_remainder = big_decimal_get_zero();
-        divisor.low = *(all_ten_pows[ten_exp - 1]);
+        divisor.low = all_ten_pows[ten_exp - 1];
         big_decimal_div(remainder, divisor, &first, &tmp_remainder);
         if (first.low.bits[0] > 5 ||
             (first.low.bits[0] == 5 &&
@@ -54,7 +54,7 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
             result = big_decimal_incr(result);
         }
         // Не забыть проставить экспоненту
-        big_decimal_set_exp(result, big_decimal_get_exp(result) - ten_exp);
+        big_decimal_set_exp(&result, big_decimal_get_exp(result) - ten_exp);
     }
     *res = in.low;
     return code;
