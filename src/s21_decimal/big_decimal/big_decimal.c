@@ -46,6 +46,7 @@ unsigned int big_decimal_is_set_bit(big_decimal in, int index) {
 /**
  * @brief Функция устанваливает в указанный бит мантиссы 1, если там был 0, либо ничего не делает.
  * (x OR y) = NOT(NOT(x) AND NOT(y))
+ * Экспонента и знак не затрагиваются
  * @param in
  * @param index Индекс бита.
  * @return

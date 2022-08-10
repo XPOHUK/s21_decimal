@@ -45,6 +45,8 @@ int big_decimal_get_exp(big_decimal in);
 void big_decimal_set_exp(big_decimal* in, int exp);
 unsigned int big_decimal_get_not_zero_bit(big_decimal in);
 
-big_decimal big_decimal_add_mant(big_decimal first, big_decimal second);
+void big_decimal_balance_exp(big_decimal* first, big_decimal* second);
+big_decimal big_decimal_add(big_decimal first, big_decimal second);
+big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second);
 big_decimal big_decimal_mul_mant(big_decimal first, big_decimal second);
 #endif //DECIMAL_BIG_DECIMAL_H
