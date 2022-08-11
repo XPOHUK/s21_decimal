@@ -22,14 +22,13 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         // Опытным путём получено, что если поделить это количество на 3 и отбросить остаток, то получим верхний уровень
         // округления в десятичных знаках. Но сначала можно проверить нижний -- возможно впишется в разрядную сетку.
         // Теория проверена на бумаге до bits_to_round < 24
-        big_decimal divisor = big_decimal_get_zero();
+        big_decimal divisor;
         int ten_exp = bits_to_round / 3 - 1;
         divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);
         // Используем деление нацело с остатком
         big_decimal result = big_decimal_get_zero();
         big_decimal remainder = big_decimal_get_zero();
         big_decimal_div(in, divisor, &result, &remainder);
-        // Тут надо переделать например на проверку первого ненулевого бита
         if (big_decimal_get_not_zero_bit(in) - 95 > 0) {
             ten_exp++;
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);

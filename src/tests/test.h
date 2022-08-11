@@ -77,12 +77,14 @@ Suite *debug2(void);
 Suite *debug3(void);
 
 Suite *division_suite1(void);
+Suite *addition_suite1(void);
 
 void test_binary_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient,
                           s21_decimal remainder);
 void test_debug(s21_decimal decimal, char *check);
 
 void test_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient);
+void test_addition(s21_decimal first, s21_decimal second, s21_decimal res);
 
 // Количество случайных тестов одного типа
 #define NUM_RANDOM_TEST 25

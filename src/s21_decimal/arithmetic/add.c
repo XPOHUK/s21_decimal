@@ -13,20 +13,50 @@
  */
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    s21_decimal res = s21_decimal_get_zero();
-    if (s21_decimal_get_sign(value_1)) {
-        if (s21_decimal_get_sign(value_2)) {
-            s21_decimal_set_sign(&value_1, 0);
-            s21_decimal_set_sign(&value_2, 0);
-            code = s21_add(value_1, value_2, &res);
-            if (code == S21_ARITHMETIC_OK)
-        } else {
-            code = s21_add(value_2, value_1, &res);
+    big_decimal big_decimal1 = decimal_to_big_decimal(value_1);
+    big_decimal big_decimal2 = decimal_to_big_decimal(value_2);
+    big_decimal big_decimal1_abs = big_decimal_set_sign(big_decimal1, 0);
+    big_decimal big_decimal2_abs = big_decimal_set_sign(big_decimal2, 0);
+    int value_1_sign = s21_decimal_get_sign(value_1);
+    int value_2_sign = s21_decimal_get_sign(value_2);
+    big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
+    int res_sign = big_decimal_get_sign(res);
+    // Оценка результата
+    // С правильными кодами ошибок ещё надо разобраться
+    if (value_1_sign == value_2_sign) {  // Если знаки аргументов одинаковые
+        if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {  // но не совпадают со знаком результата
+            code = S21_ARITHMETIC_BIG;  // значит произошло переполнение мантиссы
         }
-    } else {
-        big_decimal big_val1 = decimal_to_big_decimal(value_1);
-        big_decimal big_val2 = decimal_to_big_decimal(value_2);
-        big_decimal res = big_decimal_add(big_val1, big_val2);
+    } else if (value_1_sign){  // Если первый аргумент отрицательный
+        if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // и по модулю меньше второго
+            // знак результата должен быть положительный
+            if (res_sign) {
+                // знак результата отрицательный, неудача
+            }
+        } else if (big_decimal_compare(big_decimal1_abs, big_decimal2_abs)) {  // если же больше
+            // знак результата должен быть отрицательный
+            if (!res_sign) {
+                // знак результата положительный, неудача
+            }
+        } else {  // в этом случае результат должен быть 0
+
+        }
+    } else {  // Если второй аргумент отрицательный
+        if (big_decimal_compare(big_decimal1_abs, big_decimal2_abs)) {  // и по модулю меньше первого
+            // знак результата должен быть положительный
+            if (res_sign) {
+                // знак результата отрицательный, неудача
+            }
+        } else if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // если же больше
+            // знак результата должен быть отрицательный
+            if (!res_sign) {
+                // знак результата положительный, неудача
+            }
+        }
+    }
+    // Если код результата остался ОК, то можно попробовать округлить до decimal
+    if (code == S21_ARITHMETIC_OK) {
+        code = big_decimal_round_to_decimal(res, result);
     }
     return code;
 }

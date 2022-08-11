@@ -7,11 +7,27 @@
 
 #include "../types.h"
 
-// 0,1,2 -- соответствующие части decimal. Четвёртый int записываем в parts[6] и переставляем или дублируем
-// знаковый бит из 31 в 0
+/**
+ * @brief 0,1,2 -- соответствующие части decimal. Четвёртый int записываем в parts[6] и переставляем или дублируем
+ * знаковый бит из 31 в 0
+ */
 typedef struct big_decimal {
     unsigned int parts[7];
 } big_decimal;
+
+/**
+ * @brief коды результатов сравнения
+ * 0 -- EQUAL
+ * 1 -- FIRST > SECOND
+ * -1 -- FIRST < SECOND
+ */
+typedef enum big_decimal_comparison_result {
+    BIG_DECIMAL_COMPARISON_EQUAL = 0,
+    BIG_DECIMAL_COMPARISON_FIRST_GREATER = 1,
+    BIG_DECIMAL_COMPARISON_SECOND_GREATER = -1,
+} big_decimal_comparison_result;
+
+int big_decimal_compare(big_decimal first, big_decimal second);
 
 big_decimal decimal_to_big_decimal(s21_decimal in);
 s21_decimal big_decimal_to_decimal(big_decimal in);
@@ -36,7 +52,7 @@ big_decimal big_decimal_incr(big_decimal in);
 big_decimal big_decimal_shift_left(big_decimal in, int shifts);
 big_decimal big_decimal_shift_right(big_decimal in, int shifts);
 
-int big_decimal_div(big_decimal in, big_decimal divisor, big_decimal *result, big_decimal *remainder);
+int big_decimal_div_big_int(big_decimal in, big_decimal divisor, big_decimal *result, big_decimal *remainder);
 
 int big_decimal_round_to_decimal(big_decimal in, s21_decimal * res);
 
@@ -48,5 +64,9 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in);
 void big_decimal_balance_exp(big_decimal* first, big_decimal* second);
 big_decimal big_decimal_add(big_decimal first, big_decimal second);
 big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second);
+big_decimal big_decimal_sub(big_decimal minuend, big_decimal subtrahend);
+big_decimal big_decimal_div(big_decimal dividend, big_decimal divisor);
 big_decimal big_decimal_mul_mant(big_decimal first, big_decimal second);
+
+
 #endif //DECIMAL_BIG_DECIMAL_H

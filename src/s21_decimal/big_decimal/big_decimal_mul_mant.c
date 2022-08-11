@@ -11,5 +11,6 @@
  * @return
  */
 big_decimal big_decimal_mul_mant(big_decimal first, big_decimal second) {
+    return big_decimal_add(first, second);
 
 }

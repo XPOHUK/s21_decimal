@@ -21,6 +21,7 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Теперь прописать экспоненту и знак
     s21_decimal_set_power(&result, big_decimal_get_exp(in));
     s21_decimal_set_sign(&result, big_decimal_get_sign(in));
+    return result;
 }
 
 /**
@@ -110,12 +111,13 @@ big_decimal big_decimal_get_zero(void) {
 }
 
 /**
- * @brief Функция возвращает дополнительный код мантиссы полученного big_decimal
- * Экспонента обнуляется
+ * @brief Функция возвращает дополнительный код мантиссы полученного big_decimal. Знак превдварительно зануляется,
+ * чтобы не перевернулся. Экспонента обнуляется.
  * @param direct_code
  * @return
  */
 big_decimal big_decimal_to_twos_complement(big_decimal direct_code) {
+    big_decimal_set_sign(direct_code, 0);
     big_decimal result = big_decimal_incr(big_decimal_not(direct_code));
     // Зануляем экспоненту просто сохраняя знак
     result.parts[6] = big_decimal_get_sign(result);
@@ -154,7 +156,7 @@ void big_decimal_set_exp(big_decimal* in, int exp) {
 }
 
 unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
-    unsigned int i = 191;
+    int i = 191;
     for (; i >=0; i--) {
         if (big_decimal_is_set_bit(in, i))
             break;
