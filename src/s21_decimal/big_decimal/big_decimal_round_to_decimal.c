@@ -28,11 +28,11 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         // Используем деление нацело с остатком
         big_decimal result = big_decimal_get_zero();
         big_decimal remainder = big_decimal_get_zero();
-        big_decimal_div(in, divisor, &result, &remainder);
+        big_decimal_div_big_int(in, divisor, &result, &remainder);
         if (big_decimal_get_not_zero_bit(in) - 95 > 0) {
             ten_exp++;
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);
-            big_decimal_div(in, divisor, &result, &remainder);
+            big_decimal_div_big_int(in, divisor, &result, &remainder);
         }
 
         if (big_decimal_get_exp(in) < ten_exp) {

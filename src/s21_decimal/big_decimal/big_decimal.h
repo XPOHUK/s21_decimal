@@ -52,7 +52,7 @@ big_decimal big_decimal_incr(big_decimal in);
 big_decimal big_decimal_shift_left(big_decimal in, int shifts);
 big_decimal big_decimal_shift_right(big_decimal in, int shifts);
 
-int big_decimal_div_big_int(big_decimal in, big_decimal divisor, big_decimal *result, big_decimal *remainder);
+int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder);
 
 int big_decimal_round_to_decimal(big_decimal in, s21_decimal * res);
 

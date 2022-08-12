@@ -6,6 +6,10 @@
 
 int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
+    // Фиксируем знак результата
+    int sign = big_decimal_xor(big_decimal_get_sign(dividend), big_decimal_get_sign(divisor));
+    // Сбрасываем знак у делимого
+    dividend = big_decimal_set_sign(dividend, 0);
     *result = big_decimal_get_zero();
     // Обработка частных случаев
     if (big_decimal_is_zero(divisor)) {  // Деление на 0
@@ -18,10 +22,11 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
         // Сдвиг делителя на уровень старшего значащего бита делимого
         // Сначала вычисляем размер сдвига
         int shift_size = big_decimal_get_not_zero_bit(dividend) - big_decimal_get_not_zero_bit(divisor);
-        // Потом сдвигаем
+        // Потом сдвигаем делитель
         big_decimal shifted_divisor = big_decimal_shift_left(divisor, shift_size);
-        // Проставляем знак
-        shifted_divisor = big_decimal_change_sign(shifted_divisor);
+        // Проставляем знак если делитель изначально положительный
+        if (big_decimal_get_sign(divisor))
+            shifted_divisor = big_decimal_change_sign(shifted_divisor);
         big_decimal sum = big_decimal_get_zero();
         for (int i = 0; i <= shift_size; i++) {
             // Сдвигаем результат для записи нового бита
@@ -45,6 +50,7 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
         else
             *remainder = sum;
         *remainder = big_decimal_shift_right(*remainder, shift_size);
+        *result = big_decimal_set_sign(*result, sign);
     }
     return code;
 }
