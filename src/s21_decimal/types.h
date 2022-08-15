@@ -43,23 +43,4 @@ typedef enum s21_decimal_sign {
     S21_NEGATIVE = 1
 } s21_decimal_sign;
 
-/**
- * @brief каст для побитовой работы с float
- * (23 бита) Биты 0 - 23: Мантисса
- *   (8 бит) Биты 24 - 30: Порядок
- *   (1 бит) Бит 31: Знак
- * via: https://w.wiki/5RpW (Число одинарной точности)
- * @author Hubert Furr (hubertfu@student.21-school.ru)
- */
-typedef union float_cast {
-    float f;
-    struct {
-        uint32_t mantisa : 23;
-        uint32_t exponent : 8;
-        uint32_t sign : 1;
-    } parts;
-    uint32_t bytes;
-    int int32_bytes;
-} float_cast;
-
 #endif  //  SRC_S21_DECIMAL_TYPES_H_
