@@ -12,7 +12,14 @@ int main(void) {
 
     srunner_add_suite(sr, from_int_to_decimal_suite());
 
-//     srunner_add_suite(sr, from_float_to_decimal_suite());
+    // srunner_add_suite(sr, from_float_to_decimal_suite0());
+    // srunner_add_suite(sr, from_float_to_decimal_suite1());
+    // srunner_add_suite(sr, from_float_to_decimal_suite2());
+    // srunner_add_suite(sr, from_float_to_decimal_suite3());
+    // srunner_add_suite(sr, from_float_to_decimal_suite4());
+    // srunner_add_suite(sr, from_float_to_decimal_suite5());
+    // srunner_add_suite(sr, from_float_to_decimal_suite6());
+    // srunner_add_suite(sr, from_float_to_decimal_suite7());
 
     srunner_add_suite(sr, from_decimal_to_int_suite0());
     srunner_add_suite(sr, from_decimal_to_int_suite1());

@@ -10,7 +10,15 @@
 // #define __DEBUG 1
 
 Suite *from_int_to_decimal_suite(void);
-Suite *from_float_to_decimal_suite(void);
+
+Suite *from_float_to_decimal_suite0(void);
+Suite *from_float_to_decimal_suite1(void);
+Suite *from_float_to_decimal_suite2(void);
+Suite *from_float_to_decimal_suite3(void);
+Suite *from_float_to_decimal_suite4(void);
+Suite *from_float_to_decimal_suite5(void);
+Suite *from_float_to_decimal_suite6(void);
+Suite *from_float_to_decimal_suite7(void);
 
 Suite *from_decimal_to_int_suite0(void);
 Suite *from_decimal_to_int_suite1(void);
@@ -42,8 +50,7 @@ Suite *negate_suite(void);
 #define TEST_CONVERSION_ERROR 1
 
 void test_from_int_to_decimal(int number, s21_decimal decimal_check);
-void test_from_float_to_decimal(float f);
-void test_remove_trailing_zeros(char *str);
+void test_from_float_to_decimal(int f, s21_decimal decimal_check);
 void test_from_decimal_to_int(s21_decimal decimal, int check);
 void test_from_decimal_to_int_fail(s21_decimal decimal);
 void test_from_decimal_to_float(s21_decimal decimal, int check);
@@ -88,7 +95,6 @@ void test_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotie
 // Количество случайных тестов одного типа
 #define NUM_RANDOM_TEST 25
 
-double s21_random_double(double min, double max);
 int s21_random_int(int min, int max);
 int test_decimal_get_sign(s21_decimal value);
 int test_decimal_is_full_equal(s21_decimal value_1, s21_decimal value_2);
