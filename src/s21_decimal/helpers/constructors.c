@@ -160,29 +160,6 @@ s21_decimal s21_decimal_get_one(void) {
 }
 
 /**
- * @brief возвращает 2 в степени pow в виде числа decimal
- * Допустимый диапазон для pow - [-95, 95]. Валидация данных не осуществляется и должна производится
- * перед вызовом функции
- *
- * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param pow требуемая степень числа 2 (в диапазоне [-95, 95])
- * @return s21_decimal 2^pow
- */
-s21_decimal s21_decimal_get_two_pow(int pow) {
-    s21_decimal result;
-    s21_clear_decimal(&result);
-
-    if (pow < 0) {
-        pow = -pow;
-        result = all_two_pows_neg[pow];
-    } else {
-        result = all_two_pows_pos[pow];
-    }
-
-    return result;
-}
-
-/**
  * @brief формирует и возвращает число (10) в виде decimal
  * 
  * @author Hubert Furr (hubertfu@student.21-school.ru)
