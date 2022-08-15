@@ -3,6 +3,7 @@
 #include "../big_decimal/big_decimal.h"
 
 #include <stddef.h>
+#include <stdio.h>
 /**
  * @brief Функция принимает на входе два числа в формате Decimal и указатель для записи результата
  * Отрицательные числа записаны в прямом коде и в отдельном бите выставлен знак.
@@ -15,11 +16,14 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     big_decimal big_decimal1 = decimal_to_big_decimal(value_1);
     big_decimal big_decimal2 = decimal_to_big_decimal(value_2);
+    fprintf(stdout, "val1 = %d\n", big_decimal1.parts[0]);
+    fprintf(stdout, "val2 = %d\n", big_decimal2.parts[0]);
     big_decimal big_decimal1_abs = big_decimal_set_sign(big_decimal1, 0);
     big_decimal big_decimal2_abs = big_decimal_set_sign(big_decimal2, 0);
     int value_1_sign = s21_decimal_get_sign(value_1);
     int value_2_sign = s21_decimal_get_sign(value_2);
     big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
+    fprintf(stdout, "res = %d\n", res.parts[0]);
     int res_sign = big_decimal_get_sign(res);
     // Оценка результата
     // С правильными кодами ошибок ещё надо разобраться
@@ -56,7 +60,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     }
     // Если код результата остался ОК, то можно попробовать округлить до decimal
     if (code == S21_ARITHMETIC_OK) {
-        code = big_decimal_round_to_decimal(res, result);
+        // code = big_decimal_round_to_decimal(res, result);
     }
+    *result = big_decimal_to_decimal(res);
     return code;
 }

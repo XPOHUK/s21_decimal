@@ -7,7 +7,7 @@
 int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     // Фиксируем знак результата
-    int sign = big_decimal_xor(big_decimal_get_sign(dividend), big_decimal_get_sign(divisor));
+    int sign = big_decimal_get_sign(dividend) ^ big_decimal_get_sign(divisor);
     // Сбрасываем знак у делимого
     dividend = big_decimal_set_sign(dividend, 0);
     *result = big_decimal_get_zero();

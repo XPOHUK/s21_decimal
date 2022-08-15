@@ -1,6 +1,7 @@
 #include "big_decimal.h"
 #include "../helpers/helpers.h"
 #include "../mant_ops/mant_ops.h"
+#include <stdio.h>
 
 big_decimal decimal_to_big_decimal(s21_decimal in) {
     big_decimal result = big_decimal_get_zero();
@@ -31,7 +32,9 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
  * @return
  */
 big_decimal big_decimal_get_bit(int index) {
-    return big_decimal_shift_left(big_decimal_incr(big_decimal_get_zero()), index);
+    big_decimal result = big_decimal_get_zero();
+    result.parts[index/32] = 1U << index%32;
+    return result;
 }
 
 /**
@@ -41,8 +44,11 @@ big_decimal big_decimal_get_bit(int index) {
  * @return
  */
 unsigned int big_decimal_is_set_bit(big_decimal in, int index) {
+    unsigned int res = 0;
     big_decimal bit = big_decimal_get_bit(index);
-    return (big_decimal_shift_right(big_decimal_and(in, bit), index)).parts[0];
+    if (!big_decimal_is_zero(big_decimal_and(in, bit)))
+        res = 1U;
+    return res;
 }
 /**
  * @brief Функция устанваливает в указанный бит мантиссы 1, если там был 0, либо ничего не делает.
@@ -136,12 +142,13 @@ big_decimal big_decimal_incr(big_decimal in) {
 }
 
 unsigned int big_decimal_is_zero(big_decimal in) {
-    unsigned int result = 0U;
+    unsigned int result = 1U;
     for (int i = 0; i < 6; ++i) {
-        result = result ^ in.parts[i];
+        if (in.parts[i] != 0) {
+            result = 0U;
+            break;
+        }
     }
-    if (result)
-        result = 1U;
     return result;
 }
 

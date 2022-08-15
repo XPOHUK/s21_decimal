@@ -65,7 +65,7 @@ void big_decimal_balance_exp(big_decimal* first, big_decimal* second);
 big_decimal big_decimal_add(big_decimal first, big_decimal second);
 big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second);
 big_decimal big_decimal_sub(big_decimal minuend, big_decimal subtrahend);
-big_decimal big_decimal_div(big_decimal dividend, big_decimal divisor);
+int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *result);
 big_decimal big_decimal_mul_mant(big_decimal first, big_decimal second);
 
 

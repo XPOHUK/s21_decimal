@@ -5,7 +5,7 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-// #define __DEBUG
+#define __DEBUG
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

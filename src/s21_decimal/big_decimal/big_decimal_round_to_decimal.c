@@ -48,7 +48,7 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
             big_decimal first = big_decimal_get_zero();
             big_decimal tmp_remainder = big_decimal_get_zero();
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp - 1]);
-            big_decimal_div(remainder, divisor, &first, &tmp_remainder);
+            big_decimal_div_big_int(remainder, divisor, &first, &tmp_remainder);
             if (first.parts[0] > 5 ||
                 (first.parts[0] == 5 &&
                  (!big_decimal_is_zero(tmp_remainder) || big_decimal_is_set_bit(result, 0)))) {
