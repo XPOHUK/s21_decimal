@@ -1,10 +1,24 @@
-//
-// Created by gubankov on 10.08.22.
-//
+/**
+ * @file big_decimal_balance_exp.c
+ * @brief 
+ * @author Dmitriy Gubankov
+ * @version 0.1
+ * @date 2022-08-16
+ */
 #include <stddef.h>
 
 #include "big_decimal.h"
 
+/**
+ * @brief Функция выравнивания экспонент. Принимает на входе два указателя на big_decimal экспоненты которых
+ * надо выровнять. Выравнивание производится домножением мантиссы на 10 и увеличением экспоненты на 1 для числа
+ * с меньшей экспонентой. Операция производится до тех пор пока экспоненты обоих чисел не сравняются.
+ * Подразумевается, что корректные s21_decimal конвертируются в big_decimal и подаются на вход функции. В данном
+ * случае, теоретически, переполнения big_decimal при умножении произойти не должно.
+ *
+ * @param first
+ * @param second
+ */
 void big_decimal_balance_exp(big_decimal* first, big_decimal* second) {
     big_decimal* to_balance = NULL;
     int diff = big_decimal_get_exp(*first) - big_decimal_get_exp(*second);
