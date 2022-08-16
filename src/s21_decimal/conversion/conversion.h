@@ -26,8 +26,8 @@ typedef enum s21_conversion_result {
 
 // Вспомогательные функции
 
-void s21_get_float_mantissa_bits_string(float number, char *str);
-void s21_get_uint32_bits_string(uint32_t number, char *str);
-void s21_get_bits_string(size_t const size, void const *const ptr, char *str);
+s21_decimal s21_decimal_get_from_char(char c);
+int s21_get_float_exp_from_string(char *str);
+s21_decimal s21_float_string_to_decimal(char *str);
 
 #endif  //  SRC_S21_DECIMAL_CONVERSION_CONVERSION_H_
