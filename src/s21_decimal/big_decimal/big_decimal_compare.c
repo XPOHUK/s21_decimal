@@ -2,8 +2,10 @@
 // Created by gubankov on 11.08.22.
 //
 #include "big_decimal.h"
+#include <stdio.h>
 
 int big_decimal_compare(big_decimal first, big_decimal second) {
+    printf("in compare");
     big_decimal_comparison_result result;
     big_decimal_balance_exp(&first, &second);
     int first_sign = big_decimal_get_sign(first);

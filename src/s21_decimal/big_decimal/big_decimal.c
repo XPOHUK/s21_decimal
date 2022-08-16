@@ -2,6 +2,7 @@
 #include "../helpers/helpers.h"
 #include "../mant_ops/mant_ops.h"
 #include <stdio.h>
+#include "../../tests/_helpers/_debug.h"
 
 big_decimal decimal_to_big_decimal(s21_decimal in) {
     big_decimal result = big_decimal_get_zero();
@@ -15,13 +16,23 @@ big_decimal decimal_to_big_decimal(s21_decimal in) {
 }
 
 s21_decimal big_decimal_to_decimal(big_decimal in) {
+    // Число может быть отрицательным в доп.коде.
+    printf("before convert res: \n");
+    s21_print_big_decimal_bits(in);
+    int sign = big_decimal_get_sign(in);
+    if (sign) {
+        int exp = big_decimal_get_exp(in);
+        printf("exp = %d\n", exp);
+        in = big_decimal_to_twos_complement(in);
+        big_decimal_set_exp(&in, exp);
+    }
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = in.parts[0];
     result.bits[1] = in.parts[1];
     result.bits[2] = in.parts[2];
     // Теперь прописать экспоненту и знак
-    s21_decimal_set_power(&result, big_decimal_get_exp(in));
     s21_decimal_set_sign(&result, big_decimal_get_sign(in));
+    s21_decimal_set_power(&result, big_decimal_get_exp(in));
     return result;
 }
 
@@ -74,7 +85,7 @@ big_decimal big_decimal_flip_bit(big_decimal in, int index) {
 }
 
 /**
- * @brief Функция возвращает 1 если знак (192 индекс) установлен. Знак хранится в младшем decimal
+ * @brief Функция возвращает 1 если знак (192 индекс) установлен. 
  * @param in
  * @return
  */
@@ -89,18 +100,19 @@ unsigned int big_decimal_get_sign(big_decimal in) {
  * @return
  */
 big_decimal big_decimal_set_sign(big_decimal in, int sign) {
-    if (big_decimal_get_sign(in) && sign == 0)
+    if (big_decimal_get_sign(in) && sign == 0) {
         in.parts[6] = in.parts[6] - 1;
-    else if (!big_decimal_get_sign(in) && sign)
+    } else if (!big_decimal_get_sign(in) && sign) {
         in.parts[6] = in.parts[6] + 1;
+    }
     return in;
 }
 
 big_decimal big_decimal_change_sign(big_decimal in) {
     if (big_decimal_get_sign(in))
-        big_decimal_set_sign(in, 0);
+        in = big_decimal_set_sign(in, 0);
     else
-        big_decimal_set_sign(in, 1);
+        in = big_decimal_set_sign(in, 1);
     return in;
 }
 
@@ -123,7 +135,7 @@ big_decimal big_decimal_get_zero(void) {
  * @return
  */
 big_decimal big_decimal_to_twos_complement(big_decimal direct_code) {
-    big_decimal_set_sign(direct_code, 0);
+    direct_code = big_decimal_set_sign(direct_code, 0);
     big_decimal result = big_decimal_incr(big_decimal_not(direct_code));
     // Зануляем экспоненту просто сохраняя знак
     result.parts[6] = big_decimal_get_sign(result);
@@ -153,7 +165,7 @@ unsigned int big_decimal_is_zero(big_decimal in) {
 }
 
 int big_decimal_get_exp(big_decimal in) {
-    return (in.parts[6] & (256U << 16)) >> 16;
+    return (in.parts[6] & (255U << 16)) >> 16;
 }
 
 void big_decimal_set_exp(big_decimal* in, int exp) {

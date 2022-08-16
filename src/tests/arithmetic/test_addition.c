@@ -10,65 +10,59 @@
 Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//START_TEST(test_addition_ok1) {
-//    // First arg
-//    // 79228162514264337593543950335
-//    s21_decimal first = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Delitel
-//    // 79228162514264337593543950335
-//    s21_decimal second = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Chastnoe
-//    // 1
-//    s21_decimal res = {{0x1, 0x0, 0x0, 0x0}};
-//
-//
-//    test_addition(first, second, res);
-//}
-//
-//START_TEST(test_addition_ok2) {
-//    // Delimoe
-//    // 79228162514264337593543950335
-//    s21_decimal dividend = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Delitel
-//    // 79228162514264337593543950334
-//    s21_decimal divisor = {{0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Chastnoe
-//    // 1
-//    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-//
-//
-//    test_division(dividend, divisor, quotient);
-//}
-//
-//START_TEST(test_addition_ok3) {
-//    // Delimoe
-//    // 79228162514264337593543950335
-//    s21_decimal dividend = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Delitel
-//    // 52818775009509558395695966890
-//    s21_decimal divisor = {{0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA, 0x0}};
-//    // Chastnoe
-//    // 1
-//    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-//
-//
-//    test_division(dividend, divisor, quotient);
-//}
-//
-//START_TEST(test_addition_ok4) {
-//    // Delimoe
-//    // 79228162514264337593543950335
-//    s21_decimal dividend = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Delitel
-//    // 52818775009509558392832655360
-//    s21_decimal divisor = {{0x0, 0xAAAAAAAA, 0xAAAAAAAA, 0x0}};
-//    // Chastnoe
-//    // 1
-//    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-//
-//    test_division(dividend, divisor, quotient);
-//}
-//
+START_TEST(test_addition_big) {
+    // First arg
+    // 79228162514264337593543950335
+    s21_decimal first = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+    // Second arg
+    // 79228162514264337593543950335
+    s21_decimal second = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+    // Sum
+    // 1
+    s21_decimal res = {{0x1, 0x0, 0x0, 0x0}};
+
+    test_addition(first, second, res, 1);
+}
+
+START_TEST(test_addition_ok2) {
+    // First arg
+    // 15.95
+    s21_decimal first = {{0x63B, 0x0, 0x0, 0x00020000}};
+    // Second arg
+    // 0.008
+    s21_decimal second = {{0x8, 0x0, 0x0, 0x30000}};
+    // Result
+    // 15.958
+    s21_decimal res = {{0x3E56, 0x0, 0x0, 0x30000}};
+    test_addition(first, second, res, 0);
+}
+
+START_TEST(test_addition_ok3) {
+    // First arg
+    // 15.95
+    s21_decimal first = {{0x63B, 0x0, 0x0, 0x00020000}};
+    // Second arg
+    // -0.008
+    s21_decimal second = {{0x8, 0x0, 0x0, 0x80030000}};
+    // Result
+    // 15.942
+    s21_decimal res = {{0x3E46, 0x0, 0x0, 0x30000}};
+    test_addition(first, second, res, 0);
+}
+
+START_TEST(test_addition_ok4) {
+    // First arg
+    // -15.95
+    s21_decimal first = {{0x63B, 0x0, 0x0, 0x80020000}};
+    // Second arg
+    // -0.008
+    s21_decimal second = {{0x8, 0x0, 0x0, 0x80030000}};
+    // Result
+    // -15.958
+    s21_decimal res = {{0x3E56, 0x0, 0x0, 0x80030000}};
+    test_addition(first, second, res, 0);
+}
+
 //START_TEST(test_addition_ok5) {
 //    // Delimoe
 //    // 79228162514264337593543950335
@@ -172,19 +166,19 @@ Tests for correct data (automatic)
 //        test_division(dividend, divisor, quotient);
 //}
 
-START_TEST(test_addition_ok12) {
-        // First arg
-        // 155
-        s21_decimal first = {{0x0000009B, 0x0, 0x0, 0x0}};
-        // Second arg
-        // 5
-        s21_decimal second = {{0x00000005, 0x0, 0x0, 0x0}};
-        // Sum
-        // 160
-        s21_decimal res = {{0x000000A0, 0x0, 0x0, 0x0}};
-
-        test_addition(first, second, res);
-}
+// START_TEST(test_addition_ok12) {
+//         // First arg
+//         // 155
+//         s21_decimal first = {{0x0000009B, 0x0, 0x0, 0x0}};
+//         // Second arg
+//         // 5
+//         s21_decimal second = {{0x00000005, 0x0, 0x0, 0x0}};
+//         // Sum
+//         // 160
+//         s21_decimal res = {{0x000000A0, 0x0, 0x0, 0x0}};
+// 
+//         test_addition(first, second, res, 0);
+// }
 
 
 Suite * addition_suite1(void) {
@@ -193,10 +187,10 @@ Suite * addition_suite1(void) {
 
     s = suite_create("addition1");
     tc_core = tcase_create("Core");
-//    tcase_add_test(tc_core, test_addition_ok1);
-//    tcase_add_test(tc_core, test_addition_ok2);
-//    tcase_add_test(tc_core, test_addition_ok3);
-//    tcase_add_test(tc_core, test_addition_ok4);
+    tcase_add_test(tc_core, test_addition_big);
+    tcase_add_test(tc_core, test_addition_ok2);
+    tcase_add_test(tc_core, test_addition_ok3);
+    tcase_add_test(tc_core, test_addition_ok4);
 //    tcase_add_test(tc_core, test_addition_ok5);
 //    tcase_add_test(tc_core, test_addition_ok6);
 //    tcase_add_test(tc_core, test_addition_ok7);
@@ -204,17 +198,17 @@ Suite * addition_suite1(void) {
 //    tcase_add_test(tc_core, test_addition_ok9);
 //    tcase_add_test(tc_core, test_addition_ok10);
 //    tcase_add_test(tc_core, test_addition_ok11);
-    tcase_add_test(tc_core, test_addition_ok12);
+//     tcase_add_test(tc_core, test_addition_ok12);
     suite_add_tcase(s, tc_core);
     return s;
 }
 
 
 
-void test_addition(s21_decimal first, s21_decimal second, s21_decimal res) {
+void test_addition(s21_decimal first, s21_decimal second, s21_decimal res, int code) {
 
     s21_decimal result;
-    s21_add(first, second, &result);
+    int res_code = s21_add(first, second, &result);
 
     #if defined(__DEBUG)
     s21_print_decimal_bits(first);
@@ -227,8 +221,10 @@ void test_addition(s21_decimal first, s21_decimal second, s21_decimal res) {
     printf("\n");
     #endif
 
-    ck_assert_int_eq(s21_is_equal(result, res), 1);
-    // ck_assert_int_eq(s21_is_equal(result_remainder, remainder), 1);
+    if (code == 0) {
+        ck_assert_int_eq(s21_is_equal(result, res), 1);
+    } else {
+        ck_assert_int_eq(code, res_code);
+    }
     ck_assert_int_eq(s21_decimal_get_sign(result), s21_decimal_get_sign(res));
-    // ck_assert_int_eq(s21_decimal_get_sign(result_remainder), s21_decimal_get_sign(remainder));
 }

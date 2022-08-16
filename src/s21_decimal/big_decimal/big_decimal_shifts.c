@@ -13,14 +13,12 @@
 big_decimal big_decimal_shift_left(big_decimal in, int shifts) {
     // Начинаем со старшего инта. Если есть переполнение -- меняем знак
     if (big_decimal_is_set_bit(in, 191))
-        in = big_decimal_change_sign(in);
+        in = big_decimal_set_sign(in, 1);
     while (shifts) {
         int index = 159;
         for (int i = 5; i >= 0; i--) {
             in.parts[i] = in.parts[i] << 1;
-            fprintf(stdout, "in for\n");
-            fprintf(stdout, "in for\n");
-            if (big_decimal_is_set_bit(in, index)) {
+            if (i && big_decimal_is_set_bit(in, index)) {
                 in = big_decimal_set_bit(in, index + 1);
             }
             index -= 32;
