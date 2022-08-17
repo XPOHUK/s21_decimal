@@ -16,29 +16,29 @@
  */
 big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second) {
     int exp = big_decimal_get_exp(first);
-    printf("First and second before twos compl:\n");
-    s21_print_big_decimal_bits(first);
-    s21_print_big_decimal_bits(second);
+    // printf("First and second before twos compl:\n");
+    // s21_print_big_decimal_bits(first);
+    // s21_print_big_decimal_bits(second);
     if (big_decimal_get_sign(first)) {
         first = big_decimal_to_twos_complement(first);
     }
     big_decimal result = first;
     if (big_decimal_get_sign(second))
         second = big_decimal_to_twos_complement(second);
-    printf("First and second after twos compl:\n");
-    s21_print_big_decimal_bits(first);
-    s21_print_big_decimal_bits(second);
+    // printf("First and second after twos compl:\n");
+    // s21_print_big_decimal_bits(first);
+    // s21_print_big_decimal_bits(second);
     while (!big_decimal_is_zero(second)) {
         // Получаем carry
         big_decimal carry = big_decimal_and(result, second);
-        fprintf(stdout, "carry = ");
-        s21_print_big_decimal_bits(carry);
+        // fprintf(stdout, "carry = ");
+        // s21_print_big_decimal_bits(carry);
         big_decimal shifted_carry = big_decimal_shift_left(carry, 1);
-        fprintf(stdout, "shifted carry = ");
-        s21_print_big_decimal_bits(shifted_carry);
+        // fprintf(stdout, "shifted carry = ");
+        // s21_print_big_decimal_bits(shifted_carry);
         result = big_decimal_xor(result, second);
-        fprintf(stdout, "res after xor = ");
-        s21_print_big_decimal_bits(result);
+        // fprintf(stdout, "res after xor = ");
+        // s21_print_big_decimal_bits(result);
         second = shifted_carry;
         if (big_decimal_is_zero(second))
             result = big_decimal_xor(result, second);

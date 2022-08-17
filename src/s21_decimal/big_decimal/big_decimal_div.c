@@ -3,6 +3,8 @@
 // TODO Rambtono: Все умножения на 10 переделать на использование умножения после его реализации
 #include "../arithmetic/arithmetic.h"
 #include "big_decimal.h"
+#include <stdio.h>
+#include "../../tests/_helpers/_debug.h"
 /**
  * @brief Деление
  * @param dividend
@@ -37,6 +39,8 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             if (big_decimal_get_not_zero_bit(result_mul) > 95 || temp_exp + 1 > 28) {
                 if (temp_res.parts[0] > 5 || (temp_res.parts[0] == 5 && (!big_decimal_is_zero(remainder) || big_decimal_is_set_bit(*result, 0)))) {
                     *result = big_decimal_incr(*result);
+                    printf("Popal pod okrug\n");
+                    s21_print_big_decimal_bits(temp_res);
                     break;
                 }
             } else {

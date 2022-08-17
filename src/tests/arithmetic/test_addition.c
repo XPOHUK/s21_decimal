@@ -63,20 +63,14 @@ START_TEST(test_addition_ok4) {
     test_addition(first, second, res, 0);
 }
 
-//START_TEST(test_addition_ok5) {
-//    // Delimoe
-//    // 79228162514264337593543950335
-//    s21_decimal dividend = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-//    // Delitel
-//    // 52818774997211729016086244010
-//    s21_decimal divisor = {{0xAAAAAAAA, 0x0, 0xAAAAAAAA, 0x0}};
-//    // Chastnoe
-//    // 1
-//    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-//
-//    test_division(dividend, divisor, quotient);
-//}
-//
+START_TEST(test_addition_ok5) {
+    s21_decimal first = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x90000}};
+    s21_decimal second = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x40000}};
+    s21_decimal res = {{0x26D04E61, 0x913A4F87, 0x1999AA60, 0x30000}};
+    test_addition(first, second, res, 0);
+
+}
+
 //START_TEST(test_addition_ok6) {
 //    // Delimoe
 //    // 79228162514264337593543950335
@@ -191,7 +185,7 @@ Suite * addition_suite1(void) {
     tcase_add_test(tc_core, test_addition_ok2);
     tcase_add_test(tc_core, test_addition_ok3);
     tcase_add_test(tc_core, test_addition_ok4);
-//    tcase_add_test(tc_core, test_addition_ok5);
+    tcase_add_test(tc_core, test_addition_ok5);
 //    tcase_add_test(tc_core, test_addition_ok6);
 //    tcase_add_test(tc_core, test_addition_ok7);
 //    tcase_add_test(tc_core, test_addition_ok8);
@@ -218,6 +212,8 @@ void test_addition(s21_decimal first, s21_decimal second, s21_decimal res, int c
     printf("\n");
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
+    s21_print_decimal_bits(res);
+    s21_print_decimal_string(res);
     printf("\n");
     #endif
 

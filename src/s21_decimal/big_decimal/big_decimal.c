@@ -19,13 +19,13 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Число может быть отрицательным в доп.коде.
     printf("before convert res: \n");
     s21_print_big_decimal_bits(in);
-    int sign = big_decimal_get_sign(in);
-    if (sign) {
-        int exp = big_decimal_get_exp(in);
-        printf("exp = %d\n", exp);
-        in = big_decimal_to_twos_complement(in);
-        big_decimal_set_exp(&in, exp);
-    }
+//     int sign = big_decimal_get_sign(in);
+//     if (sign) {
+//         int exp = big_decimal_get_exp(in);
+//         printf("exp = %d\n", exp);
+//         in = big_decimal_to_twos_complement(in);
+//         big_decimal_set_exp(&in, exp);
+//     }
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = in.parts[0];
     result.bits[1] = in.parts[1];
@@ -33,6 +33,8 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Теперь прописать экспоненту и знак
     s21_decimal_set_sign(&result, big_decimal_get_sign(in));
     s21_decimal_set_power(&result, big_decimal_get_exp(in));
+    printf("after convert:\n");
+    s21_print_decimal_bits(result);
     return result;
 }
 

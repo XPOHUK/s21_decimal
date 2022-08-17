@@ -63,9 +63,18 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         }
     }
     // Если код результата остался ОК, то можно попробовать округлить до decimal
+    printf("\n");
+    printf("code: %d\n", code);
     if (code == S21_ARITHMETIC_OK) {
-        // code = big_decimal_round_to_decimal(res, result);
+    int sign = big_decimal_get_sign(res);
+    if (sign) {
+        int exp = big_decimal_get_exp(res);
+        printf("exp = %d\n", exp);
+        res = big_decimal_to_twos_complement(res);
+        big_decimal_set_exp(&res, exp);
     }
-    *result = big_decimal_to_decimal(res);
+        code = big_decimal_round_to_decimal(res, result);
+    }
+    // *result = big_decimal_to_decimal(res);
     return code;
 }
