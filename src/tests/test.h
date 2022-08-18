@@ -54,7 +54,6 @@ void test_from_float_to_decimal(int f, s21_decimal decimal_check);
 void test_from_decimal_to_int(s21_decimal decimal, int check);
 void test_from_decimal_to_int_fail(s21_decimal decimal);
 void test_from_decimal_to_float(s21_decimal decimal, int check);
-void test_from_decimal_to_float_fail(s21_decimal decimal);
 
 typedef union float_cast_test {
     float f;
@@ -87,12 +86,53 @@ Suite *debug3(void);
 Suite *division_suite1(void);
 Suite *addition_suite1(void);
 
+#define TEST_ARITHMETIC_OK 0
+#define TEST_ARITHMETIC_BIG 1
+#define TEST_ARITHMETIC_SMALL 2
+#define TEST_ARITHMETIC_ZERO_DIV 3
+
+Suite *add_suite0(void);
+Suite *add_suite1(void);
+Suite *add_suite2(void);
+Suite *add_suite3(void);
+Suite *add_suite4(void);
+Suite *add_suite5(void);
+Suite *add_suite6(void);
+Suite *add_suite7(void);
+Suite *add_suite8(void);
+Suite *add_suite9(void);
+
+Suite *div_suite0(void);
+Suite *div_suite1(void);
+Suite *div_suite2(void);
+Suite *div_suite3(void);
+Suite *div_suite4(void);
+Suite *div_suite5(void);
+Suite *div_suite6(void);
+Suite *div_suite7(void);
+Suite *div_suite8(void);
+Suite *div_suite9(void);
+Suite *div_suite10(void);
+Suite *div_suite11(void);
+Suite *div_suite12(void);
+Suite *div_suite13(void);
+Suite *div_suite14(void);
+Suite *div_suite15(void);
+Suite *div_suite16(void);
+Suite *div_suite17(void);
+Suite *div_suite18(void);
+
 void test_binary_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient,
                           s21_decimal remainder);
 void test_debug(s21_decimal decimal, char *check);
 
 void test_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient);
 void test_addition(s21_decimal first, s21_decimal second, s21_decimal res, int code);
+void test_add(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check);
+void test_add_fail(s21_decimal decimal1, s21_decimal decimal2, int check);
+void test_div(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check);
+void test_div_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check);
+void test_div_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal decimal_check, int code_check);
 
 // Количество случайных тестов одного типа
 #define NUM_RANDOM_TEST 25
