@@ -3,6 +3,7 @@
 //
 
 #include "big_decimal.h"
+#include "../arithmetic/arithmetic.h"
 
 /**
  * @brief Целочисленное умножение мантисс (соответственно без учёта экспоненты)
@@ -11,6 +12,7 @@
  * @return
  */
 int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result) {
+    s21_arithmetic_result code = S21_ARITHMETIC_OK;
     big_decimal multipliable;
     big_decimal multiplier;
     big_decimal_set_exp(&multiplier, 0);
@@ -22,7 +24,7 @@ int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* 
         multipliable = second;
         multiplier = first;
     }
-    int sign = big_decimal_get_sign(multipliable) ^ big_decimal_get_sign(multiplier);
+    // int sign = big_decimal_get_sign(multipliable) ^ big_decimal_get_sign(multiplier);
     multipliable = big_decimal_set_sign(multipliable, 0);
     multiplier = big_decimal_set_sign(multiplier, 0);
     big_decimal sum = big_decimal_get_zero();
@@ -33,5 +35,6 @@ int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* 
         }
     }
     // Если у sum появился знак, значит произошло переполнение.
-    return big_decimal_set_sign(sum, sign);
+    *result = sum;
+    return code;
 }
