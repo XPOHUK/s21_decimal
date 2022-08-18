@@ -66,7 +66,8 @@ big_decimal big_decimal_add(big_decimal first, big_decimal second);
 big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second);
 big_decimal big_decimal_sub(big_decimal minuend, big_decimal subtrahend);
 int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *result);
-big_decimal big_decimal_mul_mant(big_decimal first, big_decimal second);
+int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result);
+int big_decimal_mul(big_decimal first, big_decimal second, big_decimal* result);
 
 
 #endif //DECIMAL_BIG_DECIMAL_H
