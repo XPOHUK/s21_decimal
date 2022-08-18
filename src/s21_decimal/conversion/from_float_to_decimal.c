@@ -6,6 +6,14 @@
 
 /**
  * @brief конвертирует float src в decimal dst
+ * 
+ * Значение Decimal, возвращаемое данной функцией, содержит не более семи значащих цифр.
+ * Если src содержит более семи значащих цифр, он округляется с помощью округления до ближайшего.
+ * Т.е:
+ * 1234567500.12F -> 1234568000
+ * 1234568500.12F -> 1234568000
+ * 10.980365F -> 10.98036
+ * 10.980355F -> 10.98036
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param src конвертируемый float
@@ -49,7 +57,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         *dst = s21_decimal_get_zero();
     } else {
         *dst = s21_decimal_get_zero();
-        s21_decimal result = s21_decimal_get_zero();
+        s21_decimal result;
         char flt[64];
 
         // Приводим float в научную запись - одна цифра до запятой и 6 цифр после запятой
@@ -59,11 +67,10 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
         // Получаем степень float из научной записи.
         int exp = s21_get_float_exp_from_string(flt);
         // Анализируем полученную степень.
-        int float_precision = 0;
         if (exp <= -23) {
             // Если степень слишком маленькая, то не все значащие цифры поместятся в decimal
             // Поэтому корректируем точность и заново приводим float в научную запись уже с новой точностью
-            float_precision = exp + 28;
+            int float_precision = exp + 28;
             sprintf(flt, "%.*E", float_precision, fabsf(src));
         }
 

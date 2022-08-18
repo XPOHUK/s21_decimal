@@ -54,7 +54,6 @@ void test_from_float_to_decimal(int f, s21_decimal decimal_check);
 void test_from_decimal_to_int(s21_decimal decimal, int check);
 void test_from_decimal_to_int_fail(s21_decimal decimal);
 void test_from_decimal_to_float(s21_decimal decimal, int check);
-void test_from_decimal_to_float_fail(s21_decimal decimal);
 
 typedef union float_cast_test {
     float f;
