@@ -14,6 +14,9 @@
  * @return Код возврата.
  */
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    if (!s21_is_correct_decimal(value_1) || !s21_is_correct_decimal(value_2) || result == NULL) {
+        return -1;
+    }
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     big_decimal big_decimal1 = decimal_to_big_decimal(value_1);
     big_decimal big_decimal2 = decimal_to_big_decimal(value_2);
@@ -27,8 +30,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
     fprintf(stdout, "res = ");
     s21_print_big_decimal_bits(res);
-    fprintf(stdout, "res sign = %d\n", big_decimal_is_set_bit(res, 96));
-    int res_sign = big_decimal_is_set_bit(res, 96);
+    fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
+    int res_sign = big_decimal_get_sign(res);
     // Оценка результата
     // С правильными кодами ошибок ещё надо разобраться
     if (value_1_sign == value_2_sign) {  // Если знаки аргументов одинаковые

@@ -52,6 +52,8 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
             // Сдвигаем делимое на один разряд влево
             if (i != shift_size) {
                 dividend = big_decimal_shift_left(dividend, 1);
+                printf("shifted dividend:\n");
+                s21_print_big_decimal_bits(dividend);
             }
         printf("sum in div:\n");
         s21_print_big_decimal_bits(sum);

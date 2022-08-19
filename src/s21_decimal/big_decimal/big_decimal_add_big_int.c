@@ -31,17 +31,25 @@ big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second) {
     while (!big_decimal_is_zero(second)) {
         // Получаем carry
         big_decimal carry = big_decimal_and(result, second);
+        // На сколько помню, в and не складывается знаковый бит. Значит его надо самому учитывать.
+        // На самом деле он складывается. Но не переносится при сдвиге.
+        // Ан нет. Переносится. Тогда непонятно.
         // fprintf(stdout, "carry = ");
         // s21_print_big_decimal_bits(carry);
         big_decimal shifted_carry = big_decimal_shift_left(carry, 1);
-        // fprintf(stdout, "shifted carry = ");
-        // s21_print_big_decimal_bits(shifted_carry);
+        fprintf(stdout, "shifted carry = ");
+        s21_print_big_decimal_bits(shifted_carry);
         result = big_decimal_xor(result, second);
-        // fprintf(stdout, "res after xor = ");
-        // s21_print_big_decimal_bits(result);
+        fprintf(stdout, "res after xor = ");
+        s21_print_big_decimal_bits(result);
         second = shifted_carry;
-        if (big_decimal_is_zero(second))
+        if (big_decimal_is_zero(second)) {
+            printf("result:\n");
+            s21_print_big_decimal_bits(result);
+            printf("second:\n");
+            s21_print_big_decimal_bits(second);
             result = big_decimal_xor(result, second);
+        }
     }
     big_decimal_set_exp(&result, exp);
     return result;

@@ -28,9 +28,14 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         // Теория проверена на бумаге до bits_to_round < 24
         big_decimal divisor;
         int ten_exp = bits_to_round / 3 - 1;
+        if (ten_exp < 1) {
+        ten_exp = 1;
+        } else if (ten_exp > 28) {
+            ten_exp = 28;
+        }
         divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);
-        printf("divisor:\n");
-        s21_print_big_decimal_bits(divisor);
+        // printf("divisor:\n");
+        // s21_print_big_decimal_bits(divisor);
         // Используем деление нацело с остатком
         big_decimal result = big_decimal_get_zero();
         big_decimal remainder = big_decimal_get_zero();
@@ -45,15 +50,15 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         while ((int)big_decimal_get_not_zero_bit(result) - 95 > 0) {
             ten_exp++;
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);
-        printf("divisor after raise ten exp:\n");
-        s21_print_big_decimal_bits(divisor);
+        // printf("divisor after raise ten exp:\n");
+        // s21_print_big_decimal_bits(divisor);
             // result = big_decimal_get_zero();
             // remainder = big_decimal_get_zero();
             big_decimal_div_big_int(in_wo_exp, divisor, &result, &remainder);
-            printf("result after raise ten exp: \n");
-            s21_print_big_decimal_bits(result);
-            printf("remainder after raise ten exp: \n");
-            s21_print_big_decimal_bits(remainder);
+            // printf("result after raise ten exp: \n");
+            // s21_print_big_decimal_bits(result);
+            // printf("remainder after raise ten exp: \n");
+            // s21_print_big_decimal_bits(remainder);
         }
 
         if (big_decimal_get_exp(in) < ten_exp) {
@@ -66,9 +71,8 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         } else {
             // Теперь, оценив остаток от деления можно провести округление
             // Получить первую округляемую цифру
-            printf("suda popal\n");
-        printf("result: \n");
-        s21_print_big_decimal_bits(result);
+        // printf("result: \n");
+        // s21_print_big_decimal_bits(result);
             big_decimal first = big_decimal_get_zero();
             big_decimal tmp_remainder = big_decimal_get_zero();
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp - 1]);
@@ -77,6 +81,10 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
                 (first.parts[0] == 5 &&
                  (!big_decimal_is_zero(tmp_remainder) || big_decimal_is_set_bit(result, 0)))) {
                 result = big_decimal_incr(result);
+                // Крайний случай: переполнение decimal при инкременте
+                if (big_decimal_is_set_bit(result, 96)) {
+                    code = S21_ARITHMETIC_BIG;
+                }
             }
             // Не забыть проставить экспоненту
         printf("result before set exp: \n");
@@ -84,7 +92,9 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
             big_decimal_set_exp(&result, big_decimal_get_exp(in) - ten_exp);
         }
         // Конвертировать в decimal
-        *res = big_decimal_to_decimal(result);
+        if (code == S21_ARITHMETIC_OK) {
+            *res = big_decimal_to_decimal(result);
+        }
     } else {
         *res = big_decimal_to_decimal(in);
     }
