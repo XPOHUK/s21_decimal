@@ -612,159 +612,159 @@ START_TEST(test_add36) {
     test_add(decimal1, decimal2, check);
 }
 
-START_TEST(test_add37) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 26409387.498605864508043122005
-    s21_decimal decimal2 = {{0x55555555, 0x0, 0x55555555, 0x150000}};
-    // overflow
-    int check = S21_ARITHMETIC_BIG;
-
-    test_add_fail(decimal1, decimal2, check);
-}
-
-START_TEST(test_add38) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -26409387.498605864508043122005
-    s21_decimal decimal2 = {{0x55555555, 0x0, 0x55555555, 0x80150000}};
-    // 79228162514264337593517540948
-    s21_decimal check = {{0xFE6D0654, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add39) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 26409387
-    s21_decimal decimal2 = {{0x192F9AB, 0x0, 0x0, 0x0}};
-    // overflow
-    int check = S21_ARITHMETIC_BIG;
-
-    test_add_fail(decimal1, decimal2, check);
-}
-
-START_TEST(test_add40) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -26409387
-    s21_decimal decimal2 = {{0x192F9AB, 0x0, 0x0, 0x80000000}};
-    // 79228162514264337593517540948
-    s21_decimal check = {{0xFE6D0654, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add41) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 7.9228162514264337593543950335
-    s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x1C0000}};
-    // overflow
-    int check = S21_ARITHMETIC_BIG;
-
-    test_add_fail(decimal1, decimal2, check);
-}
-
-START_TEST(test_add42) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -7.9228162514264337593543950335
-    s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x801C0000}};
-    // 79228162514264337593543950327
-    s21_decimal check = {{0xFFFFFFF7, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add43) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 8
-    s21_decimal decimal2 = {{0x8, 0x0, 0x0, 0x0}};
-    // overflow
-    int check = S21_ARITHMETIC_BIG;
-
-    test_add_fail(decimal1, decimal2, check);
-}
-
-START_TEST(test_add44) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -8
-    s21_decimal decimal2 = {{0x8, 0x0, 0x0, 0x80000000}};
-    // 79228162514264337593543950327
-    s21_decimal check = {{0xFFFFFFF7, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add45) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 3.6336660283201536
-    s21_decimal decimal2 = {{0x811800, 0x811800, 0x0, 0x100000}};
-    // overflow
-    int check = S21_ARITHMETIC_BIG;
-
-    test_add_fail(decimal1, decimal2, check);
-}
-
-START_TEST(test_add46) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -3.6336660283201536
-    s21_decimal decimal2 = {{0x811800, 0x811800, 0x0, 0x80100000}};
-    // 79228162514264337593543950331
-    s21_decimal check = {{0xFFFFFFFB, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add47) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -0
-    s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x80000000}};
-    // 79228162514264337593543950335
-    s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add48) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 0
-    s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x0}};
-    // 79228162514264337593543950335
-    s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add49) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // -0.0000000000000000000000000000
-    s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x801C0000}};
-    // 79228162514264337593543950335
-    s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
-
-START_TEST(test_add50) {
-    // 79228162514264337593543950335
-    s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-    // 0.0000000000000000000000000000
-    s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x1C0000}};
-    // 79228162514264337593543950335
-    s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
-
-    test_add(decimal1, decimal2, check);
-}
+// START_TEST(test_add37) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 26409387.498605864508043122005
+//     s21_decimal decimal2 = {{0x55555555, 0x0, 0x55555555, 0x150000}};
+//     // overflow
+//     int check = S21_ARITHMETIC_BIG;
+// 
+//     test_add_fail(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add38) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -26409387.498605864508043122005
+//     s21_decimal decimal2 = {{0x55555555, 0x0, 0x55555555, 0x80150000}};
+//     // 79228162514264337593517540948
+//     s21_decimal check = {{0xFE6D0654, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add39) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 26409387
+//     s21_decimal decimal2 = {{0x192F9AB, 0x0, 0x0, 0x0}};
+//     // overflow
+//     int check = S21_ARITHMETIC_BIG;
+// 
+//     test_add_fail(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add40) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -26409387
+//     s21_decimal decimal2 = {{0x192F9AB, 0x0, 0x0, 0x80000000}};
+//     // 79228162514264337593517540948
+//     s21_decimal check = {{0xFE6D0654, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add41) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 7.9228162514264337593543950335
+//     s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x1C0000}};
+//     // overflow
+//     int check = S21_ARITHMETIC_BIG;
+// 
+//     test_add_fail(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add42) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -7.9228162514264337593543950335
+//     s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x801C0000}};
+//     // 79228162514264337593543950327
+//     s21_decimal check = {{0xFFFFFFF7, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add43) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 8
+//     s21_decimal decimal2 = {{0x8, 0x0, 0x0, 0x0}};
+//     // overflow
+//     int check = S21_ARITHMETIC_BIG;
+// 
+//     test_add_fail(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add44) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -8
+//     s21_decimal decimal2 = {{0x8, 0x0, 0x0, 0x80000000}};
+//     // 79228162514264337593543950327
+//     s21_decimal check = {{0xFFFFFFF7, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add45) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 3.6336660283201536
+//     s21_decimal decimal2 = {{0x811800, 0x811800, 0x0, 0x100000}};
+//     // overflow
+//     int check = S21_ARITHMETIC_BIG;
+// 
+//     test_add_fail(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add46) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -3.6336660283201536
+//     s21_decimal decimal2 = {{0x811800, 0x811800, 0x0, 0x80100000}};
+//     // 79228162514264337593543950331
+//     s21_decimal check = {{0xFFFFFFFB, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add47) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -0
+//     s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x80000000}};
+//     // 79228162514264337593543950335
+//     s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add48) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 0
+//     s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x0}};
+//     // 79228162514264337593543950335
+//     s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add49) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // -0.0000000000000000000000000000
+//     s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x801C0000}};
+//     // 79228162514264337593543950335
+//     s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
+// 
+// START_TEST(test_add50) {
+//     // 79228162514264337593543950335
+//     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+//     // 0.0000000000000000000000000000
+//     s21_decimal decimal2 = {{0x0, 0x0, 0x0, 0x1C0000}};
+//     // 79228162514264337593543950335
+//     s21_decimal check = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
+// 
+//     test_add(decimal1, decimal2, check);
+// }
 
 // START_TEST(test_add51) {
 //     // 79228162514264337593543950335
@@ -39859,20 +39859,20 @@ Suite *add_suite1(void) {
     tcase_add_test(tc_core, test_add34);
     tcase_add_test(tc_core, test_add35);
     tcase_add_test(tc_core, test_add36);
-    tcase_add_test(tc_core, test_add37);
-    tcase_add_test(tc_core, test_add38);
-    tcase_add_test(tc_core, test_add39);
-    tcase_add_test(tc_core, test_add40);
-    tcase_add_test(tc_core, test_add41);
-    tcase_add_test(tc_core, test_add42);
-    tcase_add_test(tc_core, test_add43);
-    tcase_add_test(tc_core, test_add44);
-    tcase_add_test(tc_core, test_add45);
-    tcase_add_test(tc_core, test_add46);
-    tcase_add_test(tc_core, test_add47);
-    tcase_add_test(tc_core, test_add48);
-    tcase_add_test(tc_core, test_add49);
-    tcase_add_test(tc_core, test_add50);
+//     tcase_add_test(tc_core, test_add37);
+//     tcase_add_test(tc_core, test_add38);
+//     tcase_add_test(tc_core, test_add39);
+//     tcase_add_test(tc_core, test_add40);
+//     tcase_add_test(tc_core, test_add41);
+//     tcase_add_test(tc_core, test_add42);
+//     tcase_add_test(tc_core, test_add43);
+//     tcase_add_test(tc_core, test_add44);
+//     tcase_add_test(tc_core, test_add45);
+//     tcase_add_test(tc_core, test_add46);
+//     tcase_add_test(tc_core, test_add47);
+//     tcase_add_test(tc_core, test_add48);
+//     tcase_add_test(tc_core, test_add49);
+//     tcase_add_test(tc_core, test_add50);
 //     tcase_add_test(tc_core, test_add51);
 //     tcase_add_test(tc_core, test_add52);
 //     tcase_add_test(tc_core, test_add53);
