@@ -20,23 +20,26 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     big_decimal big_decimal1 = decimal_to_big_decimal(value_1);
     big_decimal big_decimal2 = decimal_to_big_decimal(value_2);
-    printf("args in add after convert to big");
-    s21_print_big_decimal_bits(big_decimal1);
-    s21_print_big_decimal_bits(big_decimal2);
+    // printf("args in add after convert to big");
+    // s21_print_big_decimal_bits(big_decimal1);
+    // s21_print_big_decimal_bits(big_decimal2);
     big_decimal big_decimal1_abs = big_decimal_set_sign(big_decimal1, 0);
     big_decimal big_decimal2_abs = big_decimal_set_sign(big_decimal2, 0);
     int value_1_sign = s21_decimal_get_sign(value_1);
     int value_2_sign = s21_decimal_get_sign(value_2);
     big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
-    fprintf(stdout, "res = ");
-    s21_print_big_decimal_bits(res);
-    fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
+    // fprintf(stdout, "res = ");
+    // s21_print_big_decimal_bits(res);
+    // fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
     int res_sign = big_decimal_get_sign(res);
     // Оценка результата
     // С правильными кодами ошибок ещё надо разобраться
     if (value_1_sign == value_2_sign) {  // Если знаки аргументов одинаковые
         if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {  // но не совпадают со знаком результата
-            code = S21_ARITHMETIC_BIG;  // значит произошло переполнение мантиссы
+            if (value_1_sign)
+                code = S21_ARITHMETIC_SMALL;
+            else
+                code = S21_ARITHMETIC_BIG;  // значит произошло переполнение мантиссы
         }
     } else if (value_1_sign){  // Если первый аргумент отрицательный
         if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // и по модулю меньше второго
@@ -66,13 +69,13 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         }
     }
     // Если код результата остался ОК, то можно попробовать округлить до decimal
-    printf("\n");
-    printf("code: %d\n", code);
+    // printf("\n");
+    // printf("code: %d\n", code);
     if (code == S21_ARITHMETIC_OK) {
     int sign = big_decimal_get_sign(res);
     if (sign) {
         int exp = big_decimal_get_exp(res);
-        printf("exp = %d\n", exp);
+        // printf("exp = %d\n", exp);
         res = big_decimal_to_twos_complement(res);
         big_decimal_set_exp(&res, exp);
     }

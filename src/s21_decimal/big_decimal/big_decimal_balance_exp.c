@@ -23,11 +23,11 @@
  */
 void big_decimal_balance_exp(big_decimal* first, big_decimal* second) {
     big_decimal* to_balance = NULL;
-    printf("args in balance: \n");
-    s21_print_big_decimal_bits(*first);
-    s21_print_big_decimal_bits(*second);
+    // printf("args in balance: \n");
+    // s21_print_big_decimal_bits(*first);
+    // s21_print_big_decimal_bits(*second);
     int diff = big_decimal_get_exp(*first) - big_decimal_get_exp(*second);
-    printf("diff exp = %d\n", diff);
+    // printf("diff exp = %d\n", diff);
     if (diff > 0) {
         to_balance = second;
     } else if (diff < 0) {

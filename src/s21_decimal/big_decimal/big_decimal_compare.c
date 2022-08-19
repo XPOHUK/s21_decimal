@@ -12,8 +12,8 @@ int big_decimal_compare(big_decimal first, big_decimal second) {
     int second_sign = big_decimal_get_sign(second);
     int first_bit = big_decimal_get_not_zero_bit(first);
     int second_bit = big_decimal_get_not_zero_bit(second);
-    printf("first_bit: %d\n", first_bit);
-    printf("second_bit: %d\n", second_bit);
+    // printf("first_bit: %d\n", first_bit);
+    // printf("second_bit: %d\n", second_bit);
     if (first_sign == second_sign) {  // Если знаки равны
         if (first_bit == second_bit) {  // И если равны мантиссы
             result = BIG_DECIMAL_COMPARISON_EQUAL;

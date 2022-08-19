@@ -7,6 +7,9 @@
 
 int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
+    if (result == NULL || !s21_is_correct_decimal(value_1) || !s21_is_correct_decimal(value_2)) {
+        return -1;
+    }
     *result = s21_decimal_get_zero();
     big_decimal val_1_big = decimal_to_big_decimal(value_1);
     big_decimal val_2_big = decimal_to_big_decimal(value_2);
