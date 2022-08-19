@@ -1,74 +1,86 @@
 #include "./arithmetic.h"
 #include "../helpers/helpers.h"
+#include "../big_decimal/big_decimal.h"
+#include "../../tests/_helpers/_debug.h"
 
 #include <stddef.h>
+#include <stdio.h>
 /**
  * @brief Функция принимает на входе два числа в формате Decimal и указатель для записи результата
  * Отрицательные числа записаны в прямом коде и в отдельном бите выставлен знак.
- * Сначала производится выравнивание экспонент. При выравнивании экспонент может произойти переполнение мантиссы. В
- * данном случае прекращаем повышать экспоненту у этого числа и понижаем экспоненту у второго, так как у него
- * больше знаков после запятой. Применяем округление сразу до нужного уровня экспоненты.
- * После выравнивания экспонент производим сложение мантисс, при котором тоже может возникнуть переполнение. Если
- * хотя бы у одного из чисел экспонента не равна 0, то можно произвести округление. В противном случае имеем окончатель-
- * ное переполнение разрядной сетки, о чём сообщаем в коде возврата.
  * @param value_1 Первое слагаемое.
  * @param value_2 Второе слагаемое.
  * @param result Указатель для записи суммы.
  * @return Код возврата.
  */
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+    if (!s21_is_correct_decimal(value_1) || !s21_is_correct_decimal(value_2) || result == NULL) {
+        return -1;
+    }
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    s21_arithmetic_result raise_code;
-    s21_decimal raised_exp = s21_decimal_get_zero();
-    s21_decimal to_raise, second;
-    int power_1 = s21_decimal_get_power(value_1);
-    int power_2 = s21_decimal_get_power(value_2);
-    if (power_1 != power_2) {
-        if (power_1 > power_2) {
-            to_raise = value_2;
-            second = value_1;
-        } else {
-            to_raise = value_1;
-            second = value_2;
+    big_decimal big_decimal1 = decimal_to_big_decimal(value_1);
+    big_decimal big_decimal2 = decimal_to_big_decimal(value_2);
+    // printf("args in add after convert to big");
+    // s21_print_big_decimal_bits(big_decimal1);
+    // s21_print_big_decimal_bits(big_decimal2);
+    big_decimal big_decimal1_abs = big_decimal_set_sign(big_decimal1, 0);
+    big_decimal big_decimal2_abs = big_decimal_set_sign(big_decimal2, 0);
+    int value_1_sign = s21_decimal_get_sign(value_1);
+    int value_2_sign = s21_decimal_get_sign(value_2);
+    big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
+    // fprintf(stdout, "res = ");
+    // s21_print_big_decimal_bits(res);
+    // fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
+    int res_sign = big_decimal_get_sign(res);
+    // Оценка результата
+    // С правильными кодами ошибок ещё надо разобраться
+    if (value_1_sign == value_2_sign) {  // Если знаки аргументов одинаковые
+        if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {  // но не совпадают со знаком результата
+            if (value_1_sign)
+                code = S21_ARITHMETIC_SMALL;
+            else
+                code = S21_ARITHMETIC_BIG;  // значит произошло переполнение мантиссы
         }
-        while (s21_decimal_get_power(to_raise) != s21_decimal_get_power(second)) {
-            raise_code = raise_exp(to_raise, &raised_exp);
-            if (raise_code == S21_ARITHMETIC_OK) {
-                to_raise = raised_exp;
-            } else {
-                break;
+    } else if (value_1_sign){  // Если первый аргумент отрицательный
+        if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // и по модулю меньше второго
+            // знак результата должен быть положительный
+            if (res_sign) {
+                // знак результата отрицательный, неудача
             }
-        }
-        if (s21_decimal_get_power(to_raise) != s21_decimal_get_power(second)) {
-            // Выполнить округление второго числа на разницу текущих экспонент
-            int exp_diff = s21_decimal_get_power(second) - s21_decimal_get_power(to_raise);
-            // Надо второе число поделить с остатком на 10 в степени разницы
-            s21_decimal div_res = s21_decimal_get_zero();
-            s21_decimal remainder = s21_decimal_get_zero();
-            s21_arithmetic_result div_code = s21_decimal_div_mant(second, s21_decimal_get_ten_pow(exp_diff - 1), &div_res, &remainder);
-            if (div_code == S21_ARITHMETIC_OK) {
-                s21_decimal second_div_res = s21_decimal_get_zero();
-                s21_decimal second_remainder = s21_decimal_get_zero();
-                s21_arithmetic_result second_div_code = s21_decimal_div_mant(div_res, s21_decimal_get_ten(),
-                                                                             &second_div_res, &second_remainder);
-                if (second_div_code == S21_ARITHMETIC_OK) {
-                    if ((second_remainder.bits[0] == 5 && !s21_decimal_mant_is_zero(remainder)) ||
-                        s21_decimal_is_set_bit(second_div_res, 0)) {
-                        second_div_res = s21_decimal_add_mant(second_div_res, s21_decimal_get_one());
-                    }
-                    second = second_div_res;
-                } else {
-                    // Ошибка деления
-                }
-            } else {
-                // Ошибка деления
+        } else if (big_decimal_compare(big_decimal1_abs, big_decimal2_abs)) {  // если же больше
+            // знак результата должен быть отрицательный
+            if (!res_sign) {
+                // знак результата положительный, неудача
             }
-        }
-    }
-    *result = s21_decimal_add_mant(to_raise, second);
-    if ((s21_decimal_get_sign(to_raise) ^ s21_decimal_get_sign(second)) != s21_decimal_get_sign(*result)) {
-        // Произошло переполнение при сложении мантисс, но если есть экспонента, значит можно округлить
+        } else {  // в этом случае результат должен быть 0
 
+        }
+    } else {  // Если второй аргумент отрицательный
+        if (big_decimal_compare(big_decimal1_abs, big_decimal2_abs)) {  // и по модулю меньше первого
+            // знак результата должен быть положительный
+            if (res_sign) {
+                // знак результата отрицательный, неудача
+            }
+        } else if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // если же больше
+            // знак результата должен быть отрицательный
+            if (!res_sign) {
+                // знак результата положительный, неудача
+            }
+        }
     }
+    // Если код результата остался ОК, то можно попробовать округлить до decimal
+    // printf("\n");
+    // printf("code: %d\n", code);
+    if (code == S21_ARITHMETIC_OK) {
+    int sign = big_decimal_get_sign(res);
+    if (sign) {
+        int exp = big_decimal_get_exp(res);
+        // printf("exp = %d\n", exp);
+        res = big_decimal_to_twos_complement(res);
+        big_decimal_set_exp(&res, exp);
+    }
+        code = big_decimal_round_to_decimal(res, result);
+    }
+    // *result = big_decimal_to_decimal(res);
     return code;
 }

@@ -32,6 +32,7 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
         *remainder = s21_decimal_get_zero();
     } else if (s21_decimal_mant_compare(divisor, dividend) == 1) {
         // Делитель больше делимого
+        fprintf(stdout, "divisor > dividend");
         *res = s21_decimal_get_zero();
         *remainder = dividend;
     } else {

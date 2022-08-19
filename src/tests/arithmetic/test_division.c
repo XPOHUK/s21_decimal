@@ -5,7 +5,7 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-// #define __DEBUG
+#define __DEBUG
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -34,7 +34,7 @@ START_TEST(test_division_ok2) {
     s21_decimal divisor = {{0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
+    s21_decimal quotient = {{0x1, 0x0, 0x0, 0x0}};
 
 
     test_division(dividend, divisor, quotient);
@@ -49,8 +49,7 @@ START_TEST(test_division_ok3) {
     s21_decimal divisor = {{0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
-
+    s21_decimal quotient = {{0xF, 0x0, 0x0, 0x10000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -63,8 +62,7 @@ START_TEST(test_division_ok4) {
     // 52818775009509558392832655360
     s21_decimal divisor = {{0x0, 0xAAAAAAAA, 0xAAAAAAAA, 0x0}};
     // Chastnoe
-    // 1
-    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
+    s21_decimal quotient = {{0xC877B58D, 0x5D378391, 0x3077B58D, 0x1C0000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -78,7 +76,7 @@ START_TEST(test_division_ok5) {
     s21_decimal divisor = {{0xAAAAAAAA, 0x0, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
+    s21_decimal quotient = {{0xF5378391, 0x8DAF391E, 0x3077B58D, 0x1C0000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -92,7 +90,7 @@ START_TEST(test_division_ok6) {
     s21_decimal divisor = {{0x0, 0x0, 0xAAAAAAAA, 0x0}};
     // Chastnoe
     // 1
-    s21_decimal quotient = {{0x10000000, 0x3E250261, 0x204FCE5E, 0x001C0000}};
+    s21_decimal quotient = {{0x25AF391F, 0x8DAF391F, 0x3077B58D, 0x1C0000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -106,7 +104,7 @@ START_TEST(test_division_ok7) {
     s21_decimal divisor = {{0xAAAAAAAA, 0xAAAAAAAA, 0x0, 0x0}};
     // Chastnoe
     // 6442450944
-    s21_decimal quotient = {{0x80000000, 0x1, 0x0, 0x0}};
+    s21_decimal quotient = {{0xD02AB486, 0xCEDC0000, 0xD02AB486, 0x130000}};
 
 
     test_division(dividend, divisor, quotient);
@@ -136,7 +134,7 @@ START_TEST(test_division_ok8) {
     s21_decimal divisor = {{0x0, 0xAAAAAAAA, 0x0, 0x0}};
     // Chastnoe
     // 6442450945
-    s21_decimal quotient = {{0x80000001, 0x1, 0x0, 0x0}};
+    s21_decimal quotient = {{0x9F06B487, 0x9F06B487, 0xD02AB487, 0x130000}};
 
 
     test_division(dividend, divisor, quotient);
@@ -151,8 +149,7 @@ START_TEST(test_division_ok9) {
     s21_decimal divisor = {{0xAAAAAAAA, 0x0, 0x0, 0x0}};
     // Chastnoe
     // 27670116117006778369
-    s21_decimal quotient = {{0x80000001, 0x80000001, 0x1, 0x0}};
-
+    s21_decimal quotient = {{0xF, 0xF, 0xF, 0x10000}};
 
     test_division(dividend, divisor, quotient);
 }
@@ -170,6 +167,20 @@ START_TEST(test_division_ok10) {
 
 
     test_division(dividend, divisor, quotient);
+}
+
+START_TEST(test_division_11) {
+        // Delimoe
+        // 15251250625031250156250078125
+        s21_decimal dividend = {{0x84DA1BAD, 0x09FB363F, 0x314789F1, 0x0}};
+        // Delitel
+        // 19807040628566084398385987584
+        s21_decimal divisor = {{0x0, 0x0, 0x40000000, 0x0}};
+        // Chastnoe
+        // 3
+        s21_decimal quotient = {{0x327CC9E2, 0x9F722C30, 0x18E1382D, 0x1C0000}};
+
+        test_division(dividend, divisor, quotient);
 }
 
 
@@ -190,6 +201,7 @@ Suite * division_suite1(void) {
     tcase_add_test(tc_core, test_division_ok8);
     tcase_add_test(tc_core, test_division_ok9);
     tcase_add_test(tc_core, test_division_ok10);
+    tcase_add_test(tc_core, test_division_11);
 
     suite_add_tcase(s, tc_core);
     return s;
@@ -198,8 +210,6 @@ Suite * division_suite1(void) {
 
 
 void test_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient) {
-    fprintf(stdout, "tut1\n");
-    fprintf(stdout, "tut2\n");
 
     s21_decimal result;
     s21_div(dividend, divisor, &result);

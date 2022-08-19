@@ -10,6 +10,8 @@ int main(void) {
 
     sr = srunner_create(NULL);
 
+
+    
     srunner_add_suite(sr, from_int_to_decimal_suite());
 
     // srunner_add_suite(sr, from_float_to_decimal_suite0());
@@ -54,14 +56,47 @@ int main(void) {
     srunner_add_suite(sr, binary_division_suite5());
     srunner_add_suite(sr, binary_division_suite6());
 
-    srunner_add_suite(sr, division_suite1());
+    // srunner_add_suite(sr, division_suite1());
+    // srunner_add_suite(sr, addition_suite1());
+
+    // srunner_add_suite(sr, add_suite0());
+    // srunner_add_suite(sr, add_suite1());
+    // srunner_add_suite(sr, add_suite2());
+    // srunner_add_suite(sr, add_suite3());
+    // srunner_add_suite(sr, add_suite4());
+    // srunner_add_suite(sr, add_suite5());
+    // srunner_add_suite(sr, add_suite6());
+    // srunner_add_suite(sr, add_suite7());
+    // srunner_add_suite(sr, add_suite8());
+    // srunner_add_suite(sr, add_suite9());
+
+    srunner_add_suite(sr, div_suite0());
+    // srunner_add_suite(sr, div_suite1());
+    // srunner_add_suite(sr, div_suite2());
+    // srunner_add_suite(sr, div_suite3());
+    // srunner_add_suite(sr, div_suite4());
+    // srunner_add_suite(sr, div_suite5());
+    // srunner_add_suite(sr, div_suite6());
+    // srunner_add_suite(sr, div_suite7());
+    // srunner_add_suite(sr, div_suite8());
+    // srunner_add_suite(sr, div_suite9());
+    // srunner_add_suite(sr, div_suite10());
+    // srunner_add_suite(sr, div_suite11());
+    // srunner_add_suite(sr, div_suite12());
+    // srunner_add_suite(sr, div_suite13());
+    // srunner_add_suite(sr, div_suite14());
+    // srunner_add_suite(sr, div_suite15());
+    // srunner_add_suite(sr, div_suite16());
+    // srunner_add_suite(sr, div_suite17());
+    // srunner_add_suite(sr, div_suite18());
 
     srunner_add_suite(sr, debug0());
     srunner_add_suite(sr, debug1());
     srunner_add_suite(sr, debug2());
     srunner_add_suite(sr, debug3());
 
-    srunner_set_fork_status(sr, CK_NOFORK);
+    // TODO(rambo): расскоментировать nofork-режим для проверки valgrind/leaks
+    // srunner_set_fork_status(sr, CK_NOFORK);
     // Используем данный блок для вывода подробно про каждый тест с разбиением по блокам
     // srunner_set_log(sr, "-");
     // srunner_run_all(sr, CK_SILENT);  // CK_SILENT || CK_MINIMAL || CK_NORMAL || CK_VERBOSE

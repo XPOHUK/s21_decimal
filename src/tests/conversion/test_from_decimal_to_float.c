@@ -27277,10 +27277,3 @@ void test_from_decimal_to_float(s21_decimal decimal, int check) {
     ck_assert_int_eq(cast_result.int32_bytes, check);
     ck_assert_int_eq(code, TEST_CONVERSION_OK);
 }
-
-void test_from_decimal_to_float_fail(s21_decimal decimal) {
-    float result;
-    int code = s21_from_decimal_to_float(decimal, &result);
-
-    ck_assert_int_eq(code, TEST_CONVERSION_ERROR);
-}
