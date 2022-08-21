@@ -1,3 +1,4 @@
+#include "./../big_decimal/big_decimal.h"
 #include "./comparison.h"
 /**
  * @file is_equal.c
@@ -12,15 +13,20 @@
  */
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
+    big_decimal big_decimal_1 = decimal_to_big_decimal(value_1);
+    big_decimal big_decimal_2 = decimal_to_big_decimal(value_2);
 
-    // if (s21_decimal_get_power(value_1) != s21_decimal_get_power(value_2)) {
-    //     Здесь необходима функция для выравнивания степеней(&value_1, &value_2);
-    // }
+    if (big_decimal_get_exp(big_decimal_1) != big_decimal_get_exp(big_decimal_2)) {
+        big_decimal_balance_exp(&big_decimal_1, &big_decimal_2);
+    }
 
-    if (value_1.bits[0] == value_2.bits[0] &&
-        value_1.bits[1] == value_2.bits[1] &&
-        value_1.bits[2] == value_2.bits[2] &&
-        value_1.bits[3] == value_2.bits[3]) {
+    if (big_decimal_1.parts[0] == big_decimal_2.parts[0] &&
+        big_decimal_1.parts[1] == big_decimal_2.parts[1] &&
+        big_decimal_1.parts[2] == big_decimal_2.parts[2] &&
+        big_decimal_1.parts[3] == big_decimal_2.parts[3] &&
+        big_decimal_1.parts[4] == big_decimal_2.parts[4] &&
+        big_decimal_1.parts[5] == big_decimal_2.parts[5] &&
+        big_decimal_1.parts[6] == big_decimal_2.parts[6]) {
         code = S21_COMPARISON_TRUE;
     }
     return code;
