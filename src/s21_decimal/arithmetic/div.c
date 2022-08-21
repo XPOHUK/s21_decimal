@@ -15,6 +15,11 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     big_decimal val_2_big = decimal_to_big_decimal(value_2);
     big_decimal res;
     code = big_decimal_div(val_1_big, val_2_big, &res);
-    *result = big_decimal_to_decimal(res);
+    if (code == S21_ARITHMETIC_OK) {
+        if (s21_decimal_get_sign(value_1) != s21_decimal_get_sign(value_2))
+            big_decimal_set_sign(res, 1);
+        *result = big_decimal_to_decimal(res);
+    }
+
     return code;
 }

@@ -8,10 +8,10 @@
 
 int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    // printf("dividend:\n");
-    // s21_print_big_decimal_bits(dividend);
-    // printf("divisor:\n");
-    // s21_print_big_decimal_bits(divisor);
+    printf("dividend in:\n");
+    s21_print_big_decimal_bits(dividend);
+    printf("divisor in:\n");
+    s21_print_big_decimal_bits(divisor);
     // Фиксируем знак результата
     int sign = big_decimal_get_sign(dividend) ^ big_decimal_get_sign(divisor);
     // Сбрасываем знак у делимого
@@ -31,11 +31,10 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
         int shift_size = big_decimal_get_not_zero_bit(dividend) - big_decimal_get_not_zero_bit(divisor);
         // Потом сдвигаем делитель
         big_decimal shifted_divisor = big_decimal_shift_left(divisor, shift_size);
-        // Проставляем знак если делитель изначально положительный
-        if (!big_decimal_get_sign(divisor))
-            shifted_divisor = big_decimal_change_sign(shifted_divisor);
-        // printf("shifted_divisor: \n");
-        // s21_print_big_decimal_bits(shifted_divisor);
+        // Проставляем знак
+        shifted_divisor = big_decimal_set_sign(shifted_divisor, 1);
+        printf("shifted_divisor: \n");
+        s21_print_big_decimal_bits(shifted_divisor);
         big_decimal sum = big_decimal_get_zero();
         for (int i = 0; i <= shift_size; i++) {
             // Сдвигаем результат для записи нового бита
@@ -55,9 +54,11 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
                 // printf("shifted dividend:\n");
                 // s21_print_big_decimal_bits(dividend);
             }
-        // printf("sum in div:\n");
-        // s21_print_big_decimal_bits(sum);
+            printf("sum in div:\n");
+            s21_print_big_decimal_bits(sum);
         }
+        printf("Дивиденд:\n");
+        s21_print_big_decimal_bits(dividend);
 
         if (big_decimal_get_sign(sum))
             *remainder = dividend;

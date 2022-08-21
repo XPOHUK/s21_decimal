@@ -19,6 +19,8 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
     big_decimal remainder = big_decimal_get_zero();
     big_decimal_div_big_int(dividend, divisor, result, &remainder);
     int temp_exp = big_decimal_get_exp(dividend) - big_decimal_get_exp(divisor);
+    printf("remainder:\n");
+    s21_print_big_decimal_bits(remainder);
     if (!big_decimal_is_zero(remainder)) {
         // Сбрасываем знак делителя
 
@@ -58,15 +60,17 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
                 // И увеличиваем экспоненту
                 temp_exp++;
             }
+
+        }
             // Если результат 0 с экспонентой 28, значит получили очень маленькое число
             if (big_decimal_is_zero(*result) && temp_exp == 28) {
                 code = S21_ARITHMETIC_SMALL;
             } else if (temp_exp < 0) {
                 code = S21_ARITHMETIC_BIG;
+                printf("Или тут?");
             } else {
                 big_decimal_set_exp(result, temp_exp);
             }
-        }
     } else {
         // Если остаток от первоначального деления 0 и если предварительная экспонента отрицательная, то
         // результат надо домножить на 10 в степени модуля предварительной экспоненты, а экспоненту поставить 0. 
@@ -78,12 +82,14 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             big_decimal temp_res = big_decimal_add_big_int(shifted_one, shifted_three);
             if (big_decimal_get_not_zero_bit(temp_res) > 95) {
                 code = S21_ARITHMETIC_BIG;
+                printf("Тут шоль?");
                 break;
             }
             temp_exp++;
             *result = temp_res;
-            big_decimal_set_exp(result, temp_exp);
+            // big_decimal_set_exp(result, temp_exp);
         }
     }
+            big_decimal_set_exp(result, temp_exp);
     return code;
 }
