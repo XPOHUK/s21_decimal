@@ -147,6 +147,13 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
     }
             big_decimal_set_exp(result, temp_exp);
             *result = big_decimal_set_sign(*result, sign);
+            if (big_decimal_get_not_zero_bit(*result) > 95) {
+                if (sign)
+                    code = S21_ARITHMETIC_SMALL;
+                else
+                 code = S21_ARITHMETIC_BIG;
+            } else {
             *result = remove_trail_zero(*result);
+            }
     return code;
 }
