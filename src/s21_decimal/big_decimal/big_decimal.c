@@ -184,3 +184,21 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
     }
     return i;
 }
+
+big_decimal remove_trail_zero(big_decimal in) {
+    printf("in trail zero");
+    big_decimal res = in;
+    int exp = big_decimal_get_exp(in);
+    if (exp > 0) {
+        big_decimal remainder = big_decimal_get_zero();
+        big_decimal result = big_decimal_get_zero();
+        big_decimal_div_big_int(in, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+        while (big_decimal_is_zero(remainder) && exp > 0) {
+            exp--;
+            res = result;
+            big_decimal_div_big_int(result, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+        }
+        big_decimal_set_exp(&res, exp);
+    }
+    return res;
+}

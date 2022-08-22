@@ -69,5 +69,6 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
 int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result);
 int big_decimal_mul(big_decimal first, big_decimal second, big_decimal* result);
 
+big_decimal remove_trail_zero(big_decimal in);
 
 #endif //DECIMAL_BIG_DECIMAL_H

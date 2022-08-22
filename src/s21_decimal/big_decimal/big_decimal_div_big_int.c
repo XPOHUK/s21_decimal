@@ -65,7 +65,9 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
         else
             *remainder = sum;
         *remainder = big_decimal_shift_right(*remainder, shift_size);
-        *result = big_decimal_set_sign(*result, sign);
+
     }
+    *result = big_decimal_set_sign(*result, sign);
+    printf("sign in div int %d\n", sign);
     return code;
 }
