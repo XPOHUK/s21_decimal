@@ -46,6 +46,8 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             shifted_one = big_decimal_shift_left(*result, 1);
             shifted_three = big_decimal_shift_left(*result, 3);
             big_decimal result_mul = big_decimal_add_big_int(shifted_one, shifted_three);
+                printf("result_mul: \n");
+                s21_print_big_decimal_bits(result_mul);
             
             // Если при этом умножении основной результат вышел за пределы s21_decimal, значит результат промежуточного деления
             // это уже округляемая цифра
@@ -56,10 +58,12 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
                 printf("temp_res: \n");
                     rounded = 1;
                 s21_print_big_decimal_bits(temp_res);
+
                 if (big_decimal_get_not_zero_bit(result_mul) > 95 && temp_exp <= 0 && big_decimal_get_not_zero_bit(*result) > 95) {
                     if (sign) {
                         code = S21_ARITHMETIC_SMALL;
                     } else {
+                        printf("tuta\n");
                         code = S21_ARITHMETIC_BIG;
                     }
                 } else if (temp_res.parts[0] > 5 || (temp_res.parts[0] == 5 && (!big_decimal_is_zero(remainder) || big_decimal_is_set_bit(*result, 0)))) {
@@ -69,16 +73,15 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
                     // Значит можно просто разделить результат на 10 и увеличить на 1
                     if (big_decimal_get_not_zero_bit(*result) > 95) {
                         if ( temp_exp > 0) {
-                        big_decimal_div_big_int(*result, decimal_to_big_decimal(s21_decimal_get_ten()), result, NULL);
-                        *result = big_decimal_incr(*result);
-                        temp_exp--;  // Надо ли?
-                     } else {
+                            big_decimal_div_big_int(*result, decimal_to_big_decimal(s21_decimal_get_ten()), result, NULL);
+                            *result = big_decimal_incr(*result);
+                            temp_exp--;
+                        } else {
                             if(sign)
                                 code = S21_ARITHMETIC_SMALL;
                             else
-                             code = S21_ARITHMETIC_BIG;
-
-                     }
+                                code = S21_ARITHMETIC_BIG;
+                        }
                     }
                     s21_print_big_decimal_bits(temp_res);
                 }
@@ -86,10 +89,10 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
                 break;
             } else {
                 // В противном случае прибавляем к домноженному результату промежуточный и сохраняем в основной.
-                *result = big_decimal_add_big_int(result_mul, temp_res);
+                    *result = big_decimal_add_big_int(result_mul, temp_res);
                 printf("blia\n");
                 // И увеличиваем экспоненту
-                s21_print_big_decimal_bits(*result);
+                s21_print_big_decimal_bits(temp_res);
                 temp_exp++;
             }
 
@@ -110,18 +113,18 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
 
         }
             // Если результат 0 с экспонентой 28, значит получили очень маленькое число
-            if (big_decimal_is_zero(*result) && temp_exp == 28) {
+        if (big_decimal_is_zero(*result) && temp_exp == 28) {
+            code = S21_ARITHMETIC_SMALL;
+        } else if (temp_exp < 0) {
+            if (sign) {
                 code = S21_ARITHMETIC_SMALL;
-            } else if (temp_exp < 0) {
-                if (sign) {
-                    code = S21_ARITHMETIC_SMALL;
-                } else {
-                    code = S21_ARITHMETIC_BIG;
-                }
-                printf("Или тут?");
             } else {
-                big_decimal_set_exp(result, temp_exp);
+                code = S21_ARITHMETIC_BIG;
             }
+            printf("Или тут?");
+        } else {
+            big_decimal_set_exp(result, temp_exp);
+        }
     } else {
         // Если остаток от первоначального деления 0 и если предварительная экспонента отрицательная, то
         // результат надо домножить на 10 в степени модуля предварительной экспоненты, а экспоненту поставить 0. 
@@ -145,15 +148,17 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             // big_decimal_set_exp(result, temp_exp);
         }
     }
-            big_decimal_set_exp(result, temp_exp);
-            *result = big_decimal_set_sign(*result, sign);
-            if (big_decimal_get_not_zero_bit(*result) > 95) {
-                if (sign)
-                    code = S21_ARITHMETIC_SMALL;
-                else
-                 code = S21_ARITHMETIC_BIG;
-            } else {
-            *result = remove_trail_zero(*result);
-            }
+    big_decimal_set_exp(result, temp_exp);
+    *result = big_decimal_set_sign(*result, sign);
+    if (big_decimal_get_not_zero_bit(*result) > 95) {
+        printf("tuta blia\n");
+        printf("exp: %d\n", temp_exp);
+        if (sign)
+            code = S21_ARITHMETIC_SMALL;
+        // else
+            // code = S21_ARITHMETIC_BIG;
+    } else {
+        *result = remove_trail_zero(*result);
+    }
     return code;
 }
