@@ -35,9 +35,31 @@ Suite *from_decimal_to_float_suite6(void);
 Suite *from_decimal_to_float_suite7(void);
 Suite *from_decimal_to_float_suite8(void);
 
+#define TEST_COMPARISON_FALSE 0
+#define TEST_COMPARISON_TRUE 1
+
 Suite *is_greater_suite(void);
 Suite *is_less_suite(void);
 Suite *is_equal_suite(void);
+
+Suite *is_equal_suite1(void);
+Suite *is_equal_suite2(void);
+Suite *is_equal_suite3(void);
+Suite *is_equal_suite4(void);
+Suite *is_equal_suite5(void);
+Suite *is_equal_suite6(void);
+Suite *is_equal_suite7(void);
+Suite *is_equal_suite8(void);
+Suite *is_equal_suite9(void);
+Suite *is_equal_suite10(void);
+Suite *is_equal_suite11(void);
+Suite *is_equal_suite12(void);
+Suite *is_equal_suite13(void);
+Suite *is_equal_suite14(void);
+Suite *is_equal_suite15(void);
+Suite *is_equal_suite16(void);
+
+void test_is_equal(s21_decimal decimal1, s21_decimal decimal2, int check);
 
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
@@ -122,6 +144,28 @@ Suite *div_suite16(void);
 Suite *div_suite17(void);
 Suite *div_suite18(void);
 
+Suite *sub_suite0(void);
+Suite *sub_suite1(void);
+Suite *sub_suite2(void);
+Suite *sub_suite3(void);
+Suite *sub_suite4(void);
+Suite *sub_suite5(void);
+Suite *sub_suite6(void);
+Suite *sub_suite7(void);
+Suite *sub_suite8(void);
+Suite *sub_suite9(void);
+
+Suite *mul_suite0(void);
+Suite *mul_suite1(void);
+Suite *mul_suite2(void);
+Suite *mul_suite3(void);
+Suite *mul_suite4(void);
+Suite *mul_suite5(void);
+Suite *mul_suite6(void);
+Suite *mul_suite7(void);
+Suite *mul_suite8(void);
+Suite *mul_suite9(void);
+
 void test_binary_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient,
                           s21_decimal remainder);
 void test_debug(s21_decimal decimal, char *check);
@@ -133,6 +177,11 @@ void test_add_fail(s21_decimal decimal1, s21_decimal decimal2, int check);
 void test_div(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check);
 void test_div_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check);
 void test_div_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal decimal_check, int code_check);
+void test_sub(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check);
+void test_sub_fail(s21_decimal decimal1, s21_decimal decimal2, int check);
+void test_mul(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check);
+void test_mul_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check);
+void test_mul_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal decimal_check, int code_check);
 
 // Количество случайных тестов одного типа
 #define NUM_RANDOM_TEST 25
