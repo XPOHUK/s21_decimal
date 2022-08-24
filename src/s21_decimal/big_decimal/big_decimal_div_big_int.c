@@ -54,8 +54,8 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
                 // printf("shifted dividend:\n");
                 // s21_print_big_decimal_bits(dividend);
             }
-            printf("sum in div:\n");
-            s21_print_big_decimal_bits(sum);
+            // printf("sum in div:\n");
+            // s21_print_big_decimal_bits(sum);
         }
         printf("Дивиденд:\n");
         s21_print_big_decimal_bits(dividend);

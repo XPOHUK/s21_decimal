@@ -379,17 +379,17 @@ START_TEST(test_div_manual16) {
     test_div_fail1(decimal1, decimal2, code_check);
 }
 
-// START_TEST(test_div_manual17) {
-//     // 0.0000000000000000000000000001
-//     s21_decimal decimal1 = {{0x1, 0x0, 0x0, 0x1C0000}};
-//     // -79228162514264337593543950335
-//     s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x80000000}};
-//     // -0
-//     s21_decimal decimal_check = {{0x0, 0x0, 0x0, 0x80000000}};
-//     int code_check = S21_ARITHMETIC_SMALL;
-// 
-//     test_div_fail2(decimal1, decimal2, decimal_check, code_check);
-// }
+START_TEST(test_div_manual17) {
+    // 0.0000000000000000000000000001
+    s21_decimal decimal1 = {{0x1, 0x0, 0x0, 0x1C0000}};
+    // -79228162514264337593543950335
+    s21_decimal decimal2 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x80000000}};
+    // -0
+    s21_decimal decimal_check = {{0x0, 0x0, 0x0, 0x80000000}};
+    int code_check = S21_ARITHMETIC_SMALL;
+
+    test_div_fail2(decimal1, decimal2, decimal_check, code_check);
+}
 
 START_TEST(test_div_manual18) {
     // 0.0000000074505801528346182749
@@ -71511,22 +71511,22 @@ Suite * div_suite0(void) {
     tcase_add_test(tc_core, test_div_manual9);
     tcase_add_test(tc_core, test_div_manual10);
     tcase_add_test(tc_core, test_div_manual11);
-    tcase_add_test(tc_core, test_div_manual12);
-    tcase_add_test(tc_core, test_div_manual13);
-    tcase_add_test(tc_core, test_div_manual14);
-    tcase_add_test(tc_core, test_div_manual15);
-    tcase_add_test(tc_core, test_div_manual16);
-//     tcase_add_test(tc_core, test_div_manual17);
-    tcase_add_test(tc_core, test_div_manual18);
-    tcase_add_test(tc_core, test_div_manual19);
-    tcase_add_test(tc_core, test_div_manual20);
-    tcase_add_test(tc_core, test_div_manual21);
-    tcase_add_test(tc_core, test_div_manual22);
-    tcase_add_test(tc_core, test_div_manual23);
-    tcase_add_test(tc_core, test_div_manual24);
-    tcase_add_test(tc_core, test_div_manual25);
-    tcase_add_test(tc_core, test_div_manual26);
-    tcase_add_test(tc_core, test_div_manual27);
+//     tcase_add_test(tc_core, test_div_manual12);
+//     tcase_add_test(tc_core, test_div_manual13);
+//     tcase_add_test(tc_core, test_div_manual14);
+//     tcase_add_test(tc_core, test_div_manual15);
+//     tcase_add_test(tc_core, test_div_manual16);
+// //     tcase_add_test(tc_core, test_div_manual17);
+//     tcase_add_test(tc_core, test_div_manual18);
+//     tcase_add_test(tc_core, test_div_manual19);
+//     tcase_add_test(tc_core, test_div_manual20);
+//     tcase_add_test(tc_core, test_div_manual21);
+//     tcase_add_test(tc_core, test_div_manual22);
+//     tcase_add_test(tc_core, test_div_manual23);
+//     tcase_add_test(tc_core, test_div_manual24);
+//     tcase_add_test(tc_core, test_div_manual25);
+//     tcase_add_test(tc_core, test_div_manual26);
+//     tcase_add_test(tc_core, test_div_manual27);
 
     suite_add_tcase(s, tc_core);
     return s;

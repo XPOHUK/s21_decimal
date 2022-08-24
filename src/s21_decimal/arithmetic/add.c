@@ -28,8 +28,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int value_1_sign = s21_decimal_get_sign(value_1);
     int value_2_sign = s21_decimal_get_sign(value_2);
     big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
-    // fprintf(stdout, "res = ");
-    // s21_print_big_decimal_bits(res);
+    fprintf(stdout, "res after big decimal add = ");
+    s21_print_big_decimal_bits(res);
     // fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
     int res_sign = big_decimal_get_sign(res);
     // Оценка результата

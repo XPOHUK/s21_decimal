@@ -68,12 +68,12 @@ int main(void) {
     srunner_add_suite(sr, add_suite6());
     srunner_add_suite(sr, add_suite7());
     srunner_add_suite(sr, add_suite8());
-    srunner_add_suite(sr, add_suite9());
+    // srunner_add_suite(sr, add_suite9());
 
-    srunner_add_suite(sr, div_suite0());
-    srunner_add_suite(sr, div_suite1());
-    srunner_add_suite(sr, div_suite2());
-    srunner_add_suite(sr, div_suite3());
+    // srunner_add_suite(sr, div_suite0());
+    // srunner_add_suite(sr, div_suite1());
+    // srunner_add_suite(sr, div_suite2());
+    // srunner_add_suite(sr, div_suite3());
     // srunner_add_suite(sr, div_suite4());
     // srunner_add_suite(sr, div_suite5());
     // srunner_add_suite(sr, div_suite6());
