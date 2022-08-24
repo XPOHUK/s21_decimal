@@ -42,6 +42,23 @@ int main(void) {
     srunner_add_suite(sr, is_less_suite());
     srunner_add_suite(sr, is_equal_suite());
 
+    srunner_add_suite(sr, is_equal_suite1());
+    srunner_add_suite(sr, is_equal_suite2());
+    srunner_add_suite(sr, is_equal_suite3());
+    srunner_add_suite(sr, is_equal_suite4());
+    srunner_add_suite(sr, is_equal_suite5());
+    srunner_add_suite(sr, is_equal_suite6());
+    srunner_add_suite(sr, is_equal_suite7());
+    srunner_add_suite(sr, is_equal_suite8());
+    srunner_add_suite(sr, is_equal_suite9());
+    srunner_add_suite(sr, is_equal_suite10());
+    srunner_add_suite(sr, is_equal_suite11());
+    srunner_add_suite(sr, is_equal_suite12());
+    srunner_add_suite(sr, is_equal_suite13());
+    srunner_add_suite(sr, is_equal_suite14());
+    srunner_add_suite(sr, is_equal_suite15());
+    srunner_add_suite(sr, is_equal_suite16());
+
     srunner_add_suite(sr, truncate_suite0());
     srunner_add_suite(sr, truncate_suite1());
     srunner_add_suite(sr, truncate_suite2());

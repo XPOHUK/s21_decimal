@@ -35,9 +35,31 @@ Suite *from_decimal_to_float_suite6(void);
 Suite *from_decimal_to_float_suite7(void);
 Suite *from_decimal_to_float_suite8(void);
 
+#define TEST_COMPARISON_FALSE 0
+#define TEST_COMPARISON_TRUE 1
+
 Suite *is_greater_suite(void);
 Suite *is_less_suite(void);
 Suite *is_equal_suite(void);
+
+Suite *is_equal_suite1(void);
+Suite *is_equal_suite2(void);
+Suite *is_equal_suite3(void);
+Suite *is_equal_suite4(void);
+Suite *is_equal_suite5(void);
+Suite *is_equal_suite6(void);
+Suite *is_equal_suite7(void);
+Suite *is_equal_suite8(void);
+Suite *is_equal_suite9(void);
+Suite *is_equal_suite10(void);
+Suite *is_equal_suite11(void);
+Suite *is_equal_suite12(void);
+Suite *is_equal_suite13(void);
+Suite *is_equal_suite14(void);
+Suite *is_equal_suite15(void);
+Suite *is_equal_suite16(void);
+
+void test_is_equal(s21_decimal decimal1, s21_decimal decimal2, int check);
 
 Suite *truncate_suite0(void);
 Suite *truncate_suite1(void);
