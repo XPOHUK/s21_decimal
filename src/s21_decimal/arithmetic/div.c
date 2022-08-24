@@ -11,6 +11,8 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         return -1;
     } else if (s21_decimal_mant_is_zero(value_2)) {
         code = S21_ARITHMETIC_ZERO_DIV;
+    } else if (s21_decimal_mant_is_zero(value_1)) {
+        *result = s21_decimal_get_zero();
     } else {
         *result = s21_decimal_get_zero();
         big_decimal val_1_big = decimal_to_big_decimal(value_1);

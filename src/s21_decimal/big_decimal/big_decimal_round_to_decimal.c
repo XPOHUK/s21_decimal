@@ -17,8 +17,8 @@
  */
 int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    printf("before round: \n");
-    s21_print_big_decimal_bits(in);
+    // printf("before round: \n");
+    // s21_print_big_decimal_bits(in);
     // Выясняем на сколько битов надо округлить
     int bits_to_round = big_decimal_get_not_zero_bit(in) - 95;
     // printf("bits to round: %d\n", bits_to_round);

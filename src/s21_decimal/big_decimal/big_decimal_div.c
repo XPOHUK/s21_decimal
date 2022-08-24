@@ -24,15 +24,15 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
     int over_in_sum = 0;
     int break_on_exp = 0;
     int temp_exp = big_decimal_get_exp(dividend) - big_decimal_get_exp(divisor);
-    printf("remainder:\n");
-    s21_print_big_decimal_bits(remainder);
+    // printf("remainder:\n");
+    // s21_print_big_decimal_bits(remainder);
     // Сбрасываем знак делителя
     divisor = big_decimal_set_sign(divisor, 0);
     big_decimal div_res = big_decimal_get_zero();
     while (!big_decimal_is_zero(remainder)) {
-        printf("Current result: \n");
-        s21_print_big_decimal_bits(*result);
-        printf("temp_exp: %d\n", temp_exp);
+        // printf("Current result: \n");
+        // s21_print_big_decimal_bits(*result);
+        // printf("temp_exp: %d\n", temp_exp);
             
         // Домножаем остаток на 10
         big_decimal shifted_one = big_decimal_shift_left(remainder, 1);
@@ -43,10 +43,10 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
         // Делим домноженный остаток на делитель
         big_decimal_div_big_int(remainder, divisor, &div_res, &remainder);
 
-        printf("div_res: \n");
-        s21_print_big_decimal_bits(div_res);
-        printf("remainder: \n");
-        s21_print_big_decimal_bits(remainder);
+        // printf("div_res: \n");
+        // s21_print_big_decimal_bits(div_res);
+        // printf("remainder: \n");
+        // s21_print_big_decimal_bits(remainder);
             
         if (temp_exp != 28) {
             // Домножаем основной результат на 10
@@ -54,12 +54,12 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             shifted_three = big_decimal_shift_left(*result, 3);
             big_decimal temp_res = big_decimal_add_big_int(shifted_one, shifted_three);
 
-            printf("result_mul: \n");
-            s21_print_big_decimal_bits(temp_res);
+            // printf("result_mul: \n");
+            // s21_print_big_decimal_bits(temp_res);
 
             // Если при этом умножении основной результат не вышел за пределы s21_decimal, значит результат промежуточного деления
             // можно прибавить к этому временному результату. 
-            printf("result get not zero bit: %d, %u\n", big_decimal_get_not_zero_bit(temp_res), big_decimal_get_not_zero_bit(temp_res));
+            // printf("result get not zero bit: %d, %u\n", big_decimal_get_not_zero_bit(temp_res), big_decimal_get_not_zero_bit(temp_res));
             
             if (big_decimal_is_zero(temp_res) || big_decimal_get_not_zero_bit(temp_res) < 96 ) {
                 temp_res = big_decimal_add_big_int(temp_res, div_res);
@@ -79,35 +79,38 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             }
         } else {
             // При экспоненте 28 уже нет смысла домножать результат. Выходим из цикла.
-            printf("break on exp 28\n");
+            // printf("break on exp 28\n");
             break_on_exp = 1;
             break;
         }
     }
-    printf("After cycle:\n");
-    printf("result:\n");
-    s21_print_big_decimal_bits(*result);
-    printf("exp: %d, over: %d, over_in_sum: %d\n", temp_exp, over, over_in_sum);
-    printf("div_res:\n");
-    s21_print_big_decimal_bits(div_res);
-    printf("remainder:\n");
-    s21_print_big_decimal_bits(remainder);
+    // printf("After cycle:\n");
+    // printf("result:\n");
+    // s21_print_big_decimal_bits(*result);
+    // printf("exp: %d, over: %d, over_in_sum: %d\n", temp_exp, over, over_in_sum);
+    // printf("div_res:\n");
+    // s21_print_big_decimal_bits(div_res);
+    // printf("remainder:\n");
+    // s21_print_big_decimal_bits(remainder);
     // Далее идёт обработка результатов. Отталкиваемся от состояния экспоненты.
     if (big_decimal_is_zero(*result) && big_decimal_is_zero(div_res) && temp_exp == 0 && over_in_sum) {
         code = S21_ARITHMETIC_SMALL;
     } else if ((temp_exp < 0 && over) || (temp_exp == 28 && big_decimal_is_zero(*result) && big_decimal_is_zero(div_res))) {
         // Если экспонента отрицательная, а разрядная сетка при этом заполнена, то имеем неисправимое переполнение
         // Либо если экспонента 28, результат и результат деления равны 0, то имеем очень малое число.
-        printf("in first if\n");
-        if (sign)
+        // printf("in first if\n");
+        if (break_on_exp) {
             code = S21_ARITHMETIC_SMALL;
-        else
+        } else if (sign && over) {
+            code = S21_ARITHMETIC_SMALL;
+        } else if (!sign && over) {
             code = S21_ARITHMETIC_BIG;
+        }
     // } else if (temp_exp == 28 && !over && !over_in_sum && big_decimal_is_zero(remainder)) {
     //     printf("bug\n");
     } else if ((over && temp_exp >= 0) || (over_in_sum) || (temp_exp == 28 && break_on_exp)) {
         // Если экспонента больше либо равна 0 и есть флаг переполнения, то округляем
-        printf("in second if\n");
+        // printf("in second if\n");
         if (div_res.parts[0] > 5 || (div_res.parts[0] == 5 && (!big_decimal_is_zero(remainder) || big_decimal_is_set_bit(*result, 0)))) {
             big_decimal temp = big_decimal_incr(*result);
             // При инкременте могло произойти переполнение
@@ -129,7 +132,7 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
     //         code = S21_ARITHMETIC_BIG;
     // }
     if (temp_exp < 0 && code == S21_ARITHMETIC_OK) {
-        printf("in last if\n");
+        // printf("in last if\n");
             // Пробуем поднять экспоненту до 0
             big_decimal raized_res = *result;
             while (temp_exp < 0 && big_decimal_get_not_zero_bit(raized_res) < 96) {
@@ -149,14 +152,14 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
             }
 
     }
-    printf("result after ifs:\n");
-    s21_print_big_decimal_bits(*result);
+    // printf("result after ifs:\n");
+    // s21_print_big_decimal_bits(*result);
     big_decimal_set_exp(result, temp_exp);
     *result = big_decimal_set_sign(*result, sign);
     if (code == S21_ARITHMETIC_OK)
         *result = remove_trail_zero(*result);
-    printf("result after trail:\n");
-    s21_print_big_decimal_bits(*result);
-    printf("code after trail: %d\n", code);
+    // printf("result after trail:\n");
+    // s21_print_big_decimal_bits(*result);
+    // printf("code after trail: %d\n", code);
     return code;
 }

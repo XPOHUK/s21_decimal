@@ -6,7 +6,7 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-#define __DEBUG
+// #define __DEBUG
 
 START_TEST(test_div1) {
     // 79228162514264337593543950335

@@ -5,7 +5,7 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-#define __DEBUG
+// #define __DEBUG
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Тесты на некорректные данные (ручные)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -71511,22 +71511,22 @@ Suite * div_suite0(void) {
     tcase_add_test(tc_core, test_div_manual9);
     tcase_add_test(tc_core, test_div_manual10);
     tcase_add_test(tc_core, test_div_manual11);
-//     tcase_add_test(tc_core, test_div_manual12);
-//     tcase_add_test(tc_core, test_div_manual13);
-//     tcase_add_test(tc_core, test_div_manual14);
-//     tcase_add_test(tc_core, test_div_manual15);
-//     tcase_add_test(tc_core, test_div_manual16);
-// //     tcase_add_test(tc_core, test_div_manual17);
-//     tcase_add_test(tc_core, test_div_manual18);
-//     tcase_add_test(tc_core, test_div_manual19);
-//     tcase_add_test(tc_core, test_div_manual20);
-//     tcase_add_test(tc_core, test_div_manual21);
-//     tcase_add_test(tc_core, test_div_manual22);
-//     tcase_add_test(tc_core, test_div_manual23);
-//     tcase_add_test(tc_core, test_div_manual24);
-//     tcase_add_test(tc_core, test_div_manual25);
-//     tcase_add_test(tc_core, test_div_manual26);
-//     tcase_add_test(tc_core, test_div_manual27);
+    tcase_add_test(tc_core, test_div_manual12);
+    tcase_add_test(tc_core, test_div_manual13);
+    tcase_add_test(tc_core, test_div_manual14);
+    tcase_add_test(tc_core, test_div_manual15);
+    tcase_add_test(tc_core, test_div_manual16);
+    tcase_add_test(tc_core, test_div_manual17);
+    tcase_add_test(tc_core, test_div_manual18);
+    tcase_add_test(tc_core, test_div_manual19);
+    tcase_add_test(tc_core, test_div_manual20);
+    tcase_add_test(tc_core, test_div_manual21);
+    tcase_add_test(tc_core, test_div_manual22);
+    tcase_add_test(tc_core, test_div_manual23);
+    tcase_add_test(tc_core, test_div_manual24);
+    tcase_add_test(tc_core, test_div_manual25);
+    tcase_add_test(tc_core, test_div_manual26);
+    tcase_add_test(tc_core, test_div_manual27);
 
     suite_add_tcase(s, tc_core);
     return s;
