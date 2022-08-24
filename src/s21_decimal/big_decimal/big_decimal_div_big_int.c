@@ -8,9 +8,9 @@
 
 int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    // printf("dividend:\n");
+    // printf("dividend in:\n");
     // s21_print_big_decimal_bits(dividend);
-    // printf("divisor:\n");
+    // printf("divisor in:\n");
     // s21_print_big_decimal_bits(divisor);
     // Фиксируем знак результата
     int sign = big_decimal_get_sign(dividend) ^ big_decimal_get_sign(divisor);
@@ -31,9 +31,8 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
         int shift_size = big_decimal_get_not_zero_bit(dividend) - big_decimal_get_not_zero_bit(divisor);
         // Потом сдвигаем делитель
         big_decimal shifted_divisor = big_decimal_shift_left(divisor, shift_size);
-        // Проставляем знак если делитель изначально положительный
-        if (!big_decimal_get_sign(divisor))
-            shifted_divisor = big_decimal_change_sign(shifted_divisor);
+        // Проставляем знак
+        shifted_divisor = big_decimal_set_sign(shifted_divisor, 1);
         // printf("shifted_divisor: \n");
         // s21_print_big_decimal_bits(shifted_divisor);
         big_decimal sum = big_decimal_get_zero();
@@ -55,16 +54,20 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
                 // printf("shifted dividend:\n");
                 // s21_print_big_decimal_bits(dividend);
             }
-        // printf("sum in div:\n");
-        // s21_print_big_decimal_bits(sum);
+            // printf("sum in div:\n");
+            // s21_print_big_decimal_bits(sum);
         }
+        // printf("Дивиденд:\n");
+        // s21_print_big_decimal_bits(dividend);
 
         if (big_decimal_get_sign(sum))
             *remainder = dividend;
         else
             *remainder = sum;
         *remainder = big_decimal_shift_right(*remainder, shift_size);
-        *result = big_decimal_set_sign(*result, sign);
+
     }
+    *result = big_decimal_set_sign(*result, sign);
+    // printf("sign in div int %d\n", sign);
     return code;
 }

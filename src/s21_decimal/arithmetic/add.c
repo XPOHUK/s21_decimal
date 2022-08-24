@@ -28,13 +28,13 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int value_1_sign = s21_decimal_get_sign(value_1);
     int value_2_sign = s21_decimal_get_sign(value_2);
     big_decimal res = big_decimal_add(big_decimal1, big_decimal2);
-    // fprintf(stdout, "res = ");
+    // fprintf(stdout, "res after big decimal add = ");
     // s21_print_big_decimal_bits(res);
     // fprintf(stdout, "res sign = %d\n", big_decimal_get_sign(res));
     int res_sign = big_decimal_get_sign(res);
     // Оценка результата
     // С правильными кодами ошибок ещё надо разобраться
-    if (value_1_sign == value_2_sign) {  // Если знаки аргументов одинаковые
+    if (value_1_sign == value_2_sign && !big_decimal_is_zero(res)) {  // Если знаки аргументов одинаковые
         if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {  // но не совпадают со знаком результата
             if (value_1_sign)
                 code = S21_ARITHMETIC_SMALL;
@@ -71,7 +71,7 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     // Если код результата остался ОК, то можно попробовать округлить до decimal
     // printf("\n");
     // printf("code: %d\n", code);
-    if (code == S21_ARITHMETIC_OK) {
+    if (code == S21_ARITHMETIC_OK && !big_decimal_is_zero(res)) {
     int sign = big_decimal_get_sign(res);
     if (sign) {
         int exp = big_decimal_get_exp(res);
@@ -80,6 +80,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         big_decimal_set_exp(&res, exp);
     }
         code = big_decimal_round_to_decimal(res, result);
+    } else if (big_decimal_is_zero(res)) {
+        *result = s21_decimal_get_zero();
     }
     // *result = big_decimal_to_decimal(res);
     return code;

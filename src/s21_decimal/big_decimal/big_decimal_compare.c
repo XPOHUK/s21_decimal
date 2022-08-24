@@ -4,10 +4,11 @@
 #include "big_decimal.h"
 #include <stdio.h>
 
+// Закомментил строку выравнивания, теперь функция сравнивает только мантиссы
 int big_decimal_compare(big_decimal first, big_decimal second) {
     // printf("in compare");
     big_decimal_comparison_result result;
-    big_decimal_balance_exp(&first, &second);
+    // big_decimal_balance_exp(&first, &second);
     int first_sign = big_decimal_get_sign(first);
     int second_sign = big_decimal_get_sign(second);
     int first_bit = big_decimal_get_not_zero_bit(first);

@@ -137,10 +137,15 @@ big_decimal big_decimal_get_zero(void) {
  * @return
  */
 big_decimal big_decimal_to_twos_complement(big_decimal direct_code) {
-    direct_code = big_decimal_set_sign(direct_code, 0);
-    big_decimal result = big_decimal_incr(big_decimal_not(direct_code));
-    // Зануляем экспоненту просто сохраняя знак
-    result.parts[6] = big_decimal_get_sign(result);
+    big_decimal result;
+    if (big_decimal_is_zero(direct_code)) {
+        result = big_decimal_get_zero();
+    } else {
+        direct_code = big_decimal_set_sign(direct_code, 0);
+        result = big_decimal_incr(big_decimal_not(direct_code));
+        // Зануляем экспоненту просто сохраняя знак
+        result.parts[6] = big_decimal_get_sign(result);
+    }
     return result;
 }
 
@@ -183,4 +188,22 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
             break;
     }
     return i;
+}
+
+big_decimal remove_trail_zero(big_decimal in) {
+    // printf("in trail zero");
+    big_decimal res = in;
+    int exp = big_decimal_get_exp(in);
+    if (exp > 0) {
+        big_decimal remainder = big_decimal_get_zero();
+        big_decimal result = big_decimal_get_zero();
+        big_decimal_div_big_int(in, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+        while (big_decimal_is_zero(remainder) && exp > 0) {
+            exp--;
+            res = result;
+            big_decimal_div_big_int(result, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+        }
+        big_decimal_set_exp(&res, exp);
+    }
+    return res;
 }
