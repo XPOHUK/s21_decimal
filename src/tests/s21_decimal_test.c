@@ -88,7 +88,7 @@ int main(void) {
     srunner_add_suite(sr, div_suite15());
     srunner_add_suite(sr, div_suite16());
     srunner_add_suite(sr, div_suite17());
-    // srunner_add_suite(sr, div_suite18());
+    srunner_add_suite(sr, div_suite18());
 
     srunner_add_suite(sr, debug0());
     srunner_add_suite(sr, debug1());
