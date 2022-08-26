@@ -48,9 +48,10 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
                 dividend = sum;
                 *result = big_decimal_set_bit(*result, 0);
             }
-            // Сдвигаем делимое на один разряд влево
+            // Сдвигаем делитель на один разряд вправо
             if (i != shift_size) {
-                dividend = big_decimal_shift_left(dividend, 1);
+                shifted_divisor = big_decimal_shift_right(shifted_divisor, 1);
+                // dividend = big_decimal_shift_left(dividend, 1);
                 // printf("shifted dividend:\n");
                 // s21_print_big_decimal_bits(dividend);
             }
@@ -64,7 +65,7 @@ int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decim
             *remainder = dividend;
         else
             *remainder = sum;
-        *remainder = big_decimal_shift_right(*remainder, shift_size);
+        // *remainder = big_decimal_shift_right(*remainder, shift_size);
 
     }
     *result = big_decimal_set_sign(*result, sign);
