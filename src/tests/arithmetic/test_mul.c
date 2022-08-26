@@ -4,6 +4,8 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
+// #define __DEBUG
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Тесты на некорректные данные (ручные)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -41017,7 +41019,6 @@ Suite *mul_suite0(void) {
     tcase_add_test(tc_core, test_mul_manual15);
     tcase_add_test(tc_core, test_mul_manual16);
     tcase_add_test(tc_core, test_mul_manual17);
-
     tcase_add_test(tc_core, test_mul_manual97);
     tcase_add_test(tc_core, test_mul_manual98);
     tcase_add_test(tc_core, test_mul_manual99);
