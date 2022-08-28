@@ -34,14 +34,16 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int res_sign = big_decimal_get_sign(res);
     // Оценка результата
     // С правильными кодами ошибок ещё надо разобраться
-    if (value_1_sign == value_2_sign && !big_decimal_is_zero(res)) {  // Если знаки аргументов одинаковые
-        if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {  // но не совпадают со знаком результата
+    // Если знаки аргументов одинаковые
+    // но не совпадают со знаком результата
+    if (value_1_sign == value_2_sign && !big_decimal_is_zero(res)) {
+        if ((!value_1_sign && res_sign) || (value_1_sign && !res_sign)) {
             if (value_1_sign)
                 code = S21_ARITHMETIC_SMALL;
             else
-                code = S21_ARITHMETIC_BIG;  // значит произошло переполнение мантиссы
+                code = S21_ARITHMETIC_BIG;
         }
-    } else if (value_1_sign){  // Если первый аргумент отрицательный
+    } else if (value_1_sign) {  // Если первый аргумент отрицательный
         if (big_decimal_compare(big_decimal2_abs, big_decimal1_abs)) {  // и по модулю меньше второго
             // знак результата должен быть положительный
             if (res_sign) {
@@ -53,7 +55,6 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
                 // знак результата положительный, неудача
             }
         } else {  // в этом случае результат должен быть 0
-
         }
     } else {  // Если второй аргумент отрицательный
         if (big_decimal_compare(big_decimal1_abs, big_decimal2_abs)) {  // и по модулю меньше первого

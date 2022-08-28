@@ -16,8 +16,8 @@
 int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     int mul_sign = big_decimal_get_sign(first) ^ big_decimal_get_sign(second);
-    big_decimal multipliable;
-    big_decimal multiplier;
+    big_decimal multipliable = big_decimal_get_zero();
+    big_decimal multiplier = big_decimal_get_zero();
     big_decimal_set_exp(&multiplier, 0);
     big_decimal_set_exp(&multipliable, 0);
     if (big_decimal_get_not_zero_bit(first) > big_decimal_get_not_zero_bit(second)) {

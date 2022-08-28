@@ -32,3 +32,4 @@ s21_decimal s21_decimal_add_mant(s21_decimal a, s21_decimal b) {
     // s21_print_decimal_bits(res);
     return res;
 }
+

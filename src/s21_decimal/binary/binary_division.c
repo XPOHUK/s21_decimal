@@ -108,7 +108,7 @@ s21_decimal s21_decimal_binary_division(s21_decimal decimal1, s21_decimal decima
     // мы старшие 32 бита по сути не используем)
 
     // Результат работы функции
-    s21_decimal result = s21_decimal_get_zero();
+    s21_decimal result;  // = s21_decimal_get_zero();
 
     // Рассчитываемый в алгоритме частичный остаток при расчетах
     s21_decimal partial_remainder = s21_decimal_get_zero();

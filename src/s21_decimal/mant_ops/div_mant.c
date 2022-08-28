@@ -22,7 +22,10 @@
  * @return code
  * @author Rambton Ovtime (rambtono@student.21-school.ru)
  */
-int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal* res, s21_decimal* remainder) {
+int s21_decimal_div_mant(s21_decimal dividend,
+        s21_decimal divisor,
+        s21_decimal* res,
+        s21_decimal* remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     if (s21_decimal_mant_is_zero(divisor)) {
         code = S21_ARITHMETIC_ZERO_DIV;  // Обработка деления на 0
@@ -65,8 +68,10 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
                 // Складываем делимое и дополнительный код делителя
                 sum = s21_decimal_add_mant(dividend, shifted_divisor);
                 // Если сумма (промежуточный остаток) больше или равна 0, то сохраняем её в качестве делимого,
-                // а в результат дописываем 1. Если же сумма отрицательная, то записывать ничего не надо -- там и так
-                // ноль после сдвига результата. И делимое тоже не меняем чтобы сдвинулось ещё на один порядок.
+                // а в результат дописываем 1.
+                // Если же сумма отрицательная, то записывать ничего не надо -- там и так
+                // ноль после сдвига результата.
+                // И делимое тоже не меняем чтобы сдвинулось ещё на один порядок.
                 if (s21_decimal_get_sign(sum) == 0) {
                     dividend = sum;
                     *res = s21_decimal_set_bit(*res, 0);
@@ -81,8 +86,8 @@ int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal*
         else
             *remainder = sum;
         *remainder = s21_decimal_shift_mant_right(*remainder, shift_size);
-
     }
     // fprintf(stdout, "res in div mant = %u\n", res->bits[0]);
     return code;
 }
+

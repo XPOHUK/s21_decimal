@@ -156,7 +156,7 @@ big_decimal big_decimal_incr(big_decimal in) {
         if (!bit)
             break;
     }
-    // TODO Не учтено возможное переполнение
+    // TODO(Rambtono) Не учтено возможное переполнение
     return in;
 }
 
@@ -201,7 +201,10 @@ big_decimal remove_trail_zero(big_decimal in) {
         while (big_decimal_is_zero(remainder) && exp > 0) {
             exp--;
             res = result;
-            big_decimal_div_big_int(result, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+            big_decimal_div_big_int(result,
+                    decimal_to_big_decimal(s21_decimal_get_ten()),
+                    &result,
+                    &remainder);
         }
         big_decimal_set_exp(&res, exp);
     }

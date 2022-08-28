@@ -30,7 +30,7 @@ int s21_is_greater(s21_decimal value_1, s21_decimal value_2) {
     } else if (value_1_sign < value_2_sign) {
         code = S21_COMPARISON_TRUE;
     // Если знаки обоих значений равны, то выполняется побитовое сравнение.
-    } else if (value_1_sign == value_2_sign) {
+    } else {  // if (value_1_sign == value_2_sign) {
         // Здесь необходима функция для выравнивания степеней(&value_1, &value_2);
         for (int i = 95; i >= 0; i--) {
             int value_1_bit = s21_decimal_is_set_bit(value_1, i);
