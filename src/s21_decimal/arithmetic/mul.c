@@ -8,7 +8,8 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     if (result == NULL || !s21_is_correct_decimal(value_1) || !s21_is_correct_decimal(value_2)) {
         return -1;
-    } else if (s21_is_equal(value_1, s21_decimal_get_zero()) || s21_is_equal(value_2, s21_decimal_get_zero())) {
+    } else if (s21_is_equal(value_1, s21_decimal_get_zero())
+            || s21_is_equal(value_2, s21_decimal_get_zero())) {
         *result = s21_decimal_get_zero();
     } else {
         big_decimal val_1_big = decimal_to_big_decimal(value_1);

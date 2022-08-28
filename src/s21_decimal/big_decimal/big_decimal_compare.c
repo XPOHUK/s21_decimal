@@ -31,7 +31,7 @@ int big_decimal_compare(big_decimal first, big_decimal second) {
                     result = BIG_DECIMAL_COMPARISON_SECOND_GREATER;
             }
         }
-    } else if (first_sign != second_sign) {  // Если знаки не равны
+    } else {  //if (first_sign != second_sign) {  // Если знаки не равны
         if (first_sign)  // Если первое число отрицательное
             result = BIG_DECIMAL_COMPARISON_SECOND_GREATER;
         else  // Если второе число отрицательное

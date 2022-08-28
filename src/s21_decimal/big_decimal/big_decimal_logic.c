@@ -50,3 +50,4 @@ big_decimal big_decimal_not(big_decimal in) {
     }
     return result;
 }
+

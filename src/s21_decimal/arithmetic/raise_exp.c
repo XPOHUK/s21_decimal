@@ -27,7 +27,7 @@
  */
 int raise_exp(s21_decimal decimal, s21_decimal* result) {
     s21_arithmetic_result code = S21_ARITHMETIC_BIG;
-    s21_decimal shift1, shift3, res;
+    s21_decimal shift1, res;
     s21_decimal over1 = s21_decimal_get_zero();
     s21_decimal over3 = s21_decimal_get_zero();
     // Выполняем сдвиг на 1
@@ -35,7 +35,7 @@ int raise_exp(s21_decimal decimal, s21_decimal* result) {
     // Если переполнения не было, то продолжаем
     if (s21_decimal_mant_is_zero(over1)) {
         // Выполняем сдвиг на 3
-        shift3 = s21_decimal_shift_mant_left(decimal, 3, &over3);
+        s21_decimal shift3 = s21_decimal_shift_mant_left(decimal, 3, &over3);
         // Если переполнения нет, продолжаем
         if (s21_decimal_mant_is_zero(over3)) {
             // Сложение
@@ -50,3 +50,4 @@ int raise_exp(s21_decimal decimal, s21_decimal* result) {
     }
     return code;
 }
+

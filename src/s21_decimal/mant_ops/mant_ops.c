@@ -25,3 +25,4 @@ int s21_decimal_mant_compare(s21_decimal x, s21_decimal y) {
     }
     return res;
 }
+

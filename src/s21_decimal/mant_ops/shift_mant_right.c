@@ -28,3 +28,4 @@ s21_decimal s21_decimal_shift_mant_right(s21_decimal decimal, int index) {
     }
     return res;
 }
+
