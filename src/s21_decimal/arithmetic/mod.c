@@ -21,7 +21,6 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     } else if (s21_is_equal(value_1, s21_decimal_get_zero())) {
         *result = s21_decimal_get_zero();
     } else if (s21_is_greater(val2mod, val1mod)) {
-        // printf("val2 > val1");
         *result = value_1;
     } else {
         big_decimal res = big_decimal_get_zero();
@@ -29,8 +28,6 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
         big_decimal dividend = decimal_to_big_decimal(val1mod);
         big_decimal divisor = decimal_to_big_decimal(val2mod);
         code = big_decimal_div_big_int(dividend, divisor, &res, &remainder);
-        // printf("code = %d; result:\n", code);
-        // s21_print_big_decimal_bits(res);
         if (code == S21_ARITHMETIC_OK) {
             int temp_exp = big_decimal_get_exp(dividend) - big_decimal_get_exp(divisor);
             while (temp_exp > 0) {
@@ -46,13 +43,7 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
                 res = big_decimal_add(res, temp_res);
                 temp_exp++;
             }
-            // s21_truncate(*result, result);
-        // printf("code after truncate= %d; result:\n", code);
-        // s21_print_big_decimal_bits(res);
-        code = big_decimal_mul(res, divisor, &res);
-            // code = s21_mul(*result, value_2, result);
-        // printf("code after mul = %d; result:\n", code);
-        // s21_print_big_decimal_bits(res);
+            code = big_decimal_mul(res, divisor, &res);
             if (code == S21_ARITHMETIC_OK) {
                 res = big_decimal_sub(dividend, res);
             }

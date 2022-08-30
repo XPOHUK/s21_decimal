@@ -20,9 +20,6 @@ s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index, s21_deci
     s21_decimal res = decimal;
     s21_decimal_set_sign(&res, 0);
     s21_decimal_set_power(&res, 0);
-    // fprintf(stdout, "To shift:\n");
-    // s21_print_decimal_bits(res);
-    // fprintf(stdout, "Process shift:\n");
     while (index > 0) {
         // По хорошему, over тоже может переполниться, если запросить сдвиг очень большого числа
         // больше, чем на 96
@@ -39,7 +36,6 @@ s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index, s21_deci
             }
             res.bits[i] = part;
         }
-        // s21_print_decimal_bits(res);
         index--;
     }
     return res;
