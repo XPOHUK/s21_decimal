@@ -27,7 +27,6 @@ int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* 
         multipliable = second;
         multiplier = first;
     }
-    // int sign = big_decimal_get_sign(multipliable) ^ big_decimal_get_sign(multiplier);
     multipliable = big_decimal_set_sign(multipliable, 0);
     multiplier = big_decimal_set_sign(multiplier, 0);
     big_decimal sum = big_decimal_get_zero();
@@ -37,9 +36,6 @@ int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* 
             sum = big_decimal_add_big_int(sum, big_decimal_shift_left(multipliable, i));
         }
     }
-    // printf("sum after cycle:\n");
-    // s21_print_big_decimal_bits(sum);
-    // printf("res exp: %d\n", big_decimal_get_exp(first) + big_decimal_get_exp(second));
     // Если у sum появился знак, значит произошло переполнение.
     if (big_decimal_get_sign(sum)) {
         if (mul_sign) {
@@ -52,6 +48,5 @@ int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* 
     }
     big_decimal_set_exp(&sum, big_decimal_get_exp(first) + big_decimal_get_exp(second));
     *result = sum;
-    // printf("code %d\n", code);
     return code;
 }

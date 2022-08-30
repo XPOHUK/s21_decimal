@@ -47,18 +47,13 @@ int s21_decimal_div_mant(s21_decimal dividend,
         // Сдвиг делителя на уровень старшего значащего бита делимого
         // Сначала вычисляем размер сдвига
         int shift_size = s21_decimal_get_not_zero_bit(dividend) - s21_decimal_get_not_zero_bit(divisor);
-        // fprintf(stdout, "shift_size = %d\n", shift_size);
         // Потом сдвигаем
         // Переполнения быть не может поэтому третьим аргументом передаём null
         s21_decimal shifted_divisor = s21_decimal_shift_mant_left(divisor, shift_size, NULL);
         // Получаем обратный код делителя
-        // fprintf(stdout, "shifted, reversed and added divisor:\n");
-        // s21_print_decimal_bits(shifted_divisor);
         shifted_divisor = s21_decimal_binary_not(shifted_divisor);
-        // s21_print_decimal_bits(shifted_divisor);
         // Получаем дополнительный код делителя
         shifted_divisor = s21_decimal_add_mant(shifted_divisor, s21_decimal_get_one());
-        // s21_print_decimal_bits(shifted_divisor);
         // Тут должен начинаться цикл длительностью shift_size
         s21_decimal sum = s21_decimal_get_zero();
 
@@ -87,7 +82,6 @@ int s21_decimal_div_mant(s21_decimal dividend,
             *remainder = sum;
         *remainder = s21_decimal_shift_mant_right(*remainder, shift_size);
     }
-    // fprintf(stdout, "res in div mant = %u\n", res->bits[0]);
     return code;
 }
 

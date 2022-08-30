@@ -17,15 +17,6 @@ big_decimal decimal_to_big_decimal(s21_decimal in) {
 
 s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Число может быть отрицательным в доп.коде.
-    // printf("before convert res: \n");
-    // s21_print_big_decimal_bits(in);
-//     int sign = big_decimal_get_sign(in);
-//     if (sign) {
-//         int exp = big_decimal_get_exp(in);
-//         printf("exp = %d\n", exp);
-//         in = big_decimal_to_twos_complement(in);
-//         big_decimal_set_exp(&in, exp);
-//     }
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = in.parts[0];
     result.bits[1] = in.parts[1];
@@ -33,8 +24,6 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Теперь прописать экспоненту и знак
     s21_decimal_set_sign(&result, big_decimal_get_sign(in));
     s21_decimal_set_power(&result, big_decimal_get_exp(in));
-    // printf("after convert:\n");
-    // s21_print_decimal_bits(result);
     return result;
 }
 
@@ -156,7 +145,6 @@ big_decimal big_decimal_incr(big_decimal in) {
         if (!bit)
             break;
     }
-    // TODO(Rambtono) Не учтено возможное переполнение
     return in;
 }
 
@@ -191,7 +179,6 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
 }
 
 big_decimal remove_trail_zero(big_decimal in) {
-    // printf("in trail zero");
     big_decimal res = in;
     int exp = big_decimal_get_exp(in);
     if (exp > 0) {
