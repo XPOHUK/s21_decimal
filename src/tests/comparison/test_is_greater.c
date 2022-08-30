@@ -5,6 +5,8 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
+// #define __DEBUG
+
 START_TEST(s21_is_greater_1) {
     s21_decimal value_1 = {{123457u, 654u, 0xFFFFFFFF, 0}};
     s21_decimal value_2 = {{123456u, 654u, 0xFFFFFFFF, 0}};
@@ -36,7 +38,7 @@ START_TEST(s21_is_greater_4) {
     s21_decimal value_2 = {{0, 0, 0, 0}};
     s21_decimal_set_sign(&value_2, 1);
     int return_value = s21_is_greater(value_1, value_2);
-    ck_assert_int_eq(return_value, S21_COMPARISON_TRUE);
+    ck_assert_int_eq(return_value, S21_COMPARISON_FALSE);
 }
 END_TEST
 

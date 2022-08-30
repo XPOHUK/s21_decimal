@@ -92,22 +92,22 @@ int main(void) {
     // srunner_add_suite(sr, is_less_or_equal_suite15());
     // srunner_add_suite(sr, is_less_or_equal_suite16());
 
-    // srunner_add_suite(sr, is_greater_suite1());
-    // srunner_add_suite(sr, is_greater_suite2());
-    // srunner_add_suite(sr, is_greater_suite3());
-    // srunner_add_suite(sr, is_greater_suite4());
-    // srunner_add_suite(sr, is_greater_suite5());
-    // srunner_add_suite(sr, is_greater_suite6());
-    // srunner_add_suite(sr, is_greater_suite7());
-    // srunner_add_suite(sr, is_greater_suite8());
-    // srunner_add_suite(sr, is_greater_suite9());
-    // srunner_add_suite(sr, is_greater_suite10());
-    // srunner_add_suite(sr, is_greater_suite11());
-    // srunner_add_suite(sr, is_greater_suite12());
-    // srunner_add_suite(sr, is_greater_suite13());
-    // srunner_add_suite(sr, is_greater_suite14());
-    // srunner_add_suite(sr, is_greater_suite15());
-    // srunner_add_suite(sr, is_greater_suite16());
+    srunner_add_suite(sr, is_greater_suite1());
+    srunner_add_suite(sr, is_greater_suite2());
+    srunner_add_suite(sr, is_greater_suite3());
+    srunner_add_suite(sr, is_greater_suite4());
+    srunner_add_suite(sr, is_greater_suite5());
+    srunner_add_suite(sr, is_greater_suite6());
+    srunner_add_suite(sr, is_greater_suite7());
+    srunner_add_suite(sr, is_greater_suite8());
+    srunner_add_suite(sr, is_greater_suite9());
+    srunner_add_suite(sr, is_greater_suite10());
+    srunner_add_suite(sr, is_greater_suite11());
+    srunner_add_suite(sr, is_greater_suite12());
+    srunner_add_suite(sr, is_greater_suite13());
+    srunner_add_suite(sr, is_greater_suite14());
+    srunner_add_suite(sr, is_greater_suite15());
+    srunner_add_suite(sr, is_greater_suite16());
 
     // srunner_add_suite(sr, is_greater_or_equal_suite1());
     // srunner_add_suite(sr, is_greater_or_equal_suite2());
@@ -143,10 +143,10 @@ int main(void) {
     // srunner_add_suite(sr, is_not_equal_suite15());
     // srunner_add_suite(sr, is_not_equal_suite16());
 
-    // srunner_add_suite(sr, truncate_suite0());
-    // srunner_add_suite(sr, truncate_suite1());
-    // srunner_add_suite(sr, truncate_suite2());
-    // srunner_add_suite(sr, truncate_suite3());
+    srunner_add_suite(sr, truncate_suite0());
+    srunner_add_suite(sr, truncate_suite1());
+    srunner_add_suite(sr, truncate_suite2());
+    srunner_add_suite(sr, truncate_suite3());
 
     // srunner_add_suite(sr, negate_suite());
 
@@ -225,25 +225,25 @@ int main(void) {
     srunner_add_suite(sr, mul_suite8());
     srunner_add_suite(sr, mul_suite9());
 
-    // srunner_add_suite(sr, mod_suite0());
-    // srunner_add_suite(sr, mod_suite1());
-    // srunner_add_suite(sr, mod_suite2());
-    // srunner_add_suite(sr, mod_suite3());
-    // srunner_add_suite(sr, mod_suite4());
-    // srunner_add_suite(sr, mod_suite5());
-    // srunner_add_suite(sr, mod_suite6());
-    // srunner_add_suite(sr, mod_suite7());
-    // srunner_add_suite(sr, mod_suite8());
-    // srunner_add_suite(sr, mod_suite9());
-    // srunner_add_suite(sr, mod_suite10());
-    // srunner_add_suite(sr, mod_suite11());
-    // srunner_add_suite(sr, mod_suite12());
-    // srunner_add_suite(sr, mod_suite13());
-    // srunner_add_suite(sr, mod_suite14());
-    // srunner_add_suite(sr, mod_suite15());
-    // srunner_add_suite(sr, mod_suite16());
-    // srunner_add_suite(sr, mod_suite17());
-    // srunner_add_suite(sr, mod_suite18());
+    srunner_add_suite(sr, mod_suite0());
+    srunner_add_suite(sr, mod_suite1());
+    srunner_add_suite(sr, mod_suite2());
+    srunner_add_suite(sr, mod_suite3());
+    srunner_add_suite(sr, mod_suite4());
+    srunner_add_suite(sr, mod_suite5());
+    srunner_add_suite(sr, mod_suite6());
+    srunner_add_suite(sr, mod_suite7());
+    srunner_add_suite(sr, mod_suite8());
+    srunner_add_suite(sr, mod_suite9());
+    srunner_add_suite(sr, mod_suite10());
+    srunner_add_suite(sr, mod_suite11());
+    srunner_add_suite(sr, mod_suite12());
+    srunner_add_suite(sr, mod_suite13());
+    srunner_add_suite(sr, mod_suite14());
+    srunner_add_suite(sr, mod_suite15());
+    srunner_add_suite(sr, mod_suite16());
+    srunner_add_suite(sr, mod_suite17());
+    srunner_add_suite(sr, mod_suite18());
 
     srunner_add_suite(sr, debug0());
     srunner_add_suite(sr, debug1());
