@@ -14,21 +14,17 @@
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
 
-    // if (s21_decimal_get_power(value_1) != s21_decimal_get_power(value_2)) {
-    //     Здесь необходима функция для выравнивания степеней(&value_1, &value_2);
-    // }
-
     if (value_1.bits[0] == value_2.bits[0] && value_1.bits[0] == 0 &&
         value_1.bits[1] == value_2.bits[1] && value_1.bits[1] == 0 &&
         value_1.bits[2] == value_2.bits[2] && value_1.bits[2] == 0) {
         code = S21_COMPARISON_TRUE;
     }
 
-    big_decimal val_1_big = decimal_to_big_decimal(value_1);
-    big_decimal val_2_big = decimal_to_big_decimal(value_2);
-    big_decimal_balance_exp(&val_1_big, &val_2_big);
-    value_1 = big_decimal_to_decimal(val_1_big);
-    value_2 = big_decimal_to_decimal(val_2_big);
+    big_decimal value_1_big = decimal_to_big_decimal(value_1);
+    big_decimal value_2_big = decimal_to_big_decimal(value_2);
+    big_decimal_balance_exp(&value_1_big, &value_2_big);
+    value_1 = big_decimal_to_decimal(value_1_big);
+    value_2 = big_decimal_to_decimal(value_2_big);
 
     if (value_1.bits[0] == value_2.bits[0] &&
         value_1.bits[1] == value_2.bits[1] &&
@@ -36,7 +32,5 @@ int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
         value_1.bits[3] == value_2.bits[3]) {
         code = S21_COMPARISON_TRUE;
     }
-
-
     return code;
 }

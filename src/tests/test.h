@@ -38,10 +38,6 @@ Suite *from_decimal_to_float_suite8(void);
 #define TEST_COMPARISON_FALSE 0
 #define TEST_COMPARISON_TRUE 1
 
-Suite *is_greater_suite(void);
-Suite *is_less_suite(void);
-Suite *is_equal_suite(void);
-
 Suite *is_equal_suite1(void);
 Suite *is_equal_suite2(void);
 Suite *is_equal_suite3(void);
@@ -173,8 +169,6 @@ Suite *negate_suite0(void);
 Suite *negate_suite1(void);
 Suite *negate_suite2(void);
 Suite *negate_suite3(void);
-
-Suite *negate_suite(void);
 
 void test_floor(s21_decimal decimal, s21_decimal decimal_check);
 void test_round(s21_decimal decimal, s21_decimal decimal_check);
