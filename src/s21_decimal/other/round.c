@@ -17,21 +17,27 @@ int s21_round(s21_decimal value, s21_decimal *result) {
     } else {
         s21_decimal one = s21_decimal_get_one();
         s21_decimal five = s21_decimal_get_five();
-        s21_decimal mod = {0};
+        s21_decimal remainder = {0};
         int value_sign = s21_decimal_get_sign(value);
 
         s21_clear_decimal(result);
         if (value_sign) {
             s21_negate(value, &value);
         }
+
         s21_truncate(value, result);
-        s21_mod(value, one, &mod);
+        s21_mod(value, one, &remainder);
         s21_decimal_set_power(&five, 1);
-        if (s21_is_less_or_equal(five, mod)) {
-        s21_add(*result, one, result);
+
+        if (s21_is_greater(remainder, five)) {
+            s21_add(*result, one, result);
+        } else if (s21_is_equal(five, remainder)) {
+            if (s21_is_even_or_odd(*result) == 1) {
+                s21_add(*result, one, result);
+            }
         }
         if (value_sign) {
-        s21_negate(*result, result);
+            s21_negate(*result, result);
         }
     }
     return code;

@@ -16,7 +16,6 @@
  */
 int s21_is_greater(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
-
     big_decimal big_decimal_1 = decimal_to_big_decimal(value_1);
     big_decimal big_decimal_2 = decimal_to_big_decimal(value_2);
 
@@ -24,6 +23,5 @@ int s21_is_greater(s21_decimal value_1, s21_decimal value_2) {
     if (big_decimal_compare(big_decimal_1, big_decimal_2) == BIG_DECIMAL_COMPARISON_FIRST_GREATER) {
         code = S21_COMPARISON_TRUE;
     }
-
     return code;
 }
