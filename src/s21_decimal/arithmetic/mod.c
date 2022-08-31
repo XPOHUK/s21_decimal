@@ -2,6 +2,7 @@
 #include "../other/other.h"
 #include "../helpers/helpers.h"
 #include "../comparison/comparison.h"
+#include "../big_decimal/big_decimal.h"
 #include <stddef.h>
 #include <stdio.h>
 
