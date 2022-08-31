@@ -67,7 +67,6 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in);
 void big_decimal_balance_exp(big_decimal* first, big_decimal* second);
 big_decimal big_decimal_add(big_decimal first, big_decimal second);
 big_decimal big_decimal_add_big_int(big_decimal first, big_decimal second);
-big_decimal big_decimal_sub(big_decimal minuend, big_decimal subtrahend);
 int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *result);
 int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result);
 int big_decimal_mul(big_decimal first, big_decimal second, big_decimal* result);
