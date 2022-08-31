@@ -78,6 +78,9 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         big_decimal_div_big_int(in_wo_exp, divisor, &result, &remainder);
         while ((int)big_decimal_get_not_zero_bit(result) - 95 > 0) {
             ten_exp++;
+            if (ten_exp > 28) {
+                break;
+            }
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp]);
             big_decimal_div_big_int(in_wo_exp, divisor, &result, &remainder);
         }
