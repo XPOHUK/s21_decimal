@@ -47,7 +47,7 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
             code = big_decimal_mul(res, divisor, &res);
             if (code == S21_ARITHMETIC_OK) {
                 res = big_decimal_change_sign(res);
-                res = big_decimal_add(dividend, res); 
+                res = big_decimal_add(dividend, res);
             }
         }
         if (res_sign) {
