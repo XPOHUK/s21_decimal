@@ -149,10 +149,10 @@ int main(void) {
     srunner_add_suite(sr, floor_suite2());
     srunner_add_suite(sr, floor_suite3());
 
-    // srunner_add_suite(sr, round_suite0());
-    // srunner_add_suite(sr, round_suite1());
-    // srunner_add_suite(sr, round_suite2());
-    // srunner_add_suite(sr, round_suite3());
+    srunner_add_suite(sr, round_suite0());
+    srunner_add_suite(sr, round_suite1());
+    srunner_add_suite(sr, round_suite2());
+    srunner_add_suite(sr, round_suite3());
 
     srunner_add_suite(sr, negate_suite0());
     srunner_add_suite(sr, negate_suite1());
