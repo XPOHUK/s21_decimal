@@ -1,4 +1,5 @@
 #include "./helpers.h"
+#include "./../binary/binary.h"
 
 /**
  * @brief проверяет корректность данных, записанных в decimal
@@ -128,4 +129,12 @@ void s21_decimal_set_power(s21_decimal *decimal, int power) {
  */
 void s21_decimal_null_service_bits(s21_decimal *value) {
     value->bits[3] = 0;
+}
+
+int s21_is_even_or_odd(s21_decimal decimal) {
+    int result = 0;
+    if (s21_decimal_is_set_bit(decimal, 0) == 1) {
+        result = 1;
+    }
+    return result;
 }

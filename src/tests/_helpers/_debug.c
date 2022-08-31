@@ -159,15 +159,3 @@ char* s21_bin128_to_string(s21_decimal decimal) {
     return p;
 }
 
-void s21_print_big_decimal_bits(big_decimal big_dec) {
-    s21_print_bit(big_dec.parts[6], 1);
-    putchar('\n');
-    s21_print_bit(big_dec.parts[5], 0);
-    s21_print_bit(big_dec.parts[4], 0);
-    s21_print_bit(big_dec.parts[3], 0);
-    putchar('\n');
-    s21_print_bit(big_dec.parts[2], 0);
-    s21_print_bit(big_dec.parts[1], 0);
-    s21_print_bit(big_dec.parts[0], 0);
-    putchar('\n');
-}
