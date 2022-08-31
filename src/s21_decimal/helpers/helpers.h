@@ -18,6 +18,7 @@ int s21_decimal_set_bits_from_string(int *bits, char *str);
 void s21_clear_decimal(s21_decimal *decimal);
 s21_decimal s21_decimal_get_zero(void);
 s21_decimal s21_decimal_get_one(void);
+s21_decimal s21_decimal_get_five(void);
 s21_decimal s21_decimal_get_ten(void);
 s21_decimal s21_decimal_get_ten_pow(int pow);
 s21_decimal s21_decimal_get_int_max(void);
