@@ -28,7 +28,6 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
     divisor = big_decimal_set_sign(divisor, 0);
     big_decimal div_res = big_decimal_get_zero();
     while (!big_decimal_is_zero(remainder)) {
-
         // Домножаем остаток на 10
         big_decimal shifted_one = big_decimal_shift_left(remainder, 1);
         big_decimal shifted_three = big_decimal_shift_left(remainder, 3);
