@@ -1,5 +1,6 @@
 #include "./../big_decimal/big_decimal.h"
 #include "./comparison.h"
+#include "../big_decimal/big_decimal.h"
 /**
  * @file is_equal.c
  * @author Isle Annamae (isleanna@student.21-school.ru)
@@ -13,20 +14,23 @@
  */
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
-    big_decimal big_decimal_1 = decimal_to_big_decimal(value_1);
-    big_decimal big_decimal_2 = decimal_to_big_decimal(value_2);
 
-    if (big_decimal_get_exp(big_decimal_1) != big_decimal_get_exp(big_decimal_2)) {
-        big_decimal_balance_exp(&big_decimal_1, &big_decimal_2);
+    if (value_1.bits[0] == value_2.bits[0] && value_1.bits[0] == 0 &&
+        value_1.bits[1] == value_2.bits[1] && value_1.bits[1] == 0 &&
+        value_1.bits[2] == value_2.bits[2] && value_1.bits[2] == 0) {
+        code = S21_COMPARISON_TRUE;
     }
 
-    if (big_decimal_1.parts[0] == big_decimal_2.parts[0] &&
-        big_decimal_1.parts[1] == big_decimal_2.parts[1] &&
-        big_decimal_1.parts[2] == big_decimal_2.parts[2] &&
-        big_decimal_1.parts[3] == big_decimal_2.parts[3] &&
-        big_decimal_1.parts[4] == big_decimal_2.parts[4] &&
-        big_decimal_1.parts[5] == big_decimal_2.parts[5] &&
-        big_decimal_1.parts[6] == big_decimal_2.parts[6]) {
+    big_decimal value_1_big = decimal_to_big_decimal(value_1);
+    big_decimal value_2_big = decimal_to_big_decimal(value_2);
+    big_decimal_balance_exp(&value_1_big, &value_2_big);
+    value_1 = big_decimal_to_decimal(value_1_big);
+    value_2 = big_decimal_to_decimal(value_2_big);
+
+    if (value_1.bits[0] == value_2.bits[0] &&
+        value_1.bits[1] == value_2.bits[1] &&
+        value_1.bits[2] == value_2.bits[2] &&
+        value_1.bits[3] == value_2.bits[3]) {
         code = S21_COMPARISON_TRUE;
     }
     return code;

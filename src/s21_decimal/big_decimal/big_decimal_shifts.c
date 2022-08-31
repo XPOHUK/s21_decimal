@@ -14,7 +14,7 @@ big_decimal big_decimal_shift_left(big_decimal in, int shifts) {
     // Начинаем со старшего инта. Если есть переполнение -- меняем знак
     if (big_decimal_is_set_bit(in, 191))
         in = big_decimal_set_sign(in, 1);
-    else 
+    else
         in = big_decimal_set_sign(in, 0);
     while (shifts) {
         int index = 159;

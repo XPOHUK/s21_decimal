@@ -17,15 +17,6 @@ big_decimal decimal_to_big_decimal(s21_decimal in) {
 
 s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Число может быть отрицательным в доп.коде.
-    // printf("before convert res: \n");
-    // s21_print_big_decimal_bits(in);
-//     int sign = big_decimal_get_sign(in);
-//     if (sign) {
-//         int exp = big_decimal_get_exp(in);
-//         printf("exp = %d\n", exp);
-//         in = big_decimal_to_twos_complement(in);
-//         big_decimal_set_exp(&in, exp);
-//     }
     s21_decimal result = s21_decimal_get_zero();
     result.bits[0] = in.parts[0];
     result.bits[1] = in.parts[1];
@@ -33,8 +24,6 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
     // Теперь прописать экспоненту и знак
     s21_decimal_set_sign(&result, big_decimal_get_sign(in));
     s21_decimal_set_power(&result, big_decimal_get_exp(in));
-    // printf("after convert:\n");
-    // s21_print_decimal_bits(result);
     return result;
 }
 
@@ -137,10 +126,15 @@ big_decimal big_decimal_get_zero(void) {
  * @return
  */
 big_decimal big_decimal_to_twos_complement(big_decimal direct_code) {
-    direct_code = big_decimal_set_sign(direct_code, 0);
-    big_decimal result = big_decimal_incr(big_decimal_not(direct_code));
-    // Зануляем экспоненту просто сохраняя знак
-    result.parts[6] = big_decimal_get_sign(result);
+    big_decimal result;
+    if (big_decimal_is_zero(direct_code)) {
+        result = big_decimal_get_zero();
+    } else {
+        direct_code = big_decimal_set_sign(direct_code, 0);
+        result = big_decimal_incr(big_decimal_not(direct_code));
+        // Зануляем экспоненту просто сохраняя знак
+        result.parts[6] = big_decimal_get_sign(result);
+    }
     return result;
 }
 
@@ -151,7 +145,6 @@ big_decimal big_decimal_incr(big_decimal in) {
         if (!bit)
             break;
     }
-    // TODO Не учтено возможное переполнение
     return in;
 }
 
@@ -183,4 +176,24 @@ unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
             break;
     }
     return i;
+}
+
+big_decimal remove_trail_zero(big_decimal in) {
+    big_decimal res = in;
+    int exp = big_decimal_get_exp(in);
+    if (exp > 0) {
+        big_decimal remainder = big_decimal_get_zero();
+        big_decimal result = big_decimal_get_zero();
+        big_decimal_div_big_int(in, decimal_to_big_decimal(s21_decimal_get_ten()), &result, &remainder);
+        while (big_decimal_is_zero(remainder) && exp > 0) {
+            exp--;
+            res = result;
+            big_decimal_div_big_int(result,
+                    decimal_to_big_decimal(s21_decimal_get_ten()),
+                    &result,
+                    &remainder);
+        }
+        big_decimal_set_exp(&res, exp);
+    }
+    return res;
 }

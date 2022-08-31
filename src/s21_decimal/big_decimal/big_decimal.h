@@ -2,8 +2,8 @@
 // Created by gubankov on 06.08.22.
 //
 
-#ifndef DECIMAL_BIG_DECIMAL_H
-#define DECIMAL_BIG_DECIMAL_H
+#ifndef SRC_S21_DECIMAL_BIG_DECIMAL_BIG_DECIMAL_H_
+#define SRC_S21_DECIMAL_BIG_DECIMAL_BIG_DECIMAL_H_
 
 #include "../types.h"
 
@@ -52,7 +52,10 @@ big_decimal big_decimal_incr(big_decimal in);
 big_decimal big_decimal_shift_left(big_decimal in, int shifts);
 big_decimal big_decimal_shift_right(big_decimal in, int shifts);
 
-int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result, big_decimal *remainder);
+int big_decimal_div_big_int(big_decimal dividend,
+        big_decimal divisor,
+        big_decimal *result,
+        big_decimal *remainder);
 
 int big_decimal_round_to_decimal(big_decimal in, s21_decimal * res);
 
@@ -69,5 +72,6 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
 int big_decimal_mul_big_int(big_decimal first, big_decimal second, big_decimal* result);
 int big_decimal_mul(big_decimal first, big_decimal second, big_decimal* result);
 
+big_decimal remove_trail_zero(big_decimal in);
 
-#endif //DECIMAL_BIG_DECIMAL_H
+#endif  // SRC_S21_DECIMAL_BIG_DECIMAL_BIG_DECIMAL_H_
