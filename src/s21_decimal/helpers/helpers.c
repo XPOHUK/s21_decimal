@@ -131,6 +131,15 @@ void s21_decimal_null_service_bits(s21_decimal *value) {
     value->bits[3] = 0;
 }
 
+/**
+ * @brief проверяет, является ли число Decimal четным или нечетным
+ * 
+ * @author Isle Annamae (isleanna@student.21-school.ru)
+ * @param value проверяемый Decimal
+ * @return четный или нечетный первый бит
+ *         0 - четное
+ *         1 - нечетное
+ */
 int s21_is_even_or_odd(s21_decimal decimal) {
     int result = 0;
     if (s21_decimal_is_set_bit(decimal, 0) == 1) {
