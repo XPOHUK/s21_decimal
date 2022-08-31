@@ -16,6 +16,5 @@ s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index, s21_deci
 s21_decimal s21_decimal_shift_mant_right(s21_decimal decimal, int index);
 
 int s21_decimal_mant_is_zero(s21_decimal decimal);
-int s21_decimal_mant_compare(s21_decimal x, s21_decimal y);
 
 #endif  // SRC_S21_DECIMAL_MANT_OPS_MANT_OPS_H_
