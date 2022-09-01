@@ -2,9 +2,9 @@
 
 /**
  * @brief Функция определяет, являются ли все биты decimal нулями
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
- * @param decimal 
+ * @param decimal
  * @return int 1 - все биты нули, 0 - не все биты нули
  */
 int s21_decimal_binary_equal_zero(s21_decimal decimal) {
@@ -15,7 +15,7 @@ int s21_decimal_binary_equal_zero(s21_decimal decimal) {
  * @brief Сравнивает побитово 2 числа типа decimal
  * Степень и знак в данном сравнении не выполняют свои функции.
  * Фактически числа сравниваются как uint128
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param d1 первое сравниваемое число
  * @param d2 второе сравниваемое число

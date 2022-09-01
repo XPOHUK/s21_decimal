@@ -1,6 +1,6 @@
+#include "../big_decimal/big_decimal.h"
 #include "./../big_decimal/big_decimal.h"
 #include "./comparison.h"
-#include "../big_decimal/big_decimal.h"
 /**
  * @file is_equal.c
  * @author Isle Annamae (isleanna@student.21-school.ru)
@@ -15,9 +15,8 @@
 int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     s21_comparison_result code = S21_COMPARISON_FALSE;
 
-    if (value_1.bits[0] == value_2.bits[0] && value_1.bits[0] == 0 &&
-        value_1.bits[1] == value_2.bits[1] && value_1.bits[1] == 0 &&
-        value_1.bits[2] == value_2.bits[2] && value_1.bits[2] == 0) {
+    if (value_1.bits[0] == value_2.bits[0] && value_1.bits[0] == 0 && value_1.bits[1] == value_2.bits[1] &&
+        value_1.bits[1] == 0 && value_1.bits[2] == value_2.bits[2] && value_1.bits[2] == 0) {
         code = S21_COMPARISON_TRUE;
     }
 
@@ -27,10 +26,8 @@ int s21_is_equal(s21_decimal value_1, s21_decimal value_2) {
     value_1 = big_decimal_to_decimal(value_1_big);
     value_2 = big_decimal_to_decimal(value_2_big);
 
-    if (value_1.bits[0] == value_2.bits[0] &&
-        value_1.bits[1] == value_2.bits[1] &&
-        value_1.bits[2] == value_2.bits[2] &&
-        value_1.bits[3] == value_2.bits[3]) {
+    if (value_1.bits[0] == value_2.bits[0] && value_1.bits[1] == value_2.bits[1] &&
+        value_1.bits[2] == value_2.bits[2] && value_1.bits[3] == value_2.bits[3]) {
         code = S21_COMPARISON_TRUE;
     }
     return code;

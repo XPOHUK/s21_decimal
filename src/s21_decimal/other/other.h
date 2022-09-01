@@ -13,9 +13,6 @@ int s21_negate(s21_decimal value, s21_decimal *result);
  * 0 - OK
  * 1 - ошибка вычисления
  */
-typedef enum s21_other_result {
-    S21_OTHER_OK = 0,
-    S21_OTHER_ERROR = 1
-} s21_other_result;
+typedef enum s21_other_result { S21_OTHER_OK = 0, S21_OTHER_ERROR = 1 } s21_other_result;
 
 #endif  //  SRC_S21_DECIMAL_OTHER_OTHER_H_

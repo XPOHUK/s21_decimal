@@ -39817,7 +39817,6 @@ START_TEST(test_add3600) {
     test_add(decimal1, decimal2, check);
 }
 
-
 Suite *add_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -43551,7 +43550,7 @@ void test_add(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_decimal result;
     int code = s21_add(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -43565,7 +43564,7 @@ void test_add(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n\n\n\n");
-    #endif
+#endif
 
     ck_assert_int_eq(s21_is_equal(result, check), 1);
     ck_assert_int_eq(code, S21_ARITHMETIC_OK);
@@ -43575,7 +43574,7 @@ void test_add_fail(s21_decimal decimal1, s21_decimal decimal2, int check) {
     s21_decimal result;
     int code = s21_add(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -43585,7 +43584,7 @@ void test_add_fail(s21_decimal decimal1, s21_decimal decimal2, int check) {
     printf("Check: %d\n", check);
     printf("Result: %d\n", code);
     printf("---------------------------------\n\n\n\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, check);
 }

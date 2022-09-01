@@ -1,8 +1,9 @@
 //
 // Created by gubankov on 06.08.22.
 //
-#include "big_decimal.h"
 #include <stdio.h>
+
+#include "big_decimal.h"
 /**
  * @brief Функция сдвигает биты мантиссы влево на shifts разрядов.
  * Теоретически, возможно переполнение и тогда изменяется знак числа

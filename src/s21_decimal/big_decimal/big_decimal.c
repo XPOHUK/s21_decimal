@@ -1,8 +1,10 @@
 #include "big_decimal.h"
+
+#include <stdio.h>
+
+#include "../../tests/_helpers/_debug.h"
 #include "../helpers/helpers.h"
 #include "../mant_ops/mant_ops.h"
-#include <stdio.h>
-#include "../../tests/_helpers/_debug.h"
 
 big_decimal decimal_to_big_decimal(s21_decimal in) {
     big_decimal result = big_decimal_get_zero();
@@ -10,8 +12,7 @@ big_decimal decimal_to_big_decimal(s21_decimal in) {
     result.parts[1] = (unsigned int)in.bits[1];
     result.parts[2] = (unsigned int)in.bits[2];
     result.parts[6] = (unsigned int)in.bits[3];
-    if (s21_decimal_get_sign(in))
-        result = big_decimal_change_sign(result);
+    if (s21_decimal_get_sign(in)) result = big_decimal_change_sign(result);
     return result;
 }
 
@@ -28,14 +29,14 @@ s21_decimal big_decimal_to_decimal(big_decimal in) {
 }
 
 /**
- * @brief Функция возвращает big_decimal с одним единственным битом мантиссы выставленным по индексу. Такое число
- * удобно для проверки, установки или переворачивания одного бита другого числа.
+ * @brief Функция возвращает big_decimal с одним единственным битом мантиссы выставленным по индексу. Такое
+ * число удобно для проверки, установки или переворачивания одного бита другого числа.
  * @param index Индекс бита.
  * @return
  */
 big_decimal big_decimal_get_bit(int index) {
     big_decimal result = big_decimal_get_zero();
-    result.parts[index/32] = 1U << index%32;
+    result.parts[index / 32] = 1U << index % 32;
     return result;
 }
 
@@ -48,8 +49,7 @@ big_decimal big_decimal_get_bit(int index) {
 unsigned int big_decimal_is_set_bit(big_decimal in, int index) {
     unsigned int res = 0;
     big_decimal bit = big_decimal_get_bit(index);
-    if (!big_decimal_is_zero(big_decimal_and(in, bit)))
-        res = 1U;
+    if (!big_decimal_is_zero(big_decimal_and(in, bit))) res = 1U;
     return res;
 }
 /**
@@ -76,13 +76,11 @@ big_decimal big_decimal_flip_bit(big_decimal in, int index) {
 }
 
 /**
- * @brief Функция возвращает 1 если знак (192 индекс) установлен. 
+ * @brief Функция возвращает 1 если знак (192 индекс) установлен.
  * @param in
  * @return
  */
-unsigned int big_decimal_get_sign(big_decimal in) {
-    return in.parts[6] & 1U;
-}
+unsigned int big_decimal_get_sign(big_decimal in) { return in.parts[6] & 1U; }
 
 /**
  * @brief Функция устанавливает знак
@@ -120,8 +118,8 @@ big_decimal big_decimal_get_zero(void) {
 }
 
 /**
- * @brief Функция возвращает дополнительный код мантиссы полученного big_decimal. Знак превдварительно зануляется,
- * чтобы не перевернулся. Экспонента обнуляется.
+ * @brief Функция возвращает дополнительный код мантиссы полученного big_decimal. Знак превдварительно
+ * зануляется, чтобы не перевернулся. Экспонента обнуляется.
  * @param direct_code
  * @return
  */
@@ -142,8 +140,7 @@ big_decimal big_decimal_incr(big_decimal in) {
     for (register int i = 0; i < 192; ++i) {
         int bit = big_decimal_is_set_bit(in, i);
         in = big_decimal_flip_bit(in, i);
-        if (!bit)
-            break;
+        if (!bit) break;
     }
     return in;
 }
@@ -159,9 +156,7 @@ unsigned int big_decimal_is_zero(big_decimal in) {
     return result;
 }
 
-int big_decimal_get_exp(big_decimal in) {
-    return (in.parts[6] & (255U << 16)) >> 16;
-}
+int big_decimal_get_exp(big_decimal in) { return (in.parts[6] & (255U << 16)) >> 16; }
 
 void big_decimal_set_exp(big_decimal* in, int exp) {
     unsigned int sign = big_decimal_get_sign(*in);
@@ -171,9 +166,8 @@ void big_decimal_set_exp(big_decimal* in, int exp) {
 
 unsigned int big_decimal_get_not_zero_bit(big_decimal in) {
     int i = 191;
-    for (; i >=0; i--) {
-        if (big_decimal_is_set_bit(in, i))
-            break;
+    for (; i >= 0; i--) {
+        if (big_decimal_is_set_bit(in, i)) break;
     }
     return i;
 }
@@ -188,10 +182,8 @@ big_decimal remove_trail_zero(big_decimal in) {
         while (big_decimal_is_zero(remainder) && exp > 0) {
             exp--;
             res = result;
-            big_decimal_div_big_int(result,
-                    decimal_to_big_decimal(s21_decimal_get_ten()),
-                    &result,
-                    &remainder);
+            big_decimal_div_big_int(result, decimal_to_big_decimal(s21_decimal_get_ten()), &result,
+                                    &remainder);
         }
         big_decimal_set_exp(&res, exp);
     }

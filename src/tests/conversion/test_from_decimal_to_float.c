@@ -24135,7 +24135,6 @@ START_TEST(test_from_decimal_to_float_ok3004) {
     test_from_decimal_to_float(decimal, check);
 }
 
-
 Suite *from_decimal_to_float_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -27256,7 +27255,7 @@ void test_from_decimal_to_float(s21_decimal decimal, int check) {
     float_cast_test cast_result;
     cast_result.f = result;
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     float_cast_test cast_check;
     cast_check.int32_bytes = check;
     printf("---------------------------------\n");
@@ -27272,7 +27271,7 @@ void test_from_decimal_to_float(s21_decimal decimal, int check) {
     printf("\n");
     printf("%.80f\n", cast_result.f);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(cast_result.int32_bytes, check);
     ck_assert_int_eq(code, TEST_CONVERSION_OK);

@@ -4,8 +4,8 @@
 #include "./../test.h"
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* Tests for correct data (automatic)
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Tests for correct data (automatic)
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 START_TEST(test_is_less_or_equal_ok1) {
     // 79228162514264337593543950335
@@ -62727,7 +62727,6 @@ START_TEST(test_is_less_or_equal_ok6272) {
     test_is_less_or_equal(decimal1, decimal2, check);
 }
 
-
 Suite *is_less_or_equal_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -69179,7 +69178,7 @@ Suite *is_less_or_equal_suite16(void) {
 void test_is_less_or_equal(s21_decimal decimal1, s21_decimal decimal2, int check) {
     int code = s21_is_less_or_equal(decimal1, decimal2);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("Tests:\n");
     s21_print_decimal_bits(decimal1);
@@ -69189,7 +69188,7 @@ void test_is_less_or_equal(s21_decimal decimal1, s21_decimal decimal2, int check
     printf("Check: %d\n", check);
     printf("Result: %d\n", code);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, check);
 }

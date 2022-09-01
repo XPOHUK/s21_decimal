@@ -1,8 +1,9 @@
 //
 // Created by gubankov on 11.08.22.
 //
-#include "big_decimal.h"
 #include <stdio.h>
+
+#include "big_decimal.h"
 
 // Закомментил строку выравнивания, теперь функция сравнивает только мантиссы
 int big_decimal_compare(big_decimal first, big_decimal second) {

@@ -38,9 +38,6 @@ typedef union decimal_bit3 {
  * 0 - положительный decimal
  * 1 - отрицательный decimal
  */
-typedef enum s21_decimal_sign {
-    S21_POSITIVE = 0,
-    S21_NEGATIVE = 1
-} s21_decimal_sign;
+typedef enum s21_decimal_sign { S21_POSITIVE = 0, S21_NEGATIVE = 1 } s21_decimal_sign;
 
 #endif  //  SRC_S21_DECIMAL_TYPES_H_
