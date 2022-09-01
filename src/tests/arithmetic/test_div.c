@@ -506,10 +506,6 @@ START_TEST(test_div_manual27) {
 Tests all data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-
-
-
 START_TEST(test_div1201) {
     // 4294967297
     s21_decimal decimal1 = {{0x1, 0x1, 0x0, 0x0}};
@@ -65454,7 +65450,6 @@ START_TEST(test_div7056) {
     test_div(decimal1, decimal2, decimal_check);
 }
 
-
 Suite *div_suite4(void) {
     Suite *s;
     TCase *tc_core;
@@ -71476,7 +71471,7 @@ Suite *div_suite18(void) {
     return s;
 }
 
-Suite * div_suite0(void) {
+Suite *div_suite0(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -71535,7 +71530,7 @@ Suite * div_suite0(void) {
 void test_div(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_decimal result;
     int code = s21_div(decimal1, decimal2, &result);
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -71549,7 +71544,7 @@ void test_div(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
     ck_assert_int_eq(s21_is_equal(result, check), 1);
     ck_assert_int_eq(code, S21_ARITHMETIC_OK);
 }
@@ -71558,7 +71553,7 @@ void test_div_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check) 
     s21_decimal result;
     int code = s21_div(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -71571,7 +71566,7 @@ void test_div_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check) 
     printf("Check: %d\n", code_check);
     printf("Result: %d\n", code);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, code_check);
 }
@@ -71580,7 +71575,7 @@ void test_div_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal deci
     s21_decimal result;
     int code = s21_div(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -71596,7 +71591,7 @@ void test_div_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal deci
     printf("Check: %d\n", code_check);
     printf("Result: %d\n", code);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, code_check);
     ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);

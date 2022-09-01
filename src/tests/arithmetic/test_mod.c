@@ -267,7 +267,7 @@ START_TEST(test_mod_manual6) {
 }
 
 START_TEST(test_mod_manual7) {
-// 79228162514264337593543950335
+    // 79228162514264337593543950335
     s21_decimal decimal1 = {{0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
     // 100.00000000000000000000000001
     s21_decimal decimal2 = {{0x10000001, 0x3E250261, 0x204FCE5E, 0x1A0000}};
@@ -406,7 +406,7 @@ START_TEST(test_mod_manual111) {
     // 0.995705032705
     s21_decimal decimal_check = {{0xD4A51001, 0xE7, 0x0, 0xC0000}};
 
-        test_mod(decimal1, decimal2, decimal_check);
+    test_mod(decimal1, decimal2, decimal_check);
 }
 
 START_TEST(test_mod_manual112) {
@@ -417,7 +417,7 @@ START_TEST(test_mod_manual112) {
     // 0.9995705032705
     s21_decimal decimal_check = {{0x4E72A001, 0x917, 0x0, 0xD0000}};
 
-        test_mod(decimal1, decimal2, decimal_check);
+    test_mod(decimal1, decimal2, decimal_check);
 }
 
 START_TEST(test_mod_manual113) {
@@ -858,8 +858,8 @@ START_TEST(test_mod_manual226) {
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* Unworking tests from c#
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Unworking tests from c#
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 START_TEST(test_mod_manual227) {
     // // 79228162514264337593543950335
@@ -1667,8 +1667,6 @@ START_TEST(test_mod32) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod35) {
     // 79228162514264337593543950335
@@ -2571,8 +2569,6 @@ START_TEST(test_mod116) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod119) {
     // -79228162514264337593543950335
@@ -5324,8 +5320,6 @@ START_TEST(test_mod368) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
 START_TEST(test_mod371) {
     // 79228162514264337593543950334
     s21_decimal decimal1 = {{0xFFFFFFFE, 0xFFFFFFFF, 0xFFFFFFFF, 0x0}};
@@ -6227,8 +6221,6 @@ START_TEST(test_mod452) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod455) {
     // -79228162514264337593543950334
@@ -10828,8 +10820,6 @@ START_TEST(test_mod872) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
 START_TEST(test_mod875) {
     // 39614081257132168796771975168
     s21_decimal decimal1 = {{0x0, 0x0, 0x80000000, 0x0}};
@@ -11731,8 +11721,6 @@ START_TEST(test_mod956) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod959) {
     // -39614081257132168796771975168
@@ -16332,8 +16320,6 @@ START_TEST(test_mod1376) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
 START_TEST(test_mod1379) {
     // 79228162495817593524129366015
     s21_decimal decimal1 = {{0xFFFFFFFF, 0x0, 0xFFFFFFFF, 0x0}};
@@ -16399,8 +16385,6 @@ START_TEST(test_mod1384) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1387) {
     // 79228162495817593524129366015
@@ -17216,8 +17200,6 @@ START_TEST(test_mod1460) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
 START_TEST(test_mod1463) {
     // -79228162495817593524129366015
     s21_decimal decimal1 = {{0xFFFFFFFF, 0x0, 0xFFFFFFFF, 0x80000000}};
@@ -17283,8 +17265,6 @@ START_TEST(test_mod1468) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1471) {
     // -79228162495817593524129366015
@@ -18099,8 +18079,6 @@ START_TEST(test_mod1544) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1547) {
     // 4294967296
@@ -19003,8 +18981,6 @@ START_TEST(test_mod1628) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1631) {
     // -4294967296
@@ -21712,8 +21688,6 @@ START_TEST(test_mod1876) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
 START_TEST(test_mod1883) {
     // 8589934591
     s21_decimal decimal1 = {{0xFFFFFFFF, 0x1, 0x0, 0x0}};
@@ -21779,8 +21753,6 @@ START_TEST(test_mod1888) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1891) {
     // 8589934591
@@ -22552,10 +22524,6 @@ START_TEST(test_mod1960) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
-
-
-
 START_TEST(test_mod1967) {
     // -8589934591
     s21_decimal decimal1 = {{0xFFFFFFFF, 0x1, 0x0, 0x80000000}};
@@ -22621,8 +22589,6 @@ START_TEST(test_mod1972) {
 
     test_mod(decimal1, decimal2, decimal_check);
 }
-
-
 
 START_TEST(test_mod1975) {
     // -8589934591
@@ -78526,7 +78492,6 @@ START_TEST(test_mod7056) {
     test_mod(decimal1, decimal2, decimal_check);
 }
 
-
 Suite *mod_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -85879,7 +85844,7 @@ void test_mod(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_decimal result;
     int code = s21_mod(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -85893,7 +85858,7 @@ void test_mod(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(s21_is_equal(result, check), 1);
     ck_assert_int_eq(code, TEST_ARITHMETIC_OK);
@@ -85903,7 +85868,7 @@ void test_mod_fail(s21_decimal decimal1, s21_decimal decimal2, int code_check) {
     s21_decimal result;
     int code = s21_mod(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -85919,7 +85884,7 @@ void test_mod_fail(s21_decimal decimal1, s21_decimal decimal2, int code_check) {
     printf("Check: %d\n", code_check);
     printf("Result: %d\n", code);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, code_check);
 }

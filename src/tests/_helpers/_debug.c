@@ -1,9 +1,10 @@
-#include <stdio.h>
+#include "./_debug.h"
+
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../../s21_decimal.h"
-#include "./_debug.h"
 #include "../../s21_decimal/big_decimal/big_decimal.h"
 
 void s21_print_decimal_bits(s21_decimal decimal) {
@@ -14,12 +15,10 @@ void s21_print_decimal_bits(s21_decimal decimal) {
     putchar('\n');
 }
 
-void s21_print_bit(int number, int color) {
-    s21_print_bits(sizeof(number), &number, color);
-}
+void s21_print_bit(int number, int color) { s21_print_bits(sizeof(number), &number, color); }
 
-void s21_print_bits(size_t const size, void const * const ptr, int color) {
-    unsigned char *b = (unsigned char*) ptr;
+void s21_print_bits(size_t const size, void const *const ptr, int color) {
+    unsigned char *b = (unsigned char *)ptr;
     unsigned char byte;
     int i, j;
 
@@ -95,7 +94,7 @@ void s21_format_decimal_to_str(s21_decimal decimal, char *res) {
         *(ptr++) = '-';
     }
 
-    if (strlen(str) <= (size_t) power) {
+    if (strlen(str) <= (size_t)power) {
         *(ptr++) = '0';
         *(ptr++) = '.';
 
@@ -116,16 +115,16 @@ void s21_format_decimal_to_str(s21_decimal decimal, char *res) {
             if (j == 0) {
                 *(ptr++) = '.';
             }
-            *(ptr++) = str[i+j];
+            *(ptr++) = str[i + j];
         }
     }
     *(ptr++) = '\0';
 }
 
-char* s21_bin128_to_string(s21_decimal decimal) {
+char *s21_bin128_to_string(s21_decimal decimal) {
     static char s[44];
     uint32_t n[4];
-    char* p = s;
+    char *p = s;
 
     memset(s, '0', sizeof(s) - 1);
     s[sizeof(s) - 1] = '\0';
@@ -158,4 +157,3 @@ char* s21_bin128_to_string(s21_decimal decimal) {
 
     return p;
 }
-

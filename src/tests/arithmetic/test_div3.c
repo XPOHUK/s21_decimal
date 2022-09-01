@@ -4408,7 +4408,6 @@ START_TEST(test_div1200) {
     test_div(decimal1, decimal2, decimal_check);
 }
 
-
 Suite *div_suite3(void) {
     Suite *s;
     TCase *tc_core;
@@ -4819,4 +4818,3 @@ Suite *div_suite3(void) {
     suite_add_tcase(s, tc_core);
     return s;
 }
-

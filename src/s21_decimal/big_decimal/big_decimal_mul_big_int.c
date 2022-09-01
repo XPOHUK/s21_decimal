@@ -2,10 +2,11 @@
 // Created by gubankov on 08.08.22.
 //
 
-#include "big_decimal.h"
-#include "../arithmetic/arithmetic.h"
-#include "../../tests/_helpers/_debug.h"
 #include <stdio.h>
+
+#include "../../tests/_helpers/_debug.h"
+#include "../arithmetic/arithmetic.h"
+#include "big_decimal.h"
 
 /**
  * @brief Целочисленное умножение мантисс (соответственно без учёта экспоненты)

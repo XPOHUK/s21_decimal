@@ -39817,8 +39817,7 @@ START_TEST(test_sub3600) {
     test_sub(decimal1, decimal2, check);
 }
 
-
-Suite * sub_suite1(void) {
+Suite *sub_suite1(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -40229,7 +40228,7 @@ Suite * sub_suite1(void) {
     return s;
 }
 
-Suite * sub_suite2(void) {
+Suite *sub_suite2(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -40640,7 +40639,7 @@ Suite * sub_suite2(void) {
     return s;
 }
 
-Suite * sub_suite3(void) {
+Suite *sub_suite3(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -41051,7 +41050,7 @@ Suite * sub_suite3(void) {
     return s;
 }
 
-Suite * sub_suite4(void) {
+Suite *sub_suite4(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -41462,7 +41461,7 @@ Suite * sub_suite4(void) {
     return s;
 }
 
-Suite * sub_suite5(void) {
+Suite *sub_suite5(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -41873,7 +41872,7 @@ Suite * sub_suite5(void) {
     return s;
 }
 
-Suite * sub_suite6(void) {
+Suite *sub_suite6(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -42284,7 +42283,7 @@ Suite * sub_suite6(void) {
     return s;
 }
 
-Suite * sub_suite7(void) {
+Suite *sub_suite7(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -42695,7 +42694,7 @@ Suite * sub_suite7(void) {
     return s;
 }
 
-Suite * sub_suite8(void) {
+Suite *sub_suite8(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -43106,7 +43105,7 @@ Suite * sub_suite8(void) {
     return s;
 }
 
-Suite * sub_suite9(void) {
+Suite *sub_suite9(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -43550,7 +43549,7 @@ Suite *sub_suite0(void) {
 void test_sub(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_decimal result;
     int code = s21_sub(decimal1, decimal2, &result);
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -43564,7 +43563,7 @@ void test_sub(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
     ck_assert_int_eq(s21_is_equal(result, check), 1);
     ck_assert_int_eq(code, TEST_ARITHMETIC_OK);
 }
@@ -43573,7 +43572,7 @@ void test_sub_fail(s21_decimal decimal1, s21_decimal decimal2, int check) {
     s21_decimal result;
     int code = s21_sub(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -43584,7 +43583,7 @@ void test_sub_fail(s21_decimal decimal1, s21_decimal decimal2, int check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, check);
 }

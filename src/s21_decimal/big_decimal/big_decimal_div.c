@@ -1,10 +1,11 @@
 //
 // Created by gubankov on 11.08.22.
 // TODO(Rambtono): Все умножения на 10 переделать на использование умножения после его реализации
+#include <stdio.h>
+
+#include "../../tests/_helpers/_debug.h"
 #include "../arithmetic/arithmetic.h"
 #include "big_decimal.h"
-#include <stdio.h>
-#include "../../tests/_helpers/_debug.h"
 /**
  * @brief Деление
  * @param dividend
@@ -70,13 +71,10 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
         }
     }
     // Далее идёт обработка результатов. Отталкиваемся от состояния экспоненты.
-    if (big_decimal_is_zero(*result)
-            && big_decimal_is_zero(div_res)
-            && temp_exp == 0 && over_in_sum) {
+    if (big_decimal_is_zero(*result) && big_decimal_is_zero(div_res) && temp_exp == 0 && over_in_sum) {
         code = S21_ARITHMETIC_SMALL;
-    } else if ((temp_exp < 0 && over)
-            || (temp_exp == 28 && big_decimal_is_zero(*result)
-                && big_decimal_is_zero(div_res))) {
+    } else if ((temp_exp < 0 && over) ||
+               (temp_exp == 28 && big_decimal_is_zero(*result) && big_decimal_is_zero(div_res))) {
         // Если экспонента отрицательная, а разрядная сетка при этом заполнена,
         // то имеем неисправимое переполнение
         // Либо если экспонента 28, результат и результат деления равны 0, то имеем очень малое число.
@@ -89,18 +87,14 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
         }
     } else if ((over && temp_exp >= 0) || (over_in_sum) || (temp_exp == 28 && break_on_exp)) {
         // Если экспонента больше либо равна 0 и есть флаг переполнения, то округляем
-        if (div_res.parts[0] > 5
-                || (div_res.parts[0] == 5
-                    && (!big_decimal_is_zero(remainder)
-                        || big_decimal_is_set_bit(*result, 0)))) {
+        if (div_res.parts[0] > 5 || (div_res.parts[0] == 5 && (!big_decimal_is_zero(remainder) ||
+                                                               big_decimal_is_set_bit(*result, 0)))) {
             big_decimal temp = big_decimal_incr(*result);
             // При инкременте могло произойти переполнение
             if (big_decimal_get_not_zero_bit(temp) > 95) {
                 big_decimal temp_rem = big_decimal_get_zero();
-                big_decimal_div_big_int(*result,
-                        decimal_to_big_decimal(s21_decimal_get_ten()),
-                        result,
-                        &temp_rem);
+                big_decimal_div_big_int(*result, decimal_to_big_decimal(s21_decimal_get_ten()), result,
+                                        &temp_rem);
                 *result = big_decimal_incr(*result);
                 temp_exp--;
             }
@@ -110,27 +104,26 @@ int big_decimal_div(big_decimal dividend, big_decimal divisor, big_decimal *resu
         }
     }
     if (temp_exp < 0 && code == S21_ARITHMETIC_OK) {
-            // Пробуем поднять экспоненту до 0
-            big_decimal raized_res = *result;
-            while (temp_exp < 0 && big_decimal_get_not_zero_bit(raized_res) < 96) {
-                *result = raized_res;
-                big_decimal shifted_one = big_decimal_shift_left(raized_res, 1);
-                big_decimal shifted_three = big_decimal_shift_left(raized_res, 3);
-                raized_res = big_decimal_add_big_int(shifted_one, shifted_three);
-                temp_exp++;
-            }
-            if (big_decimal_get_not_zero_bit(raized_res) < 96) {
-                *result = raized_res;
-            } else {
-                if (sign)
-                    code = S21_ARITHMETIC_SMALL;
-                else
-                    code = S21_ARITHMETIC_BIG;
-            }
+        // Пробуем поднять экспоненту до 0
+        big_decimal raized_res = *result;
+        while (temp_exp < 0 && big_decimal_get_not_zero_bit(raized_res) < 96) {
+            *result = raized_res;
+            big_decimal shifted_one = big_decimal_shift_left(raized_res, 1);
+            big_decimal shifted_three = big_decimal_shift_left(raized_res, 3);
+            raized_res = big_decimal_add_big_int(shifted_one, shifted_three);
+            temp_exp++;
+        }
+        if (big_decimal_get_not_zero_bit(raized_res) < 96) {
+            *result = raized_res;
+        } else {
+            if (sign)
+                code = S21_ARITHMETIC_SMALL;
+            else
+                code = S21_ARITHMETIC_BIG;
+        }
     }
     big_decimal_set_exp(result, temp_exp);
     *result = big_decimal_set_sign(*result, sign);
-    if (code == S21_ARITHMETIC_OK)
-        *result = remove_trail_zero(*result);
+    if (code == S21_ARITHMETIC_OK) *result = remove_trail_zero(*result);
     return code;
 }

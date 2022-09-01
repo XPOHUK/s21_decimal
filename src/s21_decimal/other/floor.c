@@ -1,7 +1,7 @@
-#include "./other.h"
 #include "./../arithmetic/arithmetic.h"
 #include "./../comparison/comparison.h"
 #include "./../helpers/helpers.h"
+#include "./other.h"
 /**
  * @file floor.c
  * @author Isle Annamae (isleanna@student.21-school.ru)
@@ -18,11 +18,11 @@ int s21_floor(s21_decimal value, s21_decimal *result) {
     // Если указатель на decimal является NULL.
     if (!result) {
         code = S21_OTHER_ERROR;
-    // Проверяем, что value является корректным decimal.
+        // Проверяем, что value является корректным decimal.
     } else if (!s21_is_correct_decimal(value)) {
         code = S21_OTHER_ERROR;
         *result = s21_decimal_get_zero();
-    // В остальных случаях производим округление.
+        // В остальных случаях производим округление.
     } else {
         s21_decimal one = s21_decimal_get_one();
         int value_sign = s21_decimal_get_sign(value);

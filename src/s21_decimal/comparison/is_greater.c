@@ -1,7 +1,7 @@
-#include "./comparison.h"
-#include "./../binary/binary.h"
 #include "./../big_decimal/big_decimal.h"
+#include "./../binary/binary.h"
 #include "./../helpers/helpers.h"
+#include "./comparison.h"
 /**
  * @file is_greater.c
  * @author Isle Annamae (isleanna@student.21-school.ru)

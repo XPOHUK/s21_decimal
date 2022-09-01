@@ -120,10 +120,8 @@ END_TEST
 
 START_TEST(test_debug_create3) {
     s21_decimal decimal = s21_create_decimal_from_strings(
-        "11111111 11111111 11111111 11111111",
-        "11111111 11111111 11111111 11111111",
-        "00000000 00000000 00000000 00000001",
-        "10000000 00011100 00000000 00000000");
+        "11111111 11111111 11111111 11111111", "11111111 11111111 11111111 11111111",
+        "00000000 00000000 00000000 00000001", "10000000 00011100 00000000 00000000");
     char check[1024] = "-0.0000000036893488147419103231";
 
     test_debug(decimal, check);
@@ -132,16 +130,13 @@ END_TEST
 
 START_TEST(test_debug_create4) {
     s21_decimal decimal = s21_create_decimal_from_strings(
-        "11111111 11111111 11111111 11111111",
-        "11111111 11111111 11111111 11111111",
-        "00000000 00000000 00000000 00000051",
-        "10000000 00011100 00000000 00000000");
+        "11111111 11111111 11111111 11111111", "11111111 11111111 11111111 11111111",
+        "00000000 00000000 00000000 00000051", "10000000 00011100 00000000 00000000");
     char check[1024] = "(Incorrect Decimal)";
 
     test_debug(decimal, check);
 }
 END_TEST
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Tests for correct data (automatic)
@@ -6819,8 +6814,7 @@ START_TEST(test_debug_ok834) {
     test_debug(decimal, check);
 }
 
-
-Suite * debug1(void) {
+Suite *debug1(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -7231,7 +7225,7 @@ Suite * debug1(void) {
     return s;
 }
 
-Suite * debug2(void) {
+Suite *debug2(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -7642,7 +7636,7 @@ Suite * debug2(void) {
     return s;
 }
 
-Suite * debug3(void) {
+Suite *debug3(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -7687,7 +7681,7 @@ Suite * debug3(void) {
     return s;
 }
 
-Suite * debug0(void) {
+Suite *debug0(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -7714,11 +7708,11 @@ Suite * debug0(void) {
 }
 
 void test_debug(s21_decimal decimal, char *check) {
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     s21_print_decimal_bits(decimal);
     s21_print_decimal_string(decimal);
     printf("%s\n", check);
-    #endif
+#endif
 
     char res[1024];
     s21_decimal_to_string(decimal, res);

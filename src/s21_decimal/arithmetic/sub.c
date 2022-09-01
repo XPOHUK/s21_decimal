@@ -1,7 +1,8 @@
-#include "./arithmetic.h"
+#include <stddef.h>
+
 #include "../comparison/comparison.h"
 #include "../helpers/helpers.h"
-#include <stddef.h>
+#include "./arithmetic.h"
 
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;

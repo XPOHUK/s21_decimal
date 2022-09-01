@@ -181,8 +181,9 @@ clean:
 
 rebuild: clean all
 
-cpplint: 
-	python3 ../materials/linters/cpplint.py --extensions=c $(ALL_C_H_FILES)
+lint: 
+	cp ../materials/linters/.clang-format ./
+	find ./ -name "*.[ch]" | xargs clang-format --verbose -n
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem $(ALL_C_H_FILES)
 leaks:

@@ -1,13 +1,14 @@
 //
 // Created by gubankov on 06.08.22.
 //
-#include "big_decimal.h"
-#include "../binary/binary.h"
-#include "../mant_ops/mant_ops.h"
-#include "../helpers/helpers.h"
-#include "../arithmetic/arithmetic.h"
-#include "../../tests/_helpers/_debug.h"
 #include <stdio.h>
+
+#include "../../tests/_helpers/_debug.h"
+#include "../arithmetic/arithmetic.h"
+#include "../binary/binary.h"
+#include "../helpers/helpers.h"
+#include "../mant_ops/mant_ops.h"
+#include "big_decimal.h"
 /**
  * @brief Функция по возможности округляет big_decimal до decimal.
  *
@@ -24,15 +25,13 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         big_decimal remainder = big_decimal_get_zero();
         big_decimal temp_res1 = big_decimal_get_zero();
         code = big_decimal_div_big_int(big_decimal_set_sign(in, 0),
-                decimal_to_big_decimal(s21_decimal_get_ten_pow(to_low)),
-                &temp_res1,
-                &remainder);
+                                       decimal_to_big_decimal(s21_decimal_get_ten_pow(to_low)), &temp_res1,
+                                       &remainder);
         if (code == S21_ARITHMETIC_OK && !big_decimal_is_zero(remainder)) {
             big_decimal temp_res2 = big_decimal_get_zero();
             code = big_decimal_div_big_int(big_decimal_set_sign(in, 0),
-                    decimal_to_big_decimal(s21_decimal_get_ten_pow(to_low - 1)),
-                    &temp_res2,
-                    &remainder);
+                                           decimal_to_big_decimal(s21_decimal_get_ten_pow(to_low - 1)),
+                                           &temp_res2, &remainder);
             if (code == S21_ARITHMETIC_OK) {
                 // Для вычисления округляемой цифры прид`тся домножить первый результат на 10 и вычесть 'то
                 // из второго результата
@@ -40,8 +39,9 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
                 big_decimal shifted_three = big_decimal_shift_left(temp_res1, 3);
                 big_decimal multied = big_decimal_add_big_int(shifted_one, shifted_three);
                 big_decimal digit = big_decimal_add_big_int(temp_res2, big_decimal_set_sign(multied, 1));
-                if (digit.parts[0] == 5 && (!big_decimal_is_zero(remainder)
-                            || (big_decimal_is_zero(remainder) && big_decimal_is_set_bit(temp_res1, 0)))) {
+                if (digit.parts[0] == 5 &&
+                    (!big_decimal_is_zero(remainder) ||
+                     (big_decimal_is_zero(remainder) && big_decimal_is_set_bit(temp_res1, 0)))) {
                     temp_res1 = big_decimal_incr(temp_res1);
                 } else if (digit.parts[0] > 5) {
                     temp_res1 = big_decimal_incr(temp_res1);
@@ -62,9 +62,9 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
         // проверить нижний -- возможно впишется в разрядную сетку.
         // Теория проверена на бумаге до bits_to_round < 24
         big_decimal divisor;
-        int ten_exp = (bits_to_round - 1)/ 3 - 2;
+        int ten_exp = (bits_to_round - 1) / 3 - 2;
         if (ten_exp < 1) {
-        ten_exp = 1;
+            ten_exp = 1;
         } else if (ten_exp > 28) {
             ten_exp = 28;
         }
@@ -102,9 +102,8 @@ int big_decimal_round_to_decimal(big_decimal in, s21_decimal* res) {
             big_decimal tmp_remainder = big_decimal_get_zero();
             divisor = decimal_to_big_decimal(all_ten_pows[ten_exp - 1]);
             big_decimal_div_big_int(remainder, divisor, &first, &tmp_remainder);
-            if (first.parts[0] > 5 ||
-                (first.parts[0] == 5 &&
-                 (!big_decimal_is_zero(tmp_remainder) || big_decimal_is_set_bit(result, 0)))) {
+            if (first.parts[0] > 5 || (first.parts[0] == 5 && (!big_decimal_is_zero(tmp_remainder) ||
+                                                               big_decimal_is_set_bit(result, 0)))) {
                 result = big_decimal_incr(result);
                 // Крайний случай: переполнение decimal при инкременте
                 if (big_decimal_is_set_bit(result, 96)) {

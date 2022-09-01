@@ -1,10 +1,10 @@
-#include "./arithmetic.h"
-#include "../helpers/helpers.h"
-#include "../big_decimal/big_decimal.h"
-#include "../../tests/_helpers/_debug.h"
-
 #include <stddef.h>
 #include <stdio.h>
+
+#include "../../tests/_helpers/_debug.h"
+#include "../big_decimal/big_decimal.h"
+#include "../helpers/helpers.h"
+#include "./arithmetic.h"
 /**
  * @brief Функция принимает на входе два числа в формате Decimal и указатель для записи результата
  * Отрицательные числа записаны в прямом коде и в отдельном бите выставлен знак.
@@ -64,12 +64,12 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     }
     // Если код результата остался ОК, то можно попробовать округлить до decimal
     if (code == S21_ARITHMETIC_OK && !big_decimal_is_zero(res)) {
-    int sign = big_decimal_get_sign(res);
-    if (sign) {
-        int exp = big_decimal_get_exp(res);
-        res = big_decimal_to_twos_complement(res);
-        big_decimal_set_exp(&res, exp);
-    }
+        int sign = big_decimal_get_sign(res);
+        if (sign) {
+            int exp = big_decimal_get_exp(res);
+            res = big_decimal_to_twos_complement(res);
+            big_decimal_set_exp(&res, exp);
+        }
         code = big_decimal_round_to_decimal(res, result);
     } else if (big_decimal_is_zero(res)) {
         *result = s21_decimal_get_zero();

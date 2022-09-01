@@ -1,15 +1,15 @@
+#include "./../s21_decimal.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "./test.h"
-#include "./../s21_decimal.h"
 
 int main(void) {
     int number_failed;
     SRunner *sr;
 
     sr = srunner_create(NULL);
-
 
     srunner_add_suite(sr, from_int_to_decimal_suite());
 

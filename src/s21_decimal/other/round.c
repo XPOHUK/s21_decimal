@@ -1,7 +1,7 @@
-#include "./other.h"
 #include "./../arithmetic/arithmetic.h"
 #include "./../comparison/comparison.h"
 #include "./../helpers/helpers.h"
+#include "./other.h"
 /**
  * @file round.c
  * @author Isle Annamae (isleanna@student.21-school.ru)
@@ -12,17 +12,19 @@
  *         0 - OK
  *         1 - Ошибка конвертации
  */
+
+
 int s21_round(s21_decimal value, s21_decimal *result) {
     s21_other_result code = S21_OTHER_OK;
 
     // Если указатель на decimal является NULL.
     if (!result) {
         code = S21_OTHER_ERROR;
-    // Проверяем, что value является корректным decimal.
+        // Проверяем, что value является корректным decimal.
     } else if (!s21_is_correct_decimal(value)) {
         code = S21_OTHER_ERROR;
         *result = s21_decimal_get_zero();
-    // В остальных случаях производим округление.
+        // В остальных случаях производим округление.
     } else {
         s21_decimal one = s21_decimal_get_one();
         s21_decimal five = s21_decimal_get_five();

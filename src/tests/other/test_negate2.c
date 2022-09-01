@@ -108,8 +108,8 @@ START_TEST(test_negate_fail9) {
 END_TEST
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* Tests for correct data (automatic)
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Tests for correct data (automatic)
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 START_TEST(test_negate_ok1) {
     // 79228162514264337593543950335
@@ -9291,7 +9291,6 @@ START_TEST(test_negate_ok1020) {
     test_negate(decimal, decimal_check);
 }
 
-
 Suite *negate_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -10372,7 +10371,7 @@ void test_negate(s21_decimal decimal, s21_decimal decimal_check) {
     int sign_check = test_decimal_get_sign(decimal_check);
     int sign_result = test_decimal_get_sign(result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal);
@@ -10386,7 +10385,7 @@ void test_negate(s21_decimal decimal, s21_decimal decimal_check) {
     s21_print_decimal_string(result);
     printf("sign = %d\n", sign_result);
     printf("---------------------------------\n\n\n\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, TEST_OTHER_OK);
     ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);

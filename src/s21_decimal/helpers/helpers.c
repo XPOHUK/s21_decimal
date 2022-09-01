@@ -1,15 +1,16 @@
 #include "./helpers.h"
+
 #include "./../binary/binary.h"
 
 /**
  * @brief проверяет корректность данных, записанных в decimal
- * 
- * 
+ *
+ *
  * Данные некорректны если выполняется хотя бы одно условие:
  * 1) в bits[3] биты от 0 до 15 не равны нулю.
  * 2) в bits[3] биты с 16 по 23 содержат показатель степени вне диапазона [0, 28].
  * 3) в bits[3] биты с 24 по 30 не равны нулю.
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int 1 - ок, 0 - некорректные данные
@@ -31,7 +32,7 @@ int s21_is_correct_decimal(s21_decimal decimal) {
 
 /**
  * @brief возвращает знак decimal
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int 1 - отрицательный decimal, 0 - положительный decimal
@@ -45,7 +46,7 @@ int s21_decimal_get_sign(s21_decimal decimal) {
 
 /**
  * @brief возвращает степень decimal
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int значение степени decimal
@@ -59,7 +60,7 @@ int s21_decimal_get_power(s21_decimal decimal) {
 
 /**
  * @brief возвращает значение битов с 24 по 30 в bits[3]
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int значение битов
@@ -73,7 +74,7 @@ int s21_decimal_get_empty1(s21_decimal decimal) {
 
 /**
  * @brief возвращает значение битов с 0 до 15 в bits[3]
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int значение битов
@@ -87,7 +88,7 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
 
 /**
  * @brief устанавливает для decimal знак sign
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal меняемый decimal
  * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal.
@@ -107,11 +108,11 @@ void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
 
 /**
  * @brief устанавливает для decimal степень
- *  
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal меняемый decimal
  * @param power устанавливаемая степень
- * 
+ *
  */
 void s21_decimal_set_power(s21_decimal *decimal, int power) {
     decimal_bit3 bits3;
@@ -123,17 +124,15 @@ void s21_decimal_set_power(s21_decimal *decimal, int power) {
 
 /**
  * @brief зануляет все биты, не являющиеся самим числом decimal (bits[3])
- * 
+ *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param value указатель на decimal, биты которого требуется занулить
  */
-void s21_decimal_null_service_bits(s21_decimal *value) {
-    value->bits[3] = 0;
-}
+void s21_decimal_null_service_bits(s21_decimal *value) { value->bits[3] = 0; }
 
 /**
  * @brief проверяет, является ли число Decimal четным или нечетным
- * 
+ *
  * @author Isle Annamae (isleanna@student.21-school.ru)
  * @param value проверяемый Decimal
  * @return четный или нечетный первый бит

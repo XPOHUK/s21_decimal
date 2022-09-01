@@ -1,10 +1,11 @@
+#include "./test_from_float_to_decimal.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "./../../s21_decimal.h"
 #include "./../test.h"
-#include "./test_from_float_to_decimal.h"
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Тесты на ненормальные float
@@ -126,8 +127,8 @@ START_TEST(test_from_float_to_decimal_fail_small_negate) {
 END_TEST
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* Tests for correct data (automatic)
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ * Tests for correct data (automatic)
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 START_TEST(test_from_float_to_decimal_ok1) {
     // 2.28401628E-19
@@ -24861,7 +24862,6 @@ START_TEST(test_from_float_to_decimal_ok2748) {
     test_from_float_to_decimal(f, decimal_check);
 }
 
-
 Suite *from_float_to_decimal_suite1(void) {
     Suite *s;
     TCase *tc_core;
@@ -27724,7 +27724,7 @@ void test_from_float_to_decimal(int f, s21_decimal decimal_check) {
 
     int code = s21_from_float_to_decimal(cast_float.f, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("Float:   %.28f\n", cast_float.f);
     printf("Decimal_check: \n");
@@ -27733,7 +27733,7 @@ void test_from_float_to_decimal(int f, s21_decimal decimal_check) {
     printf("Decimal_result: \n");
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
-    #endif
+#endif
 
     ck_assert_int_eq(code, TEST_CONVERSION_OK);
     ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);

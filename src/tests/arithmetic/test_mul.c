@@ -41031,7 +41031,7 @@ void test_mul(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_decimal result;
     int code = s21_mul(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -41045,7 +41045,7 @@ void test_mul(s21_decimal decimal1, s21_decimal decimal2, s21_decimal check) {
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(s21_is_equal(result, check), 1);
     ck_assert_int_eq(code, TEST_ARITHMETIC_OK);
@@ -41055,7 +41055,7 @@ void test_mul_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check) 
     s21_decimal result;
     int code = s21_mul(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -41066,7 +41066,7 @@ void test_mul_fail1(s21_decimal decimal1, s21_decimal decimal2, int code_check) 
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, code_check);
 }
@@ -41075,7 +41075,7 @@ void test_mul_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal deci
     s21_decimal result;
     int code = s21_mul(decimal1, decimal2, &result);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     printf("---------------------------------\n");
     printf("\n\nTests:\n");
     s21_print_decimal_bits(decimal1);
@@ -41086,7 +41086,7 @@ void test_mul_fail2(s21_decimal decimal1, s21_decimal decimal2, s21_decimal deci
     s21_print_decimal_bits(result);
     s21_print_decimal_string(result);
     printf("---------------------------------\n");
-    #endif
+#endif
 
     ck_assert_int_eq(code, code_check);
     ck_assert_int_eq(s21_is_equal(result, decimal_check), 1);

@@ -1,12 +1,12 @@
-#include "./arithmetic.h"
-#include "../other/other.h"
-#include "../helpers/helpers.h"
-#include "../comparison/comparison.h"
-#include "../big_decimal/big_decimal.h"
 #include <stddef.h>
 #include <stdio.h>
 
 #include "../../tests/_helpers/_debug.h"
+#include "../big_decimal/big_decimal.h"
+#include "../comparison/comparison.h"
+#include "../helpers/helpers.h"
+#include "../other/other.h"
+#include "./arithmetic.h"
 
 int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;

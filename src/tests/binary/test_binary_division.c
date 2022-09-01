@@ -5,7 +5,6 @@
 #include "./../../s21_decimal.h"
 #include "./../test.h"
 
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Tests for correct data (automatic)
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -37589,7 +37588,7 @@ START_TEST(test_binary_division_ok2209) {
     test_binary_division(dividend, divisor, quotient, remainder);
 }
 
-Suite * binary_division_suite1(void) {
+Suite *binary_division_suite1(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -38000,7 +37999,7 @@ Suite * binary_division_suite1(void) {
     return s;
 }
 
-Suite * binary_division_suite2(void) {
+Suite *binary_division_suite2(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -38411,7 +38410,7 @@ Suite * binary_division_suite2(void) {
     return s;
 }
 
-Suite * binary_division_suite3(void) {
+Suite *binary_division_suite3(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -38822,7 +38821,7 @@ Suite * binary_division_suite3(void) {
     return s;
 }
 
-Suite * binary_division_suite4(void) {
+Suite *binary_division_suite4(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -39233,7 +39232,7 @@ Suite * binary_division_suite4(void) {
     return s;
 }
 
-Suite * binary_division_suite5(void) {
+Suite *binary_division_suite5(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -39644,7 +39643,7 @@ Suite * binary_division_suite5(void) {
     return s;
 }
 
-Suite * binary_division_suite6(void) {
+Suite *binary_division_suite6(void) {
     Suite *s;
     TCase *tc_core;
 
@@ -39864,14 +39863,13 @@ Suite * binary_division_suite6(void) {
     return s;
 }
 
-void test_binary_division(
-    s21_decimal dividend, s21_decimal divisor, s21_decimal quotient, s21_decimal remainder) {
-
+void test_binary_division(s21_decimal dividend, s21_decimal divisor, s21_decimal quotient,
+                          s21_decimal remainder) {
     s21_decimal result;
     s21_decimal result_remainder;
     result = s21_decimal_binary_division(dividend, divisor, &result_remainder);
 
-    #if defined(__DEBUG)
+#if defined(__DEBUG)
     s21_print_decimal_bits(dividend);
     s21_print_decimal_string(dividend);
     s21_print_decimal_bits(divisor);
@@ -39886,7 +39884,7 @@ void test_binary_division(
     s21_print_decimal_string(remainder);
     s21_print_decimal_bits(result_remainder);
     s21_print_decimal_string(result_remainder);
-    #endif
+#endif
 
     ck_assert_int_eq(s21_is_equal(result, quotient), 1);
     ck_assert_int_eq(s21_is_equal(result_remainder, remainder), 1);

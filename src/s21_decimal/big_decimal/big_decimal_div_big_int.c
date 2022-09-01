@@ -1,15 +1,14 @@
 //
 // Created by gubankov on 11.08.22.
 //
-#include "big_decimal.h"
-#include "../arithmetic/arithmetic.h"
-#include "../../tests/_helpers/_debug.h"
 #include <stdio.h>
 
-int big_decimal_div_big_int(big_decimal dividend,
-        big_decimal divisor,
-        big_decimal *result,
-        big_decimal *remainder) {
+#include "../../tests/_helpers/_debug.h"
+#include "../arithmetic/arithmetic.h"
+#include "big_decimal.h"
+
+int big_decimal_div_big_int(big_decimal dividend, big_decimal divisor, big_decimal *result,
+                            big_decimal *remainder) {
     s21_arithmetic_result code = S21_ARITHMETIC_OK;
     // Фиксируем знак результата
     int sign = big_decimal_get_sign(dividend) ^ big_decimal_get_sign(divisor);
@@ -19,8 +18,8 @@ int big_decimal_div_big_int(big_decimal dividend,
     // Обработка частных случаев
     if (big_decimal_is_zero(divisor)) {  // Деление на 0
         code = S21_ARITHMETIC_ZERO_DIV;
-    } else if (big_decimal_compare(big_decimal_set_sign(divisor, 0),
-                big_decimal_set_sign(dividend, 0)) == 1) {
+    } else if (big_decimal_compare(big_decimal_set_sign(divisor, 0), big_decimal_set_sign(dividend, 0)) ==
+               1) {
         //  Делитель больше делимого по модулю
         *result = big_decimal_get_zero();
         *remainder = dividend;
