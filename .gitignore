@@ -50,3 +50,17 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Mac files
+.DS_Store
+.vscode/
+
+# gcov files
+*.gcov
+*.gcda
+*.gcno
+
+# Projects's resut
+test
+gcov_report
+report/
