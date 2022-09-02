@@ -161,7 +161,7 @@ s21_decimal s21_decimal_get_one(void) {
 }
 
 /**
- * @brief формирует и возвращает число (10) в виде decimal
+ * @brief формирует и возвращает число (5) в виде decimal
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @return s21_decimal число (5)

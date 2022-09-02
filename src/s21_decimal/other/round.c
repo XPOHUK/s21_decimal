@@ -2,6 +2,17 @@
 #include "./../comparison/comparison.h"
 #include "./../helpers/helpers.h"
 #include "./other.h"
+/**
+ * @file round.c
+ * @author Isle Annamae (isleanna@student.21-school.ru)
+ * @brief Округляет Decimal до ближайшего целого числа, используется банковское округление.
+ * @param value Обрабатываемое значение Decimal.
+ * @param result Указатель на значение Decimal, куда запишется результат выполнения функции.
+ * @return Код возврата:
+ *         0 - OK
+ *         1 - Ошибка конвертации
+ */
+
 
 int s21_round(s21_decimal value, s21_decimal *result) {
     s21_other_result code = S21_OTHER_OK;
