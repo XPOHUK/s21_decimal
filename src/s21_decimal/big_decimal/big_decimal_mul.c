@@ -9,8 +9,9 @@
 #include "../arithmetic/arithmetic.h"
 #include "big_decimal.h"
 
-int big_decimal_mul(big_decimal first, big_decimal second, big_decimal* result) {
-    s21_arithmetic_result code = S21_ARITHMETIC_OK;
-    code = big_decimal_mul_big_int(first, second, result);
-    return code;
+int big_decimal_mul(big_decimal first, big_decimal second,
+                    big_decimal* result) {
+  s21_arithmetic_result code = S21_ARITHMETIC_OK;
+  code = big_decimal_mul_big_int(first, second, result);
+  return code;
 }

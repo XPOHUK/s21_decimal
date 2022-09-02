@@ -4,10 +4,11 @@
 /**
  * @brief Битовый сдвиг влево для чисел типа decimal.
  * Эквивалентно decimal << shift
- * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за пределы размеров
- * (валидация должна осуществляться перед вызовом функции)
+ * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за
+ * пределы размеров (валидация должна осуществляться перед вызовом функции)
  *
- * Фактически функция shift раз вызывает вспомогательную функцию s21_decimal_binary_shift_left_one()
+ * Фактически функция shift раз вызывает вспомогательную функцию
+ * s21_decimal_binary_shift_left_one()
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal
@@ -15,22 +16,23 @@
  * @return s21_decimal результат применения decimal << shift
  */
 s21_decimal s21_decimal_binary_shift_left(s21_decimal decimal, int shift) {
-    s21_decimal result = decimal;
-    while (shift > 0) {
-        result = s21_decimal_binary_shift_left_one(result);
-        --shift;
-    }
+  s21_decimal result = decimal;
+  while (shift > 0) {
+    result = s21_decimal_binary_shift_left_one(result);
+    --shift;
+  }
 
-    return result;
+  return result;
 }
 
 /**
  * @brief Битовый сдвиг вправо для чисел типа decimal.
  * Эквивалентно decimal >> shift
- * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за пределы размеров
- * (валидация должна осуществляться перед вызовом функции)
+ * Как и оригинальный сдвиг не осуществляет валидацию входных данных и сдвиги за
+ * пределы размеров (валидация должна осуществляться перед вызовом функции)
  *
- * Фактически функция shift раз вызывает вспомогательную функцию s21_decimal_binary_shift_right_one()
+ * Фактически функция shift раз вызывает вспомогательную функцию
+ * s21_decimal_binary_shift_right_one()
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal
@@ -38,13 +40,13 @@ s21_decimal s21_decimal_binary_shift_left(s21_decimal decimal, int shift) {
  * @return s21_decimal результат применения decimal >> shift
  */
 s21_decimal s21_decimal_binary_shift_right(s21_decimal decimal, int shift) {
-    s21_decimal result = decimal;
-    while (shift > 0) {
-        result = s21_decimal_binary_shift_right_one(result);
-        --shift;
-    }
+  s21_decimal result = decimal;
+  while (shift > 0) {
+    result = s21_decimal_binary_shift_right_one(result);
+    --shift;
+  }
 
-    return result;
+  return result;
 }
 
 /**
@@ -67,40 +69,40 @@ s21_decimal s21_decimal_binary_shift_right(s21_decimal decimal, int shift) {
  * @return s21_decimal результат применения decimal << 1
  */
 s21_decimal s21_decimal_binary_shift_left_one(s21_decimal decimal) {
-    s21_decimal result = s21_decimal_get_zero();
+  s21_decimal result = s21_decimal_get_zero();
 
-    int b0 = s21_is_set_bit(decimal.bits[0], MAX_BLOCK_BITS - 1);
-    unsigned int result0 = decimal.bits[0];
-    result0 = result0 << 1;
-    result.bits[0] = result0;
+  int b0 = s21_is_set_bit(decimal.bits[0], MAX_BLOCK_BITS - 1);
+  unsigned int result0 = decimal.bits[0];
+  result0 = result0 << 1;
+  result.bits[0] = result0;
 
-    int b1 = s21_is_set_bit(decimal.bits[1], MAX_BLOCK_BITS - 1);
-    unsigned int result1 = decimal.bits[1];
-    result1 = result1 << 1;
-    result.bits[1] = result1;
+  int b1 = s21_is_set_bit(decimal.bits[1], MAX_BLOCK_BITS - 1);
+  unsigned int result1 = decimal.bits[1];
+  result1 = result1 << 1;
+  result.bits[1] = result1;
 
-    int b2 = s21_is_set_bit(decimal.bits[2], MAX_BLOCK_BITS - 1);
-    unsigned int result2 = decimal.bits[2];
-    result2 = result2 << 1;
-    result.bits[2] = result2;
+  int b2 = s21_is_set_bit(decimal.bits[2], MAX_BLOCK_BITS - 1);
+  unsigned int result2 = decimal.bits[2];
+  result2 = result2 << 1;
+  result.bits[2] = result2;
 
-    unsigned int result3 = decimal.bits[3];
-    result3 = result3 << 1;
-    result.bits[3] = result3;
+  unsigned int result3 = decimal.bits[3];
+  result3 = result3 << 1;
+  result.bits[3] = result3;
 
-    if (b0) {
-        result.bits[1] = s21_set_bit(result.bits[1], 0);
-    }
+  if (b0) {
+    result.bits[1] = s21_set_bit(result.bits[1], 0);
+  }
 
-    if (b1) {
-        result.bits[2] = s21_set_bit(result.bits[2], 0);
-    }
+  if (b1) {
+    result.bits[2] = s21_set_bit(result.bits[2], 0);
+  }
 
-    if (b2) {
-        result.bits[3] = s21_set_bit(result.bits[3], 0);
-    }
+  if (b2) {
+    result.bits[3] = s21_set_bit(result.bits[3], 0);
+  }
 
-    return result;
+  return result;
 }
 
 /**
@@ -123,38 +125,38 @@ s21_decimal s21_decimal_binary_shift_left_one(s21_decimal decimal) {
  * @return s21_decimal результат применения decimal >> 1
  */
 s21_decimal s21_decimal_binary_shift_right_one(s21_decimal decimal) {
-    s21_decimal result = s21_decimal_get_zero();
+  s21_decimal result = s21_decimal_get_zero();
 
-    int b3 = s21_is_set_bit(decimal.bits[3], 0);
-    unsigned int result3 = decimal.bits[3];
-    result3 = result3 >> 1;
-    result.bits[3] = result3;
+  int b3 = s21_is_set_bit(decimal.bits[3], 0);
+  unsigned int result3 = decimal.bits[3];
+  result3 = result3 >> 1;
+  result.bits[3] = result3;
 
-    int b2 = s21_is_set_bit(decimal.bits[2], 0);
-    unsigned int result2 = decimal.bits[2];
-    result2 = result2 >> 1;
-    result.bits[2] = result2;
+  int b2 = s21_is_set_bit(decimal.bits[2], 0);
+  unsigned int result2 = decimal.bits[2];
+  result2 = result2 >> 1;
+  result.bits[2] = result2;
 
-    int b1 = s21_is_set_bit(decimal.bits[1], 0);
-    unsigned int result1 = decimal.bits[1];
-    result1 = result1 >> 1;
-    result.bits[1] = result1;
+  int b1 = s21_is_set_bit(decimal.bits[1], 0);
+  unsigned int result1 = decimal.bits[1];
+  result1 = result1 >> 1;
+  result.bits[1] = result1;
 
-    unsigned int result0 = decimal.bits[0];
-    result0 = result0 >> 1;
-    result.bits[0] = result0;
+  unsigned int result0 = decimal.bits[0];
+  result0 = result0 >> 1;
+  result.bits[0] = result0;
 
-    if (b3) {
-        result.bits[2] = s21_set_bit(result.bits[2], MAX_BLOCK_BITS - 1);
-    }
+  if (b3) {
+    result.bits[2] = s21_set_bit(result.bits[2], MAX_BLOCK_BITS - 1);
+  }
 
-    if (b2) {
-        result.bits[1] = s21_set_bit(result.bits[1], MAX_BLOCK_BITS - 1);
-    }
+  if (b2) {
+    result.bits[1] = s21_set_bit(result.bits[1], MAX_BLOCK_BITS - 1);
+  }
 
-    if (b1) {
-        result.bits[0] = s21_set_bit(result.bits[0], MAX_BLOCK_BITS - 1);
-    }
+  if (b1) {
+    result.bits[0] = s21_set_bit(result.bits[0], MAX_BLOCK_BITS - 1);
+  }
 
-    return result;
+  return result;
 }

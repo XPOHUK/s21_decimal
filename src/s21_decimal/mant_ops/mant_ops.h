@@ -9,8 +9,10 @@
 #include "../types.h"
 
 s21_decimal s21_decimal_add_mant(s21_decimal a, s21_decimal b);
-int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor, s21_decimal* res, s21_decimal* remainder);
-s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index, s21_decimal* over);
+int s21_decimal_div_mant(s21_decimal dividend, s21_decimal divisor,
+                         s21_decimal* res, s21_decimal* remainder);
+s21_decimal s21_decimal_shift_mant_left(s21_decimal decimal, int index,
+                                        s21_decimal* over);
 s21_decimal s21_decimal_shift_mant_right(s21_decimal decimal, int index);
 
 int s21_decimal_mant_is_zero(s21_decimal decimal);

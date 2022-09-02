@@ -8,26 +8,27 @@
  *
  * Данные некорректны если выполняется хотя бы одно условие:
  * 1) в bits[3] биты от 0 до 15 не равны нулю.
- * 2) в bits[3] биты с 16 по 23 содержат показатель степени вне диапазона [0, 28].
- * 3) в bits[3] биты с 24 по 30 не равны нулю.
+ * 2) в bits[3] биты с 16 по 23 содержат показатель степени вне диапазона [0,
+ * 28]. 3) в bits[3] биты с 24 по 30 не равны нулю.
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal проверяемый decimal
  * @return int 1 - ок, 0 - некорректные данные
  */
 int s21_is_correct_decimal(s21_decimal decimal) {
-    int code = 1;
+  int code = 1;
 
-    if (s21_decimal_get_empty1(decimal) != 0 || s21_decimal_get_empty2(decimal) != 0) {
-        code = 0;
-    } else {
-        int power = s21_decimal_get_power(decimal);
-        if (power < 0 || power > 28) {
-            code = 0;
-        }
+  if (s21_decimal_get_empty1(decimal) != 0 ||
+      s21_decimal_get_empty2(decimal) != 0) {
+    code = 0;
+  } else {
+    int power = s21_decimal_get_power(decimal);
+    if (power < 0 || power > 28) {
+      code = 0;
     }
+  }
 
-    return code;
+  return code;
 }
 
 /**
@@ -38,10 +39,10 @@ int s21_is_correct_decimal(s21_decimal decimal) {
  * @return int 1 - отрицательный decimal, 0 - положительный decimal
  */
 int s21_decimal_get_sign(s21_decimal decimal) {
-    decimal_bit3 bits3;
-    bits3.i = decimal.bits[3];
+  decimal_bit3 bits3;
+  bits3.i = decimal.bits[3];
 
-    return bits3.parts.sign;
+  return bits3.parts.sign;
 }
 
 /**
@@ -52,10 +53,10 @@ int s21_decimal_get_sign(s21_decimal decimal) {
  * @return int значение степени decimal
  */
 int s21_decimal_get_power(s21_decimal decimal) {
-    decimal_bit3 bits3;
-    bits3.i = decimal.bits[3];
+  decimal_bit3 bits3;
+  bits3.i = decimal.bits[3];
 
-    return bits3.parts.power;
+  return bits3.parts.power;
 }
 
 /**
@@ -66,10 +67,10 @@ int s21_decimal_get_power(s21_decimal decimal) {
  * @return int значение битов
  */
 int s21_decimal_get_empty1(s21_decimal decimal) {
-    decimal_bit3 bits3;
-    bits3.i = decimal.bits[3];
+  decimal_bit3 bits3;
+  bits3.i = decimal.bits[3];
 
-    return bits3.parts.empty1;
+  return bits3.parts.empty1;
 }
 
 /**
@@ -80,10 +81,10 @@ int s21_decimal_get_empty1(s21_decimal decimal) {
  * @return int значение битов
  */
 int s21_decimal_get_empty2(s21_decimal decimal) {
-    decimal_bit3 bits3;
-    bits3.i = decimal.bits[3];
+  decimal_bit3 bits3;
+  bits3.i = decimal.bits[3];
 
-    return bits3.parts.empty2;
+  return bits3.parts.empty2;
 }
 
 /**
@@ -91,19 +92,19 @@ int s21_decimal_get_empty2(s21_decimal decimal) {
  *
  * @author Hubert Furr (hubertfu@student.21-school.ru)
  * @param decimal меняемый decimal
- * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 - положительный decimal.
- * Любой sign, отличный от 0, установит знак 1
+ * @param sign устанавливаемый знак, 1 - отрицательный decimal, 0 -
+ * положительный decimal. Любой sign, отличный от 0, установит знак 1
  */
 void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
-    decimal_bit3 bits3;
-    bits3.i = decimal->bits[3];
-    if (sign == S21_POSITIVE) {
-        bits3.parts.sign = S21_POSITIVE;
-    } else {
-        bits3.parts.sign = S21_NEGATIVE;
-    }
+  decimal_bit3 bits3;
+  bits3.i = decimal->bits[3];
+  if (sign == S21_POSITIVE) {
+    bits3.parts.sign = S21_POSITIVE;
+  } else {
+    bits3.parts.sign = S21_NEGATIVE;
+  }
 
-    decimal->bits[3] = bits3.i;
+  decimal->bits[3] = bits3.i;
 }
 
 /**
@@ -115,11 +116,11 @@ void s21_decimal_set_sign(s21_decimal *decimal, int sign) {
  *
  */
 void s21_decimal_set_power(s21_decimal *decimal, int power) {
-    decimal_bit3 bits3;
-    bits3.i = decimal->bits[3];
-    bits3.parts.power = power;
+  decimal_bit3 bits3;
+  bits3.i = decimal->bits[3];
+  bits3.parts.power = power;
 
-    decimal->bits[3] = bits3.i;
+  decimal->bits[3] = bits3.i;
 }
 
 /**
@@ -140,9 +141,9 @@ void s21_decimal_null_service_bits(s21_decimal *value) { value->bits[3] = 0; }
  *         1 - нечетное
  */
 int s21_is_even_or_odd(s21_decimal decimal) {
-    int result = 0;
-    if (s21_decimal_is_set_bit(decimal, 0) == 1) {
-        result = 1;
-    }
-    return result;
+  int result = 0;
+  if (s21_decimal_is_set_bit(decimal, 0) == 1) {
+    result = 1;
+  }
+  return result;
 }

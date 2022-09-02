@@ -16,8 +16,8 @@ int s21_is_not_equal(s21_decimal value_1, s21_decimal value_2);
  * 1 - TRUE
  */
 typedef enum s21_comparison_result {
-    S21_COMPARISON_FALSE = 0,
-    S21_COMPARISON_TRUE = 1,
+  S21_COMPARISON_FALSE = 0,
+  S21_COMPARISON_TRUE = 1,
 } s21_comparison_result;
 
 #endif  //  SRC_S21_DECIMAL_COMPARISON_COMPARISON_H_
